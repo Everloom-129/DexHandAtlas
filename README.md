@@ -15,7 +15,7 @@ Maintained by **Jie Wang**, GRASP Lab, University of Pennsylvania.
 
 | Volume | Review | Live page |
 |--------|--------|-----------|
-| **I · Hardware** | Dexterous Hand Hardware — Landscape Review. 20+ hands across commercial specialists, humanoid-integrated end-effectors, and the research / open-source / biomimetic frontier. Compared on DOF, actuation topology, tactile stack, and product philosophy, with photos and vendor links. | [Read ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_hardware_review_standalone.html) |
+| **I · Hardware** | Dexterous Hand Hardware — Landscape Review. 20+ hands across commercial specialists, humanoid-integrated end-effectors, and the research / open-source / biomimetic frontier. Compared on DOF, actuation topology, tactile stack, and product philosophy, with photos and vendor links. | [Read ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_hardware_review.html) |
 | **II · Market** | Hands on the Market (灵巧手产品市场一览). 14 buyable dexterous hands with product images, finger/DOF counts, origin, and reference prices — from $2k open-source kits to $110k research benchmarks, sources linked per row. | [Browse ↗](https://everloom-129.github.io/DexHandAtlas/dex_hand_products.html) |
 | **III · Benchmarks** | Dexterous Manipulation Benchmarks — A Literature Review. Simulation suites, real-world task sets, and datasets used to measure in-hand manipulation and grasping. | [Read ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_benchmarks.html) · [中文 ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_benchmarks.zh.html) |
 
@@ -24,16 +24,15 @@ Maintained by **Jie Wang**, GRASP Lab, University of Pennsylvania.
 ## Repository layout
 
 ```
-index.html                              # landing page (GitHub Pages entry)
-dexhand_hardware_review.html            # Vol I — linked images (images/ folder)
-dexhand_hardware_review_standalone.html # Vol I — single-file (images inlined)
-dex_hand_products.html                  # Vol II — products table
-dexhand_benchmarks.html                 # Vol III — benchmarks literature review
-*.zh.html                               # Simplified-Chinese twin of every page
-images/                                 # product / hand photos
+index.html                   # landing page (GitHub Pages entry)
+dexhand_hardware_review.html # Vol I — hardware landscape review
+dex_hand_products.html       # Vol II — products table
+dexhand_benchmarks.html      # Vol III — benchmarks literature review
+*.zh.html                    # Simplified-Chinese twin of every page
+images/                      # product / hand photos
 ```
 
-The **`*_standalone.html`** files inline every image as base64 — open them anywhere, no folder needed. The plain `.html` versions are lighter and load images from `images/`. Each page also has a Simplified-Chinese twin (`*.zh.html`); the EN ⇄ 中文 toggle links the two.
+Pages load images from `images/`. Each page also has a Simplified-Chinese twin (`*.zh.html`); the EN ⇄ 中文 toggle links the two.
 
 ## Notes on the data
 

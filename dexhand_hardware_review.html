@@ -152,6 +152,12 @@
   .entry p{font-size:15px;color:var(--ink-dim)}
   .entry p b{color:var(--ink);font-weight:600}
   .entry p .hi{color:var(--amber-bright);font-family:var(--mono);font-size:13.5px}
+  .entry{overflow:hidden}
+  .entry .ethumb,.entry .noimg{float:left;width:150px;height:120px;margin:4px 24px 10px 0;border:1px solid var(--line);border-radius:5px;background:var(--bg-2)}
+  .entry .ethumb{object-fit:contain;padding:7px}
+  .entry .noimg{display:flex;align-items:center;justify-content:center;border-style:dashed;border-color:var(--line-bright);color:var(--ink-faint);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+  .entry h3 span a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+  .entry h3 span a:hover{color:var(--amber-bright);border-bottom-color:var(--amber-bright)}
 
   /* ---------- themes ---------- */
   .themes{counter-reset:th;display:grid;gap:0;margin-top:8px}
@@ -191,6 +197,7 @@
     .axes,.papers{grid-template-columns:1fr}
     .theme{grid-template-columns:44px 1fr}
     .entry .top{flex-direction:column}
+    .entry .ethumb,.entry .noimg{width:96px;height:80px;margin-right:14px}
     section{padding:54px 0}
   }
 </style>
@@ -300,60 +307,70 @@
     <div class="entries">
 
       <div class="entry">
-        <div class="top"><h3>Sharpa — SharpaWave<span>Singapore</span></h3>
+        <img class="ethumb" src="images/sharpa.webp" alt="SharpaWave hand">
+        <div class="top"><h3>Sharpa — SharpaWave<span>Singapore · <a href="https://www.sharpa.com/" target="_blank" rel="noopener">sharpa.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-mixed">22 DOF</span><span class="pill p-direct">sensing-first</span></div></div>
         <p>A 1:1 human-scale, 22-active-DOF hand whose pitch is high-resolution touch. The proprietary <b>Dynamic Tactile Array</b> claims <span class="hi">&gt;1,000 px/fingertip</span>, sub-mm resolution, pressure sensitivity ~0.005–0.02 N over 0–30 N, and 180 FPS — enabling texture recognition and 6D force. Mass production from Oct 2025, open ROS2 stack, paired with <b>CraftNet</b> (Vision-Tactile-Language-Action, "System 0" reflex layer). Demoed at IROS 2025, CES 2026 honoree, integrated into the <b>NVIDIA Isaac GR00T</b> reference humanoid.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Wuji Tech — Wuji Hand<span>Shenzhen · ex-Pan-Motor</span></h3>
+        <img class="ethumb" src="images/wuji.webp" alt="Wuji Hand">
+        <div class="top"><h3>Wuji Tech — Wuji Hand<span>Shenzhen · ex-Pan-Motor · <a href="https://wuji.tech/" target="_blank" rel="noopener">wuji.tech ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">20 DOF</span><span class="pill p-direct">direct-drive</span></div></div>
         <p>Vertically integrated on actuation. 20 active DOF, four joints per finger, <b>direct-drive micro-actuators in the phalanges</b> (no tendon slack). Reported ~0.6–0.9 kg, ~15 N fingertip, ~10 kg static grasp, ~1 kHz control, <span class="hi">300,000+ grasp cycles</span>, ~80 cm drop survival. Companion glove: 526 touch points @ 120 FPS. Strategically the hardware partner behind <b>Genesis AI's "Genesis Hand 1.0"</b> (3 ms latency, tuned for human-data collection into the GENE model).</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>RobotEra — XHAND1<span>Beijing</span></h3>
+        <img class="ethumb" src="images/xhand1.jpg" alt="RobotEra XHAND1">
+        <div class="top"><h3>RobotEra — XHAND1<span>Beijing · <a href="https://www.robotera.com/en/" target="_blank" rel="noopener">robotera.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">12 DOF</span><span class="pill p-direct">QDD</span></div></div>
         <p>12 active DOF (3 on thumb &amp; index, 2 on the rest), <b>full-gear quasi-direct-drive</b> with decoupled, backdrivable joints — explicitly marketed as a clean platform for IL/RL. Index swings ±15°, thumb reaches pinky opposition. Tactile: &gt;100-point per-fingertip array, 270° encircling 3D force + temperature. Whole-hand grip ~80 N. Integrates with <b>ERA-42</b> and supports Apple Vision Pro teleop. Slimmer <b>XHAND Lite</b> (11 DOF) for service robots.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Inspire — RH56 series<span>Beijing · 因时机器人</span></h3>
+        <img class="ethumb" src="images/inspire-rh56h1.webp" alt="Inspire RH56 hand">
+        <div class="top"><h3>Inspire — RH56 series<span>Beijing · 因时机器人 · <a href="https://en.inspire-robots.com/" target="_blank" rel="noopener">inspire-robots.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-link">6 DOF</span><span class="pill p-link">linkage</span></div></div>
         <p>The incumbent research workhorse. 6 active DOF / 12 joints via six <b>miniature linear servos</b>, <b>underactuated &amp; coupled</b>. Variants: BFX (fast "pianist"), DFX (balanced; ~15 N thumb), all-metal flagship F1 (EtherCAT 1 kHz, 24 sensors, 30 kg static). Ubiquitous on Unitree G1/H1. But a <b>2026 characterization paper (Tan, Xie, Correll)</b> documents its limits as an instrument: uncalibrated proprioception, <span class="hi">up to +1618% force overshoot</span> at speed, non-trivial antipodal grasps. Essential cautionary reading.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>BrainCo / Qiangnao — Revo series<span>Hangzhou · 强脑科技</span></h3>
+        <img class="ethumb" src="images/brainco-revo2.jpg" alt="BrainCo Revo hand">
+        <div class="top"><h3>BrainCo / Qiangnao — Revo series<span>Hangzhou · 强脑科技 · <a href="https://www.brainco.tech/" target="_blank" rel="noopener">brainco.tech ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">11 / 21 DOF</span><span class="pill p-direct">visuo-tactile</span></div></div>
         <p>From BCI and prosthetics into robot hands. <b>Revo 2</b>: 11 DOF, 383 g, 50 N, 20 kg load, RS485/CAN-FD/EtherCAT @ 1 kHz, Basic/Pro/Touch tiers. <b>Revo 3</b> (2026): a 21-DOF jump to <b>direct-drive backdrivable</b> with full-palm tactile + fingertip visuo-tactile + 70 N grip — positioned as the first 20+ DOF open-ecosystem hand combining those modes. Demoed 33 grasp types, two-handed Rubik's cube. HK IPO reportedly in motion.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Linkerbot — Linker Hand<span>Beijing · 灵心巧手</span></h3>
+        <img class="ethumb" src="images/linker-l20.jpg" alt="Linker Hand L20">
+        <div class="top"><h3>Linkerbot — Linker Hand<span>Beijing · 灵心巧手 · <a href="https://www.linkerbot.cn/" target="_blank" rel="noopener">linkerbot.cn ↗</a></span></h3>
           <div class="badges"><span class="pill p-mixed">6–42 DOF</span><span class="pill p-mixed">all routes</span></div></div>
         <p>Volume leader and the most explicit "embrace all routes" strategy (founder Zhou Yong, 2023). <b>L6</b> (6 DOF direct, ~¥19,900), <b>L20</b> (20–21 DOF linkage, ~¥49,900), <b>L30</b> (25 DOF tendon, ~¥100k), research line to <b>42 DOF</b>. Pricing ~<span class="hi">1/10–1/20 of overseas</span>. Reported 10,000+ units in 2025, &gt;80% of China's high-DOF market, ~¥1.5B Series B at &gt;¥10B valuation. Customers: Stanford, Cambridge, PKU, Tsinghua. The clearest lab-to-standard-product case study.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Agile Robots — Agile Hand<span>Munich + China</span></h3>
+        <img class="ethumb" src="images/agile.webp" alt="Agile Hand">
+        <div class="top"><h3>Agile Robots — Agile Hand<span>Munich + China · <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">agile-robots.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">15–16 DOF</span><span class="pill p-direct">compliant</span></div></div>
         <p>Founded 2018, acquired Franka Emika (2023) — force-control arm pedigree. 21 joints / 15–16 DOF, 1.5 kg, ~10 N fingertip, 360°/s, with <b>identical modular fingers</b> (actuator + electronics + sensing + transmission in each). Joint-torque + fingertip tactile, active compliant control for safe contact. Now embedded in the <b>Agile ONE</b> industrial humanoid.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>AgiBot / Zhiyuan — OmniHand<span>Shanghai · 智元</span></h3>
+        <img class="ethumb" src="images/omnihand.webp" alt="AgiBot OmniHand">
+        <div class="top"><h3>AgiBot / Zhiyuan — OmniHand<span>Shanghai · 智元 · <a href="https://www.agibot.com/" target="_blank" rel="noopener">agibot.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-tendon">10–22 DOF</span><span class="pill p-tendon">modular</span></div></div>
         <p>Modular end-effector family on a standard wrist (swaps with OmniPicker). <b>OmniHand 2025</b>: 10 active + 6 passive DOF, ~500 g, <span class="hi">400+ taxels @ 0.1 N</span>, open SDK. <b>Pro</b>: 19 DOF (12 active), 35–60 N, 150+ sensors. <b>OmniHand 3 Ultra-T</b> (Apr 2026): 22+3 DOF, <b>tendon-driven</b>, full-hand 3D tactile, 10:1 load-to-weight. Presented at MWC 2026; tied to a European manufacturing partnership.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Daxo Robotics — Muscle V0 / V2<span>Philadelphia · Tom Zhang (Penn PhD)</span></h3>
+        <img class="ethumb" src="images/daxo.jpg" alt="Daxo Muscle hand">
+        <div class="top"><h3>Daxo Robotics — Muscle V0 / V2<span>Philadelphia · Tom Zhang (Penn PhD) · <a href="https://daxo-robotics.com/" target="_blank" rel="noopener">daxo-robotics.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-soft">108–120 act.</span><span class="pill p-soft">soft redundant</span></div></div>
         <p>The contrarian. A <b>soft, tendon-driven</b> hand with <span class="hi">108–120 actuators</span> (~3× the human hand), pitched as "infinite DOF." Explicitly rejects the human hand as a reference — dexterity comes from control complexity, not joint count. Redundancy is the headline: the AI reroutes through remaining muscles and reportedly keeps working with ~20% of motors failed. Electronics live outside the hand. Built cheap (~$1,200, ~$5 motors), assembled in hours. V2 targets Q3 2026 with industrial pilots.</p>
       </div>
 
       <div class="entry">
+        <div class="noimg">early stage</div>
         <div class="top"><h3>Origami Robotics<span>YC · US</span></h3>
           <div class="badges"><span class="pill p-direct">early</span><span class="pill p-direct">data-first</span></div></div>
         <p>Early-stage; thesis is the <b>data problem</b>. Large transmissions make current hands hard to model, and the embodiment gap inflates the train/deploy distribution. Their answer: build <b>both</b> the hand and a <b>co-designed data-collection glove</b>, optimizing miniature motors so glove kinematics match the hand — minimizing sim-to-real and embodiment gaps for scalable high-quality data. Aligned with the broader "hardware in service of data" pattern.</p>
@@ -370,25 +387,29 @@
     <div class="entries">
 
       <div class="entry">
-        <div class="top"><h3>Xiaomi — CyberOne V2 hand<span>in-house</span></h3>
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Xiaomi — CyberOne V2 hand<span>in-house · <a href="https://www.mi.com/global/" target="_blank" rel="noopener">mi.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">22–27 DOF</span><span class="pill p-direct">liquid-cooled</span></div></div>
         <p>The 2026 redesign reaches <b>22–27 DOF</b> (~83% jump in active DOF), volume cut ~60% to a true 1:1 adult-hand scale (improving sim-to-real for teleop data). The standout is thermal: <b>"bionic sweat glands"</b> — 3D-printed metal liquid-cooling channels evaporating ~0.5 ml/min to dissipate ~100 W from compact motors, attacking one of the hardest constraints in dense hands. Full-palm tactile, <span class="hi">150,000+ cycles</span>. Edge: a captive customer in Xiaomi's own EV factory.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Figure AI — Figure 03 hand<span>Helix-02</span></h3>
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Figure AI — Figure 03 hand<span>Helix-02 · <a href="https://www.figure.ai/" target="_blank" rel="noopener">figure.ai ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">16 DOF</span><span class="pill p-direct">3 g tactile</span></div></div>
         <p>16-DOF five-finger hands; the emphasis is <b>compliance + sensing</b>, not DOF. Softer, larger-surface fingertips, a small <b>palm-embedded camera</b> for occluded close-range feedback, and an in-house tactile fingertip sensor sensitive to <span class="hi">~3 grams</span> (a paperclip) to predict slip before it happens. Engineered around the <b>Helix / Helix-02</b> VLA (pixels-to-action, onboard, 44 DOF total). Vertically integrated, BotQ ~12,000 units/yr, ~$20k target, TIME Best Invention 2025.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Boston Dynamics — Atlas GR grippers<span>US</span></h3>
+        <img class="ethumb" src="images/atlas.png" alt="Boston Dynamics Atlas">
+        <div class="top"><h3>Boston Dynamics — Atlas GR grippers<span>US · <a href="https://bostondynamics.com/products/atlas/" target="_blank" rel="noopener">bostondynamics.com ↗</a></span></h3>
           <div class="badges"><span class="pill p-direct">7 DOF</span><span class="pill p-direct">non-anthropomorphic</span></div></div>
         <p>A deliberately <b>non-anthropomorphic</b> path. <b>GR2</b>: 7-DOF, three-finger (two fingers + opposable swiveling thumb), tactile + palm camera, and a superhuman trick — fingers <b>bend fully backward</b> for back-of-hand grasps. Philosophy: "the fewest fingers that achieve complex manipulation," reliability over biomimicry. Plot twist: at CES 2026 BD revealed a more conventional three-finger hand — a concession to <b>human-tool compatibility</b>. Atlas runs Large Behavior Models; in pilots at a Hyundai plant.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Sunday Robotics — Memo<span>Mountain View · Zhao + Chi</span></h3>
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Sunday Robotics — Memo<span>Mountain View · Zhao + Chi · <a href="https://www.sunday.ai/" target="_blank" rel="noopener">sunday.ai ↗</a></span></h3>
           <div class="badges"><span class="pill p-link">pincer</span><span class="pill p-link">data-maximal</span></div></div>
         <p>The purest "hardware minimalism, data maximalism" bet — founders <b>Tony Zhao (ALOHA/ACT)</b> and <b>Cheng Chi (Diffusion Policy/UMI)</b>. A wheeled two-arm home robot with intentionally <b>simple pincer "Lego-like" hands</b>. The product is the data engine: a patented <b>Skill Capture Glove</b> matching Memo's hands, worn across 500+ homes to produce <span class="hi">~10 million chore episodes</span> feeding the in-house <b>ACT-1</b> model, emphasizing zero-shot generalization to unseen homes. The implicit argument: for many home tasks, matched-embodiment data beats end-effector dexterity.</p>
       </div>
@@ -405,18 +426,21 @@
     <div class="entries">
 
       <div class="entry">
-        <div class="top"><h3>Benchmarks &amp; commercial-research crossover<span>Shadow · Allegro · PSYONIC</span></h3></div>
+        <img class="ethumb" src="images/shadow.png" alt="Shadow Dexterous Hand">
+        <div class="top"><h3>Benchmarks &amp; commercial-research crossover<span><a href="https://www.shadowrobot.com/" target="_blank" rel="noopener">Shadow ↗</a> · <a href="https://www.allegrohand.com/" target="_blank" rel="noopener">Allegro ↗</a> · <a href="https://www.psyonic.io/" target="_blank" rel="noopener">PSYONIC ↗</a></span></h3></div>
         <p><b>Shadow Dexterous Hand</b> (London, since 2005): 24 joints, 20 DOF, tendon-driven, extensive tactile — the long-standing gold standard, historically &gt;$100k and fragile, the exact accessibility gap the open-source hands attack. <b>Allegro Hand</b>: direct-drive, 16 DOF, ~15,000 CHF — the default RL/sim2real platform (e.g. NVIDIA's <b>DeXtreme</b> with Isaac Gym). <b>PSYONIC Ability Hand</b>: a bionic prosthesis adapted for robotics (490 g, closes ~0.2 s, lower native DOF), on <b>Apptronik Apollo</b> and Hexagon AEON — the "modular, simple first" humanoid philosophy.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Open-source hands — the accessibility wave<span>LEAP · ORCA · RUKA · MM-Hand</span></h3>
+        <img class="ethumb" src="images/orca.webp" alt="ORCA open-source hand">
+        <div class="top"><h3>Open-source hands — the accessibility wave<span><a href="https://leaphand.com/" target="_blank" rel="noopener">LEAP ↗</a> · <a href="https://www.orcahand.com/" target="_blank" rel="noopener">ORCA ↗</a> · <a href="https://ruka-hand.github.io/" target="_blank" rel="noopener">RUKA ↗</a> · MM-Hand</span></h3>
           <div class="badges"><span class="pill p-tendon">tendon</span><span class="pill p-direct">direct</span></div></div>
         <p><b>LEAP Hand</b> (CMU; Shaw, Pathak): open-source, <b>direct-drive, 16 DOF, &lt;$2,000, ~3 hr assembly</b> — a landmark in cheap reproducible research. <b>ORCA Hand</b> (ETH SRL; 2504.04259): <b>tendon-driven, 17 DOF</b> (16 fingers + 1 wrist), integrated tactile, &lt;2,000 CHF, assembled <span class="hi">in under 8 hours</span>, with popping joints, auto-calibration &amp; tensioning — matches LEAP accuracy/latency despite tendons. <b>RUKA / Ruka-v2</b> (NYU; 2603.26660): <b>11 DOF, &lt;$1,300</b>, learns tendon dynamics directly; v2 adds a 2-DOF parallel wrist + finger abduction. <b>MM-Hand</b>: 21-DOF multimodal modular, remote tendon actuation to free finger volume and keep heat out.</p>
       </div>
 
       <div class="entry">
-        <div class="top"><h3>Biomimetic / muscle-driven — the high-fidelity frontier<span>Clone · Faive/Mimic</span></h3>
+        <img class="ethumb" src="images/clone.jpg" alt="Clone Robotics hand">
+        <div class="top"><h3>Biomimetic / muscle-driven — the high-fidelity frontier<span><a href="https://clonerobotics.com/" target="_blank" rel="noopener">Clone ↗</a> · <a href="https://www.mimicrobotics.com/" target="_blank" rel="noopener">Faive/Mimic ↗</a></span></h3>
           <div class="badges"><span class="pill p-soft">27 DOF</span><span class="pill p-tendon">rolling-contact</span></div></div>
         <p><b>Clone Robotics</b>: anthropomorphic <b>27-DOF</b> hand with artificial-muscle actuation, claiming human-level grip strength &amp; speed; its <b>Neural Joint V2</b> controller is a network trained on human-hand video rather than hardcoded control. <b>Faive Hand / Mimic Robotics</b> (ETH spinout): biomimetic, tendon-driven with <b>rolling-contact joints</b> (no fixed axis) — closed-loop RL trained in Isaac Gym, transferred to hardware; rolling joints break the usual encoder assumptions. Historical grounding: the <b>ACT Hand</b>, the <b>Biomimetic Hand</b> (9 actuators), and <b>CasiaHand</b> (15 DOF, palm-integrated).</p>
       </div>

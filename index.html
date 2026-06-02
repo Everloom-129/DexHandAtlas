@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DexHand Atlas — Dexterous Hand Research</title>
-<meta name="description" content="An independent research atlas of the dexterous robotic hand landscape: hardware, market & pricing, and manipulation benchmarks. Compiled by Jie Wang.">
+<meta name="description" content="A research atlas of the dexterous robotic hand landscape: hardware, market & pricing, and manipulation benchmarks. Jie Wang, GRASP Lab, University of Pennsylvania.">
 <meta name="author" content="Jie Wang">
 <!-- Open Graph -->
 <meta property="og:title" content="DexHand Atlas — Dexterous Hand Research">
-<meta property="og:description" content="An independent research atlas of the dexterous robotic hand landscape: hardware, market, and benchmarks.">
+<meta property="og:description" content="A research atlas of the dexterous robotic hand landscape: hardware, market, and benchmarks. GRASP Lab, University of Pennsylvania.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +122,9 @@
   .card .alt a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent}
   .card .alt a:hover{border-bottom-color:var(--cyan)}
   .span2{grid-column:1 / -1}
+  .atlas-note{margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.03em}
+  .atlas-note a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .atlas-note a:hover{border-bottom-color:var(--cyan)}
 
   /* about */
   .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:20px 24px;font-size:14.5px;color:var(--ink-dim);border-radius:0 6px 6px 0}
@@ -151,12 +154,12 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="kick">Independent Research · Updated June 2026</div>
+    <div class="kick">Dexterous Hand Research · Updated June 2026</div>
     <h1 class="title">DexHand <em>Atlas</em></h1>
     <p class="sub">A field guide to the dexterous robotic hand landscape — the hardware that grasps, the market that sells it, and the benchmarks that measure it. Compiled from public vendor data, primary papers, and 3rd-party listings.</p>
     <div class="byline">
       <div class="avatar">JW</div>
-      <div class="who"><b>Jie&nbsp;Wang</b><span>Independent research · maintained on GitHub</span></div>
+      <div class="who"><b>Jie&nbsp;Wang</b><span>GRASP Lab, University of Pennsylvania</span></div>
       <a class="gh" href="https://github.com/Everloom-129/DexHandAtlas" target="_blank" rel="noopener">★ Repository ↗</a>
     </div>
     <div class="meta">
@@ -171,29 +174,27 @@
 <!-- THE ATLAS -->
 <section>
   <div class="wrap reveal">
-    <div class="sec-head"><span class="sec-num">01</span><h2>The Atlas</h2></div>
-    <p class="lead">Three independent reviews, each self-contained. Specs and prices are vendor- or paper-reported and should be read as claims pending independent characterization.</p>
+    <div class="sec-head"><h2>The Atlas</h2></div>
+    <p class="lead">Three reviews, each a single self-contained page. Specs and prices are vendor- or paper-reported and should be read as claims pending independent characterization.</p>
 
     <div class="cards">
 
-      <a class="card amber" href="dexhand_hardware_review.html">
+      <a class="card amber" href="dexhand_hardware_review_standalone.html">
         <span class="vol">Volume I · Hardware</span>
         <h3>Dexterous Hand Hardware</h3>
         <div class="zh">Landscape Review</div>
         <p>20+ hands across three lines — commercial specialists, humanoid-integrated end-effectors, and the frontier research / open-source / biomimetic edge. Compared on DOF, actuation topology, tactile stack, and product philosophy, with photos and vendor links.</p>
         <div class="tags"><span class="t">14+ companies</span><span class="t">actuation</span><span class="t">tactile</span><span class="t">8 key papers</span></div>
         <div class="go"><span>Read the review</span><span class="arrow">→</span></div>
-        <div class="alt">offline copy: <a href="dexhand_hardware_review_standalone.html">single-file ↗</a></div>
       </a>
 
-      <a class="card cyan" href="dex_hand_products.html">
+      <a class="card cyan" href="dex_hand_products_standalone.html">
         <span class="vol">Volume II · Market</span>
         <h3>Hands on the Market</h3>
         <div class="zh">灵巧手产品市场一览 · Products &amp; Pricing</div>
         <p>The buyable end of the field: 14 dexterous hands you can actually order, with product images, finger/DOF counts, origin, and reference prices — from $2k open-source kits to $110k research benchmarks. Sources linked per row.</p>
         <div class="tags"><span class="t">reference prices</span><span class="t">images</span><span class="t">14 products</span></div>
         <div class="go"><span>Browse the table</span><span class="arrow">→</span></div>
-        <div class="alt">offline copy: <a href="dex_hand_products_standalone.html">single-file ↗</a></div>
       </a>
 
       <a class="card violet span2" href="dexhand_benchmarks.html">
@@ -203,29 +204,16 @@
         <p>The evaluation side of dexterity — simulation suites, real-world task sets, and datasets used to measure in-hand manipulation and grasping. The substrate that turns hardware claims into comparable numbers.</p>
         <div class="tags"><span class="t">benchmarks</span><span class="t">datasets</span><span class="t">sim &amp; real</span><span class="t">literature</span></div>
         <div class="go"><span>Read the review</span><span class="arrow">→</span></div>
-        <div class="alt">中文版: <a href="dexbench_survey_sonnet.html">灵巧手操作基准综述 ↗</a></div>
       </a>
 
     </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section>
-  <div class="wrap reveal">
-    <div class="sec-head"><span class="sec-num">02</span><h2>About this work</h2></div>
-    <div class="note">
-      <b>Independent research.</b> DexHand Atlas is a personal, independent research project by <b>Jie Wang</b> — not affiliated with, sponsored by, or endorsed by any vendor listed. It exists to map a fast-moving field in one place. All trademarks, product names, and images belong to their respective owners; images are linked or reproduced for reference and identification only.
-    </div>
-    <div class="note cyan">
-      <b>How to read it.</b> Figures are vendor- or paper-reported and inconsistently defined (active DOF vs. total joints; fingertip vs. whole-hand force; list vs. quote-only prices). Treat single-number comparisons as approximate, and confirm anything decision-critical with the original source — every entry links back to one.
-    </div>
+    <p class="atlas-note">Volume III is also available in 中文 — <a href="dexbench_survey_sonnet.html">灵巧手操作基准综述 ↗</a></p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>DexHand Atlas · Independent research by Jie Wang</span>
+    <span>DexHand Atlas · Jie Wang · GRASP Lab, University of Pennsylvania</span>
     <span>Compiled June 2026 · <a href="https://github.com/Everloom-129/DexHandAtlas" target="_blank" rel="noopener">github.com/Everloom-129/DexHandAtlas</a></span>
   </div>
 </footer>

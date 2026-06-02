@@ -16,7 +16,7 @@ Maintained by **Jie Wang**, GRASP Lab, University of Pennsylvania.
 | Volume | Review | Live page |
 |--------|--------|-----------|
 | **I · Hardware** | Dexterous Hand Hardware — Landscape Review. 20+ hands across commercial specialists, humanoid-integrated end-effectors, and the research / open-source / biomimetic frontier. Compared on DOF, actuation topology, tactile stack, and product philosophy, with photos and vendor links. | [Read ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_hardware_review_standalone.html) |
-| **II · Market** | Hands on the Market (灵巧手产品市场一览). 14 buyable dexterous hands with product images, finger/DOF counts, origin, and reference prices — from $2k open-source kits to $110k research benchmarks, sources linked per row. | [Browse ↗](https://everloom-129.github.io/DexHandAtlas/dex_hand_products_standalone.html) |
+| **II · Market** | Hands on the Market (灵巧手产品市场一览). 14 buyable dexterous hands with product images, finger/DOF counts, origin, and reference prices — from $2k open-source kits to $110k research benchmarks, sources linked per row. | [Browse ↗](https://everloom-129.github.io/DexHandAtlas/dex_hand_products.html) |
 | **III · Benchmarks** | Dexterous Manipulation Benchmarks — A Literature Review. Simulation suites, real-world task sets, and datasets used to measure in-hand manipulation and grasping. | [Read ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_benchmarks.html) · [中文 ↗](https://everloom-129.github.io/DexHandAtlas/dexhand_benchmarks.zh.html) |
 
 ---
@@ -27,8 +27,7 @@ Maintained by **Jie Wang**, GRASP Lab, University of Pennsylvania.
 index.html                              # landing page (GitHub Pages entry)
 dexhand_hardware_review.html            # Vol I — linked images (images/ folder)
 dexhand_hardware_review_standalone.html # Vol I — single-file (images inlined)
-dex_hand_products.html                  # Vol II — linked images
-dex_hand_products_standalone.html       # Vol II — single-file (images inlined)
+dex_hand_products.html                  # Vol II — products table
 dexhand_benchmarks.html                 # Vol III — benchmarks literature review
 *.zh.html                               # Simplified-Chinese twin of every page
 images/                                 # product / hand photos

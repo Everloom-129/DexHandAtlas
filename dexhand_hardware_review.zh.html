@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>灵巧手硬件 — 全景综述</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e10;
+    --bg-2:#121518;
+    --panel:#15191d;
+    --panel-2:#1b2025;
+    --line:#262d33;
+    --line-bright:#3a444c;
+    --ink:#e8e4dc;
+    --ink-dim:#9aa2a8;
+    --ink-faint:#8a929a;
+    --amber:#e0a45c;
+    --amber-bright:#f4b96b;
+    --cyan:#6fd0c8;
+    --rust:#c46a4a;
+    --green:#86b06a;
+    --violet:#9d8fc4;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Archivo',system-ui,sans-serif;
+    --serif:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(224,164,92,.06), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(111,208,200,.05), transparent 42%);
+    background-attachment:fixed;
+  }
+  /* grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ---------- header ---------- */
+  header.hero{
+    border-bottom:1px solid var(--line);
+    padding:90px 0 54px;
+    position:relative;overflow:hidden;
+  }
+  .hero .kick{
+    font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:26px;display:flex;gap:14px;align-items:center;
+    opacity:0;animation:fade .7s ease .1s forwards;
+  }
+  .hero .kick::before{content:"";width:42px;height:1px;background:var(--amber)}
+  h1.title{
+    font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,82px);
+    line-height:.98;letter-spacing:-.02em;max-width:14ch;
+    opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .2s forwards;
+  }
+  h1.title em{font-style:italic;color:var(--amber-bright)}
+  .hero .sub{
+    margin-top:30px;max-width:62ch;color:var(--ink-dim);font-size:18px;
+    opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .35s forwards;
+  }
+  .hero .meta{
+    margin-top:38px;display:flex;flex-wrap:wrap;gap:10px;
+    opacity:0;animation:fade .8s ease .55s forwards;
+  }
+  .chip{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+    border:1px solid var(--line-bright);border-radius:2px;padding:6px 11px;color:var(--ink-dim);
+    background:rgba(255,255,255,.012);
+  }
+  .chip b{color:var(--ink)}
+
+  /* ---------- section frame ---------- */
+  section{padding:74px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:36px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.1em;padding-top:6px}
+  .sec-head h2{
+    font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);
+    line-height:1.05;letter-spacing:-.015em;color:var(--ink);
+  }
+  .lead{font-size:17px;color:var(--ink-dim);max-width:74ch;margin-bottom:8px}
+
+  /* ---------- axes cards ---------- */
+  .axes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:34px}
+  .axis{background:var(--panel);padding:26px 24px;transition:background .3s}
+  .axis:hover{background:var(--panel-2)}
+  .axis .n{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.1em}
+  .axis h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:8px 0 12px;color:var(--ink)}
+  .axis p{font-size:14.5px;color:var(--ink-dim)}
+  .axis p b{color:var(--ink)}
+  .axis .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:2px;margin:3px 4px 0 0;letter-spacing:.04em}
+  .t-direct{background:rgba(224,164,92,.14);color:var(--amber-bright)}
+  .t-tendon{background:rgba(111,208,200,.14);color:var(--cyan)}
+  .t-link{background:rgba(157,143,196,.16);color:var(--violet)}
+
+  /* ---------- table ---------- */
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+  .controls .lbl{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;margin-right:6px}
+  .fbtn{
+    font-family:var(--mono);font-size:12px;letter-spacing:.03em;cursor:pointer;
+    border:1px solid var(--line-bright);background:transparent;color:var(--ink-dim);
+    padding:6px 13px;border-radius:2px;transition:all .2s;
+  }
+  .fbtn:hover{border-color:var(--amber);color:var(--ink)}
+  .fbtn.active{background:var(--amber);color:#1a1205;border-color:var(--amber);font-weight:700}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+  table{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5px}
+  thead th{
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-faint);text-align:left;padding:14px 14px;border-bottom:1px solid var(--line-bright);
+    cursor:pointer;user-select:none;white-space:nowrap;position:relative;background:var(--bg-2);
+  }
+  thead th:hover{color:var(--amber)}
+  thead th[data-sort]::after{content:"⇅";opacity:.3;margin-left:6px;font-size:10px}
+  thead th.sorted-asc::after{content:"↑";opacity:1;color:var(--amber)}
+  thead th.sorted-desc::after{content:"↓";opacity:1;color:var(--amber)}
+  tbody td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-dim)}
+  tbody tr{transition:background .15s}
+  tbody tr:hover{background:var(--panel-2)}
+  tbody tr:last-child td{border-bottom:none}
+  .hand-name{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  .hand-org{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:3px;letter-spacing:.02em}
+  .dof{font-family:var(--mono);color:var(--amber-bright);font-weight:500}
+  .pill{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:2px;letter-spacing:.03em;white-space:nowrap}
+  .p-direct{background:rgba(224,164,92,.14);color:var(--amber-bright)}
+  .p-tendon{background:rgba(111,208,200,.14);color:var(--cyan)}
+  .p-link{background:rgba(157,143,196,.16);color:var(--violet)}
+  .p-soft{background:rgba(196,106,74,.16);color:var(--rust)}
+  .p-mixed{background:rgba(134,176,106,.14);color:var(--green)}
+  .table-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:14px;line-height:1.7}
+
+  /* ---------- entry cards ---------- */
+  .entries{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:8px}
+  .entry{background:var(--panel);padding:28px 28px;transition:background .3s}
+  .entry:hover{background:var(--panel-2)}
+  .entry .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .entry h3{font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);letter-spacing:-.01em}
+  .entry h3 span{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.04em;font-weight:400;display:block;margin-top:4px}
+  .entry .badges{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+  .entry p{font-size:15px;color:var(--ink-dim)}
+  .entry p b{color:var(--ink);font-weight:600}
+  .entry p .hi{color:var(--amber-bright);font-family:var(--mono);font-size:13.5px}
+  .entry{overflow:hidden}
+  .entry .ethumb,.entry .noimg{float:left;width:150px;height:120px;margin:4px 24px 10px 0;border:1px solid var(--line);border-radius:5px;background:var(--bg-2)}
+  .entry .ethumb{object-fit:contain;padding:7px}
+  .entry .noimg{display:flex;align-items:center;justify-content:center;border-style:dashed;border-color:var(--line-bright);color:var(--ink-faint);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+  .entry h3 span a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+  .entry h3 span a:hover{color:var(--amber-bright);border-bottom-color:var(--amber-bright)}
+
+  /* ---------- themes ---------- */
+  .themes{counter-reset:th;display:grid;gap:0;margin-top:8px}
+  .theme{display:grid;grid-template-columns:64px 1fr;gap:0;border-top:1px solid var(--line);padding:24px 0}
+  .theme:first-child{border-top:none}
+  .theme .tn{font-family:var(--serif);font-size:34px;color:var(--line-bright);font-weight:300;line-height:1}
+  .theme h3{font-family:var(--sans);font-weight:600;font-size:18px;color:var(--ink);margin-bottom:8px}
+  .theme p{font-size:15px;color:var(--ink-dim);max-width:76ch}
+  .theme p b{color:var(--amber-bright);font-weight:600}
+
+  /* ---------- papers ---------- */
+  .papers{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:14px}
+  .paper{background:var(--panel);padding:18px 20px;transition:background .25s}
+  .paper:hover{background:var(--panel-2)}
+  .paper .id{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.03em}
+  .paper .t{font-size:14.5px;color:var(--ink);margin-top:5px;font-weight:500}
+  .paper .w{font-size:13px;color:var(--ink-faint);margin-top:4px}
+  .src-block{margin-top:22px;padding:20px 22px;border:1px solid var(--line);background:var(--bg-2);font-size:13.5px;color:var(--ink-dim);font-family:var(--mono);line-height:1.9}
+  .src-block b{color:var(--ink)}
+
+  /* ---------- callouts / notes ---------- */
+  .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:18px 22px;margin-top:18px;font-size:14.5px;color:var(--ink-dim)}
+  .note b{color:var(--ink)}
+  .gaps{margin-top:18px;font-size:14.5px;color:var(--ink-dim)}
+  .gaps b{color:var(--ink)}
+
+  footer{padding:50px 0 80px;color:var(--ink-faint);font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .wrap{padding:0 20px}
+    .axes,.papers{grid-template-columns:1fr}
+    .theme{grid-template-columns:44px 1fr}
+    .entry .top{flex-direction:column}
+    .entry .ethumb,.entry .noimg{width:96px;height:80px;margin-right:14px}
+    section{padding:54px 0}
+  }
+  .langswitch{position:fixed;top:16px;right:18px;z-index:1000;font:600 13px/1 -apple-system,system-ui,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;letter-spacing:.02em;padding:11px 16px;border-radius:999px;text-decoration:none;color:inherit;background:rgba(128,128,128,.16);border:1px solid rgba(128,128,128,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .2s,border-color .2s,transform .2s}
+  .langswitch:hover{background:rgba(128,128,128,.3);transform:translateY(-1px)}
+  a:focus-visible,button:focus-visible,.langswitch:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+    .reveal{opacity:1!important;transform:none!important}
+    .langswitch:hover{transform:none}
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a class="langswitch" href="dexhand_hardware_review.html" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">硬件全景 · 编撰于 2026 年 6 月</div>
+    <h1 class="title">灵巧手 <em>硬件</em></h1>
+    <p class="sub">商用专精厂商、集成于人形机器人的末端执行器，以及前沿研究 / 开源 / 仿生这一条线。各项规格均为厂商或论文自报数据，在独立表征完成之前应视为待验证的宣称。</p>
+    <div class="meta">
+      <span class="chip"><b>14+</b> 家公司</span>
+      <span class="chip">对比 <b>20</b> 款灵巧手</span>
+      <span class="chip"><b>8</b> 篇关键论文</span>
+      <span class="chip">自由度 · 驱动 · 触觉 · 设计理念</span>
+    </div>
+  </div>
+</header>
+
+<!-- 1 — ORIENTATION -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2>定位 — 真正重要的几条设计轴线</h2></div>
+    <p class="lead">在逐条细看之前，有四条轴线把这些灵巧手彼此区分开来。"有多少自由度"已不再是能力的干净代理指标。</p>
+    <div class="axes">
+      <div class="axis">
+        <div class="n">AXIS 01</div>
+        <h3>驱动拓扑</h3>
+        <p>
+          <span class="tag t-direct">直驱 / QDD</span> 电机置于关节处 — 映射干净、可反驱，但在手内体积大且发热。
+          <span class="tag t-link">连杆</span> 电机数量少、关节耦合 — 廉价且力大，但映射困难。
+          <span class="tag t-tendon">腱驱动</span> 电机移至手掌/基座 — 最拟人，但有摩擦、迟滞与标定问题。
+        </p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 02</div>
+        <h3>自由度</h3>
+        <p>从 <b>6 个主动自由度</b>（Inspire）经过 12–22 这一"等同人手"区间，直到 <b>27</b>（Clone）以及 Daxo 的 <b>108–120 个驱动器</b>。自由度越多，越要在可靠性、成本、可控性与数据效率上做出取舍。</p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 03</div>
+        <h3>触觉与传感堆栈</h3>
+        <p>越来越成为真正的分水岭：仅指尖 vs <b>全手掌阵列</b>、触觉单元密度、力分辨率，以及是否包含 <b>视触觉</b>（指内摄像头）。</p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 04</div>
+        <h3>产品理念</h3>
+        <p>一条真实的断层线：<b>极致硬件</b>（堆自由度、堆传感、堆拟人化）对阵 <b>以数据为中心的极简主义</b>（用一只简单廉价的手，靠规模化的数据引擎和模型取胜）。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 — COMPARISON TABLE -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>对比 — 核心规格</h2></div>
+    <p class="lead">按驱动方式筛选，或点击列标题排序。数字均为厂商自报，且定义口径不一致；单一数字的比较请视为近似值。</p>
+    <div class="controls">
+      <span class="lbl">驱动</span>
+      <button class="fbtn active" data-filter="all">全部</button>
+      <button class="fbtn" data-filter="direct">直驱 / QDD</button>
+      <button class="fbtn" data-filter="tendon">腱驱动</button>
+      <button class="fbtn" data-filter="link">连杆</button>
+      <button class="fbtn" data-filter="soft">柔性</button>
+      <button class="fbtn" data-filter="mixed">混合</button>
+    </div>
+    <div class="tbl-scroll">
+      <table id="cmp">
+        <thead>
+          <tr>
+            <th data-sort="name" data-type="str">灵巧手 / 公司</th>
+            <th data-sort="dof" data-type="num">主动自由度</th>
+            <th data-sort="act" data-type="str">驱动</th>
+            <th>触觉</th>
+            <th>亮点</th>
+            <th data-sort="status" data-type="str">状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-act="mixed" data-dof="22" data-name="SharpaWave" data-status="Mass production"><td><span class="hand-name">SharpaWave</span><span class="hand-org">Sharpa · Singapore</span></td><td class="dof">22</td><td><span class="pill p-mixed">指内</span></td><td>动态触觉阵列，&gt;1,000 px/指尖，~0.005–0.02 N</td><td>搭载于 NVIDIA Isaac GR00T 参考人形机器人；CES 2026 获奖</td><td>量产（2025 年 10 月）</td></tr>
+          <tr data-act="direct" data-dof="20" data-name="Wuji Hand" data-status="Shipping"><td><span class="hand-name">Wuji Hand</span><span class="hand-org">Wuji Tech (Pan-Motor) · Shenzhen</span></td><td class="dof">20</td><td><span class="pill p-direct">直驱微型驱动器</span></td><td>数据手套 526 点</td><td>~15 N 指尖力，~10 kg 抓取，~1 kHz，30 万+ 次循环；Genesis AI 合作伙伴</td><td>出货中</td></tr>
+          <tr data-act="direct" data-dof="12" data-name="XHAND1" data-status="Commercial"><td><span class="hand-name">XHAND1</span><span class="hand-org">RobotEra · Beijing</span></td><td class="dof">12</td><td><span class="pill p-direct">全齿轮 QDD</span></td><td>&gt;100 点/指，270° 环绕，三维力 + 温度</td><td>~80 N 抓握力，ERA-42 VLA，Vision Pro 遥操作</td><td>商用</td></tr>
+          <tr data-act="link" data-dof="6" data-name="RH56 series" data-status="Commercial mature"><td><span class="hand-name">RH56 series</span><span class="hand-org">Inspire 因时 · Beijing</span></td><td class="dof">6</td><td><span class="pill p-link">直线舵机连杆</span></td><td>力；F1 配 24 个传感器</td><td>无处不在（Unitree G1/H1）；F1 全金属 EtherCAT 1 kHz</td><td>商用，成熟</td></tr>
+          <tr data-act="direct" data-dof="21" data-name="Revo 3" data-status="Commercial"><td><span class="hand-name">Revo 2 / Revo 3</span><span class="hand-org">BrainCo 强脑 · Hangzhou</span></td><td class="dof">11 / 21</td><td><span class="pill p-direct">直驱，可反驱</span></td><td>全手掌 + 指尖视触觉（Revo 3）</td><td>脑机接口血统；Revo 3 = 70 N，开源生态</td><td>商用；传闻将在香港 IPO</td></tr>
+          <tr data-act="mixed" data-dof="25" data-name="Linker Hand" data-status="Mass production"><td><span class="hand-name">Linker Hand L6/L20/L30</span><span class="hand-org">Linkerbot 灵心巧手 · Beijing</span></td><td class="dof">6 / 20 / 25</td><td><span class="pill p-mixed">三种路线全覆盖</span></td><td>因型号而异</td><td>约为海外成本的 ~1/10–1/20；2025 年 1 万+ 台，占中国 &gt;80% 份额</td><td>量产</td></tr>
+          <tr data-act="direct" data-dof="16" data-name="Agile Hand" data-status="Commercial"><td><span class="hand-name">Agile Hand</span><span class="hand-org">Agile Robots · Munich + CN</span></td><td class="dof">15–16</td><td><span class="pill p-direct">指内模块化</span></td><td>关节力矩 + 指尖</td><td>主动柔顺控制；搭载于 Agile ONE 人形机器人</td><td>商用</td></tr>
+          <tr data-act="tendon" data-dof="22" data-name="OmniHand" data-status="Commercial"><td><span class="hand-name">OmniHand 2025 / Pro / 3 Ultra-T</span><span class="hand-org">AgiBot 智元 · Shanghai</span></td><td class="dof">10 / 12 / 22+3</td><td><span class="pill p-tendon">腱驱动（Ultra-T）</span></td><td>400+ 触觉单元（0.1 N）；全手三维力（Ultra-T）</td><td>与 OmniPicker 模块化互换；开放 SDK</td><td>商用</td></tr>
+          <tr data-act="soft" data-dof="120" data-name="Muscle V0" data-status="V2 Q3 2026"><td><span class="hand-name">Muscle V0 / V2</span><span class="hand-org">Daxo Robotics · Philadelphia</span></td><td class="dof">108–120 个驱动器</td><td><span class="pill p-soft">柔性冗余腱驱动</span></td><td>AI 驱动</td><td>可容忍 ~20% 电机失效；整机成本 ~$1,200；电子件置于手外</td><td>V2 计划 2026 Q3</td></tr>
+          <tr data-act="direct" data-dof="1" data-name="Origami (unnamed)" data-status="Early stage"><td><span class="hand-name">（未命名）</span><span class="hand-org">Origami Robotics · YC / US</span></td><td class="dof">待定</td><td><span class="pill p-direct">自研微型</span></td><td>协同设计的手套</td><td>手 + 匹配的数据手套，以弥合仿真-现实与本体差异</td><td>早期阶段</td></tr>
+          <tr data-act="direct" data-dof="27" data-name="CyberOne V2 hand" data-status="Pre-commercial"><td><span class="hand-name">CyberOne V2 hand</span><span class="hand-org">Xiaomi · in-house</span></td><td class="dof">22–27</td><td><span class="pill p-direct">指内</span></td><td>全手掌触觉</td><td>液冷"汗腺"；1:1 比例；15 万+ 次循环</td><td>内部 / 预商用</td></tr>
+          <tr data-act="direct" data-dof="16" data-name="Figure 03 hand" data-status="Production ramp"><td><span class="hand-name">Figure 03 hand</span><span class="hand-org">Figure AI · US</span></td><td class="dof">16</td><td><span class="pill p-direct">指内</span></td><td>自研触觉（3 g），掌心摄像头</td><td>为 Helix-02 提供动力；整机目标 ~$20k，BotQ 1.2 万/年</td><td>产能爬坡</td></tr>
+          <tr data-act="direct" data-dof="7" data-name="Atlas GR2 gripper" data-status="Commercial pilots"><td><span class="hand-name">Atlas GR2 gripper</span><span class="hand-org">Boston Dynamics · US</span></td><td class="dof">7</td><td><span class="pill p-direct">电动，3 指</span></td><td>触觉 + 掌心摄像头</td><td>手指可反向弯曲；CES '26 转向更兼容工具的手</td><td>商用试点（Hyundai）</td></tr>
+          <tr data-act="link" data-dof="2" data-name="Memo hands" data-status="Beta 2026"><td><span class="hand-name">Memo hands</span><span class="hand-org">Sunday Robotics · Mountain View</span></td><td class="dof">夹钳</td><td><span class="pill p-link">简单夹爪</span></td><td>极简</td><td>刻意极简；ACT-1 模型 + Skill Capture Glove（1000 万 episode）</td><td>Founding Family 测试版</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">研究 / 开源 / 仿生类灵巧手（Shadow、Allegro、LEAP、ORCA、RUKA、Clone、Faive）在 §05 中详述。<br>"主动自由度" vs "总关节数" vs "被动自由度"在各厂商间报告口径不一致 — 排序在有数据的情况下基于主动自由度数值。</p>
+  </div>
+</section>
+
+<!-- 3 — SPECIALISTS -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">03</span><h2>独立灵巧手专精厂商</h2></div>
+    <div class="entries">
+
+      <div class="entry">
+        <img class="ethumb" src="images/sharpa.webp" alt="SharpaWave 灵巧手">
+        <div class="top"><h3>Sharpa — SharpaWave<span>Singapore · <a href="https://www.sharpa.com/" target="_blank" rel="noopener">sharpa.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-mixed">22 DOF</span><span class="pill p-direct">传感优先</span></div></div>
+        <p>一款 1:1 人手尺寸、22 个主动自由度的灵巧手，其卖点是高分辨率触觉。其专有的 <b>动态触觉阵列</b> 宣称 <span class="hi">&gt;1,000 px/指尖</span>、亚毫米分辨率、在 0–30 N 范围内 ~0.005–0.02 N 的压力灵敏度，以及 180 FPS — 由此实现纹理识别与 6D 力。自 2025 年 10 月起量产，开放 ROS2 堆栈，与 <b>CraftNet</b>（视觉-触觉-语言-动作，"System 0" 反射层）搭配。在 IROS 2025 演示，CES 2026 获奖，集成进 <b>NVIDIA Isaac GR00T</b> 参考人形机器人。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/wuji.webp" alt="Wuji Hand">
+        <div class="top"><h3>Wuji Tech — Wuji Hand<span>Shenzhen · ex-Pan-Motor · <a href="https://wuji.tech/" target="_blank" rel="noopener">wuji.tech ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">20 DOF</span><span class="pill p-direct">直驱</span></div></div>
+        <p>在驱动上垂直整合。20 个主动自由度，每指四个关节，<b>指节内直驱微型驱动器</b>（无腱松弛）。自报 ~0.6–0.9 kg、~15 N 指尖力、~10 kg 静态抓取、~1 kHz 控制、<span class="hi">30 万+ 次抓取循环</span>、~80 cm 跌落幸存。配套手套：526 个触点 @ 120 FPS。战略上是 <b>Genesis AI "Genesis Hand 1.0"</b> 背后的硬件合作伙伴（3 ms 延迟，专为采集人类数据进入 GENE 模型而调优）。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/xhand1.jpg" alt="RobotEra XHAND1">
+        <div class="top"><h3>RobotEra — XHAND1<span>Beijing · <a href="https://www.robotera.com/en/" target="_blank" rel="noopener">robotera.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">12 DOF</span><span class="pill p-direct">QDD</span></div></div>
+        <p>12 个主动自由度（拇指与食指各 3 个，其余各 2 个），<b>全齿轮准直驱</b>，关节解耦、可反驱 — 明确定位为面向 IL/RL 的干净平台。食指摆动 ±15°，拇指可达小指对掌。触觉：每指尖 &gt;100 点阵列，270° 环绕的三维力 + 温度。全手抓握力 ~80 N。与 <b>ERA-42</b> 集成并支持 Apple Vision Pro 遥操作。更纤薄的 <b>XHAND Lite</b>（11 DOF）面向服务机器人。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/inspire-rh56h1.webp" alt="Inspire RH56 灵巧手">
+        <div class="top"><h3>Inspire — RH56 series<span>Beijing · 因时机器人 · <a href="https://en.inspire-robots.com/" target="_blank" rel="noopener">inspire-robots.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-link">6 DOF</span><span class="pill p-link">连杆</span></div></div>
+        <p>研究界的现任主力机型。6 个主动自由度 / 12 关节，由六个 <b>微型直线舵机</b> 驱动，<b>欠驱动且耦合</b>。变体：BFX（快速"钢琴家"）、DFX（均衡型；~15 N 拇指力）、全金属旗舰 F1（EtherCAT 1 kHz，24 个传感器，30 kg 静载）。在 Unitree G1/H1 上无处不在。但一篇 <b>2026 年表征论文（Tan, Xie, Correll）</b> 记录了它作为仪器的局限：本体感知未标定、高速下 <span class="hi">力过冲高达 +1618%</span>、对踵抓取并不简单。必读的警示性文献。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/brainco-revo2.jpg" alt="BrainCo Revo 灵巧手">
+        <div class="top"><h3>BrainCo / Qiangnao — Revo series<span>Hangzhou · 强脑科技 · <a href="https://www.brainco.tech/" target="_blank" rel="noopener">brainco.tech ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">11 / 21 DOF</span><span class="pill p-direct">视触觉</span></div></div>
+        <p>从脑机接口和假肢切入机器人手。<b>Revo 2</b>：11 DOF，383 g，50 N，20 kg 负载，RS485/CAN-FD/EtherCAT @ 1 kHz，分 Basic/Pro/Touch 档。<b>Revo 3</b>（2026）：跃升至 21 DOF 的 <b>直驱可反驱</b>，配全手掌触觉 + 指尖视触觉 + 70 N 抓握力 — 被定位为首款融合这些模式的 20+ DOF 开放生态灵巧手。演示了 33 种抓取类型、双手魔方。据称香港 IPO 正在推进。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/linker-l20.jpg" alt="Linker Hand L20">
+        <div class="top"><h3>Linkerbot — Linker Hand<span>Beijing · 灵心巧手 · <a href="https://www.linkerbot.cn/" target="_blank" rel="noopener">linkerbot.cn ↗</a></span></h3>
+          <div class="badges"><span class="pill p-mixed">6–42 DOF</span><span class="pill p-mixed">全路线</span></div></div>
+        <p>出货量领头羊，也是最明确"全路线通吃"的策略（创始人周永，2023 年）。<b>L6</b>（6 DOF 直驱，~¥19,900）、<b>L20</b>（20–21 DOF 连杆，~¥49,900）、<b>L30</b>（25 DOF 腱驱动，~¥10 万），研究线可达 <b>42 DOF</b>。定价约为 <span class="hi">海外的 1/10–1/20</span>。据报 2025 年出货 1 万+ 台，占中国高自由度市场 &gt;80%，~¥15 亿 B 轮，估值 &gt;¥100 亿。客户：斯坦福、剑桥、北大、清华。从实验室走向标准化产品最清晰的案例研究。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/agile.webp" alt="Agile Hand">
+        <div class="top"><h3>Agile Robots — Agile Hand<span>Munich + China · <a href="https://www.agile-robots.com/" target="_blank" rel="noopener">agile-robots.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">15–16 DOF</span><span class="pill p-direct">柔顺</span></div></div>
+        <p>成立于 2018 年，收购 Franka Emika（2023）— 具备力控机械臂的血统。21 关节 / 15–16 DOF，1.5 kg，~10 N 指尖力，360°/s，采用 <b>完全相同的模块化手指</b>（每根手指内含驱动器 + 电子件 + 传感 + 传动）。关节力矩 + 指尖触觉，主动柔顺控制以实现安全接触。现已嵌入 <b>Agile ONE</b> 工业人形机器人。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/omnihand.webp" alt="AgiBot OmniHand">
+        <div class="top"><h3>AgiBot / Zhiyuan — OmniHand<span>Shanghai · 智元 · <a href="https://www.agibot.com/" target="_blank" rel="noopener">agibot.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-tendon">10–22 DOF</span><span class="pill p-tendon">模块化</span></div></div>
+        <p>基于标准腕部的模块化末端执行器家族（可与 OmniPicker 互换）。<b>OmniHand 2025</b>：10 主动 + 6 被动自由度，~500 g，<span class="hi">400+ 触觉单元 @ 0.1 N</span>，开放 SDK。<b>Pro</b>：19 DOF（12 主动），35–60 N，150+ 传感器。<b>OmniHand 3 Ultra-T</b>（2026 年 4 月）：22+3 DOF，<b>腱驱动</b>，全手三维触觉，10:1 负载自重比。在 MWC 2026 展出；与一家欧洲制造合作绑定。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/daxo.jpg" alt="Daxo Muscle 灵巧手">
+        <div class="top"><h3>Daxo Robotics — Muscle V0 / V2<span>Philadelphia · Tom Zhang (Penn PhD) · <a href="https://daxo-robotics.com/" target="_blank" rel="noopener">daxo-robotics.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-soft">108–120 个驱动器</span><span class="pill p-soft">柔性冗余</span></div></div>
+        <p>逆向思路者。一款 <b>柔性、腱驱动</b> 的灵巧手，拥有 <span class="hi">108–120 个驱动器</span>（约为人手的 3 倍），主打"无限自由度"。明确拒绝以人手为参照 — 灵巧来自控制复杂度，而非关节数量。冗余是其头条卖点：AI 会绕过失效肌肉重新布线，据称在 ~20% 电机失效时仍能工作。电子件置于手外。造价低廉（~$1,200，~$5 的电机），数小时即可装配。V2 目标 2026 Q3，配合工业试点。</p>
+      </div>
+
+      <div class="entry">
+        <div class="noimg">early stage</div>
+        <div class="top"><h3>Origami Robotics<span>YC · US</span></h3>
+          <div class="badges"><span class="pill p-direct">早期</span><span class="pill p-direct">数据优先</span></div></div>
+        <p>早期阶段；其论点是 <b>数据问题</b>。庞大的传动让当前的手难以建模，而本体差异放大了训练/部署的分布偏移。他们的答案：<b>同时</b>打造手与一只 <b>协同设计的数据采集手套</b>，优化微型电机使手套运动学与手相匹配 — 最小化仿真-现实与本体差异，以获得可扩展的高质量数据。与更广泛的"硬件服务于数据"模式一致。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4 — HUMANOID-INTEGRATED -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">04</span><h2>嵌入整机人形机器人的灵巧手</h2></div>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Xiaomi — CyberOne V2 hand<span>in-house · <a href="https://www.mi.com/global/" target="_blank" rel="noopener">mi.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">22–27 DOF</span><span class="pill p-direct">液冷</span></div></div>
+        <p>2026 年的重新设计达到 <b>22–27 DOF</b>（主动自由度提升约 83%），体积缩减约 60% 至真正的 1:1 成人手尺寸（改善遥操作数据的仿真-现实迁移）。最突出之处在于散热：<b>"仿生汗腺"</b> — 3D 打印的金属液冷通道以 ~0.5 ml/min 蒸发，从紧凑电机散去 ~100 W，攻克密集型手最难的约束之一。全手掌触觉，<span class="hi">15 万+ 次循环</span>。优势：在小米自家电动车工厂中有一个内部客户。</p>
+      </div>
+
+      <div class="entry">
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Figure AI — Figure 03 hand<span>Helix-02 · <a href="https://www.figure.ai/" target="_blank" rel="noopener">figure.ai ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">16 DOF</span><span class="pill p-direct">3 g 触觉</span></div></div>
+        <p>16-DOF 五指手；重点在 <b>柔顺 + 传感</b>，而非自由度。更柔软、表面更大的指尖，一枚小巧的 <b>嵌入掌心的摄像头</b> 用于遮挡时的近距离反馈，以及一枚对 <span class="hi">~3 克</span>（一枚回形针）敏感的自研指尖触觉传感器，可在打滑发生前预测。围绕 <b>Helix / Helix-02</b> VLA 设计（像素到动作，板载，整机 44 DOF）。垂直整合，BotQ ~12,000 台/年，目标 ~$20k，TIME 2025 年最佳发明。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/atlas.png" alt="Boston Dynamics Atlas">
+        <div class="top"><h3>Boston Dynamics — Atlas GR grippers<span>US · <a href="https://bostondynamics.com/products/atlas/" target="_blank" rel="noopener">bostondynamics.com ↗</a></span></h3>
+          <div class="badges"><span class="pill p-direct">7 DOF</span><span class="pill p-direct">非拟人</span></div></div>
+        <p>一条刻意 <b>非拟人</b> 的路线。<b>GR2</b>：7-DOF，三指（两指 + 可旋转对掌拇指），触觉 + 掌心摄像头，还有一项超人手法 — 手指 <b>可完全反向弯曲</b> 以实现手背抓取。理念："用最少的手指完成复杂操作"，可靠性优先于仿生。剧情反转：在 CES 2026 上 BD 公布了一款更传统的三指手 — 这是向 <b>人类工具兼容性</b> 的让步。Atlas 运行大型行为模型（Large Behavior Models）；在 Hyundai 工厂试点中。</p>
+      </div>
+
+      <div class="entry">
+        <div class="noimg">no photo</div>
+        <div class="top"><h3>Sunday Robotics — Memo<span>Mountain View · Zhao + Chi · <a href="https://www.sunday.ai/" target="_blank" rel="noopener">sunday.ai ↗</a></span></h3>
+          <div class="badges"><span class="pill p-link">夹钳</span><span class="pill p-link">数据极大化</span></div></div>
+        <p>最纯粹的"硬件极简、数据极大"押注 — 创始人为 <b>Tony Zhao（ALOHA/ACT）</b> 和 <b>Cheng Chi（Diffusion Policy/UMI）</b>。一台带轮的双臂家用机器人，配有刻意设计的 <b>简单"乐高式"夹钳手</b>。产品的核心是数据引擎：一只已获专利的 <b>Skill Capture Glove</b> 与 Memo 的手相匹配，在 500+ 户家庭中佩戴，产出 <span class="hi">~1000 万段家务 episode</span> 喂给自研 <b>ACT-1</b> 模型，强调对未见过家庭的零样本泛化。隐含论点：对许多家庭任务而言，匹配本体的数据胜过末端执行器的灵巧度。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5 — RESEARCH / OPEN SOURCE / BIOMIMETIC -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">05</span><h2>前沿研究、开源与仿生</h2></div>
+    <p class="lead">这是领域里真正会去读的部分 — 也是最有用的硬件思想往往在商业化之前最先诞生的地方。</p>
+    <div class="entries">
+
+      <div class="entry">
+        <img class="ethumb" src="images/shadow.png" alt="Shadow Dexterous Hand">
+        <div class="top"><h3>基准与商业-研究交叉<span><a href="https://www.shadowrobot.com/" target="_blank" rel="noopener">Shadow ↗</a> · <a href="https://www.allegrohand.com/" target="_blank" rel="noopener">Allegro ↗</a> · <a href="https://www.psyonic.io/" target="_blank" rel="noopener">PSYONIC ↗</a></span></h3></div>
+        <p><b>Shadow Dexterous Hand</b>（伦敦，2005 年起）：24 关节，20 DOF，腱驱动，触觉丰富 — 长期以来的黄金标准，历史上 &gt;$100k 且脆弱，正是开源手所攻击的可及性缺口。<b>Allegro Hand</b>：直驱，16 DOF，~15,000 CHF — 默认的 RL/sim2real 平台（例如 NVIDIA 的 <b>DeXtreme</b> 配 Isaac Gym）。<b>PSYONIC Ability Hand</b>：为机器人改造的仿生假肢（490 g，~0.2 s 闭合，原生自由度较低），搭载于 <b>Apptronik Apollo</b> 和 Hexagon AEON — 体现"模块化、先求简单"的人形机器人理念。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/orca.webp" alt="ORCA 开源灵巧手">
+        <div class="top"><h3>开源灵巧手 — 可及性浪潮<span><a href="https://leaphand.com/" target="_blank" rel="noopener">LEAP ↗</a> · <a href="https://www.orcahand.com/" target="_blank" rel="noopener">ORCA ↗</a> · <a href="https://ruka-hand.github.io/" target="_blank" rel="noopener">RUKA ↗</a> · MM-Hand</span></h3>
+          <div class="badges"><span class="pill p-tendon">腱驱动</span><span class="pill p-direct">直驱</span></div></div>
+        <p><b>LEAP Hand</b>（CMU；Shaw, Pathak）：开源，<b>直驱，16 DOF，&lt;$2,000，~3 小时装配</b> — 廉价可复现研究的里程碑。<b>ORCA Hand</b>（ETH SRL；2504.04259）：<b>腱驱动，17 DOF</b>（16 手指 + 1 腕），集成触觉，&lt;2,000 CHF，<span class="hi">8 小时内</span>装配完成，配有弹出式关节、自动标定与张紧 — 尽管用腱驱动，精度/延迟仍与 LEAP 相当。<b>RUKA / Ruka-v2</b>（NYU；2603.26660）：<b>11 DOF，&lt;$1,300</b>，直接学习腱动力学；v2 增加 2-DOF 并联腕 + 手指外展。<b>MM-Hand</b>：21-DOF 多模态模块化，远端腱驱动以腾出手指容积并把热量排出手外。</p>
+      </div>
+
+      <div class="entry">
+        <img class="ethumb" src="images/clone.jpg" alt="Clone Robotics 灵巧手">
+        <div class="top"><h3>仿生 / 肌肉驱动 — 高保真前沿<span><a href="https://clonerobotics.com/" target="_blank" rel="noopener">Clone ↗</a> · <a href="https://www.mimicrobotics.com/" target="_blank" rel="noopener">Faive/Mimic ↗</a></span></h3>
+          <div class="badges"><span class="pill p-soft">27 DOF</span><span class="pill p-tendon">滚动接触</span></div></div>
+        <p><b>Clone Robotics</b>：拟人 <b>27-DOF</b> 手，采用人造肌肉驱动，宣称达到人类级别的抓握力与速度；其 <b>Neural Joint V2</b> 控制器是一个在人手视频上训练的网络，而非硬编码控制。<b>Faive Hand / Mimic Robotics</b>（ETH 衍生）：仿生，腱驱动，配 <b>滚动接触关节</b>（无固定轴）— 在 Isaac Gym 中闭环 RL 训练后迁移到硬件；滚动关节打破了常规的编码器假设。历史根基：<b>ACT Hand</b>、<b>Biomimetic Hand</b>（9 个驱动器）和 <b>CasiaHand</b>（15 DOF，掌内集成）。</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>可穿戴 / 数据采集硬件<span>相邻却居于核心</span></h3></div>
+        <p>"手即数据设备"的模式反复出现：Wuji 的 526 点手套、Origami 的匹配手套、Sunday 的 Skill Capture Glove，以及学术工作如 <b>HIRO Hand</b>（一只用于手把手模仿的可穿戴机器人手，能捕获操作者自身的触觉反馈）。对 VLA 评测语境而言这很重要 — <b>手套就是定义训练分布的那个本体。</b></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 6 — THEMES -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">06</span><h2>贯穿性主题</h2></div>
+    <div class="themes">
+      <div class="theme"><div class="tn">1</div><div><h3>自由度"军备竞赛"正在分化</h3><p>一派朝着乃至超越人手自由度推进（Clone 27、Xiaomi 22–27、Linker 研究线 42、Daxo 108+）。相反一派则主张自由度是错误的轴线，转而押注 <b>数据 + 模型</b>（Sunday、Boston Dynamics、Apollo 上的 PSYONIC）。两派在 2026 年都有可信的进展。</p></div></div>
+      <div class="theme"><div class="tn">2</div><div><h3>触觉是新的战场</h3><p>Sharpa（&gt;1,000 px/指尖）、Figure（3 g 传感器）、Xiaomi/BrainCo/AgiBot（全手掌阵列），外加掌心摄像头视触觉。<b>仅指尖传感正在成为入场门槛；全手三维触觉才是前沿。</b></p></div></div>
+      <div class="theme"><div class="tn">3</div><div><h3>驱动方式趋向"电机移出手指"</h3><p>远端腱驱动（MM-Hand、Daxo、OmniHand 3）和置于手掌的驱动方案，解决了指内电机的两大杀手：<b>惯量与热量</b>。Xiaomi 的液冷则是那些仍把电机留在手内者的暴力替代方案。</p></div></div>
+      <div class="theme"><div class="tn">4</div><div><h3>可靠性与表征是研究使用的门槛</h3><p>Inspire RH56DFX 论文是个警示故事：手册上的自由度和力数据对过冲、标定和接触行为几乎一无所言。<b>ORCA 的整个卖点就是把可靠性当作功能。</b></p></div></div>
+      <div class="theme"><div class="tn">5</div><div><h3>中国主导出货量；西方领跑集成堆栈</h3><p>Linkerbot、Inspire、BrainCo、AgiBot、RobotEra、Wuji、Xiaomi 掌握着成本曲线与出货量。Figure、Boston Dynamics、Sunday、Apptronik、Daxo、Clone 把手集成进 <b>以学习为先的机器人</b>。Agile 和 Sharpa 则横跨两端。</p></div></div>
+      <div class="theme"><div class="tn">6</div><div><h3>手与模型协同设计</h3><p>SharpaWave/CraftNet、Figure/Helix、RobotEra/ERA-42、Sunday/ACT-1、Wuji/Genesis Hand。<b>硬件与策略已不再可分</b> — 数据采集的本体本身就是规格的一部分。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 — PAPERS -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">07</span><h2>关键论文与一手来源</h2></div>
+    <div class="papers">
+      <div class="paper"><div class="id">arXiv 2504.04259</div><div class="t">ORCA — Open-Source, Reliable, Cost-Effective Anthropomorphic Hand</div><div class="w">ETH Zurich Soft Robotics Lab</div></div>
+      <div class="paper"><div class="id">arXiv 2603.26660</div><div class="t">Ruka-v2 — Tendon-Driven Open-Source Hand with Wrist &amp; Abduction</div><div class="w">NYU</div></div>
+      <div class="paper"><div class="id">arXiv 2603.08988</div><div class="t">Characterization, Planning &amp; Hybrid Force Control for the Inspire RH56DFX</div><div class="w">Tan / Xie / Correll · CU Boulder</div></div>
+      <div class="paper"><div class="id">arXiv 2512.24657</div><div class="t">Antagonistic Bowden-Cable Actuation of a Lightweight Robotic Hand</div><div class="w">综述线缆驱动仿生谱系</div></div>
+      <div class="paper"><div class="id">arXiv 2308.02453</div><div class="t">Getting the Ball Rolling — Biomimetic Tendon Hand w/ Rolling Contact Joints</div><div class="w">Faive / ETH</div></div>
+      <div class="paper"><div class="id">arXiv 2309.14860</div><div class="t">A Wearable Robotic Hand for Hand-over-Hand Imitation Learning (HIRO)</div><div class="w">Wei &amp; Xu</div></div>
+      <div class="paper"><div class="id">RSS 2023</div><div class="t">LEAP Hand — Low-Cost, Anthropomorphic, Dexterous</div><div class="w">Shaw &amp; Pathak · CMU</div></div>
+      <div class="paper"><div class="id">arXiv 2210.13702</div><div class="t">DeXtreme — Agile In-hand Manipulation, Sim-to-Real</div><div class="w">NVIDIA · Allegro + Isaac Gym</div></div>
+    </div>
+    <div class="src-block">
+      <b>主要厂商来源</b>（规格为厂商自报）：sharpa.com · wuji.tech · robotera（XHAND1 手册）· en.inspire-robots.com · BrainCo / Qiangnao · linkerbot.cn · agile-robots.com · store.agibot.com（+ AgibotTech GitHub SDK）· daxo-robotics.com · figure.ai · bostondynamics.com · sunday.ai · shadowrobot.com
+    </div>
+  </div>
+</section>
+
+<!-- 8 — METHODOLOGY -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">08</span><h2>方法论与缺口说明</h2></div>
+    <div class="note">
+      <b>如何解读自由度与力的数字。</b>"主动自由度" vs "总关节数" vs "被动自由度"的报告口径不一致（Inspire 的"6 DOF / 12 关节"、AgiBot 的"10 主动 + 6 被动"、Agile 的"21 关节 / 15–16 DOF"）。力的数字混合了指尖、拇指、全手与静载。在统一测试台上完成表征之前，所有单一数字的比较都应视为近似值。
+    </div>
+    <p class="gaps"><b>可考虑补充的覆盖缺口：</b>Tesla Optimus Gen 3 手（~22 DOF，自研，未公开规格）、Sanctuary AI Phoenix、Unitree 自家的 Dex 手系列、DeepRobotics OmniHand2025（16–19 DOF）、RoboSense Papert 2.0（20 DOF，激光雷达厂商跨界），以及中国长尾中的 Dexmate / DexRobot。如果本综述用于支撑评测/基准的范围界定，那么最具决策相关性的缺失轴线是 <b>标准化的接触/力表征</b>（Inspire 那篇论文就是模板）— 决定一只手能否充当可靠评测基底的，是这一点，而非手册上的自由度。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>灵巧手硬件 — 全景综述</span>
+    <span>编撰于 2026 年 6 月 · 规格为厂商 / 论文自报</span>
+  </div>
+</footer>
+
+<script>
+  // ---- filter ----
+  const fbtns=document.querySelectorAll('.fbtn');
+  const rows=Array.from(document.querySelectorAll('#cmp tbody tr'));
+  fbtns.forEach(b=>b.addEventListener('click',()=>{
+    fbtns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const f=b.dataset.filter;
+    rows.forEach(r=>{r.style.display=(f==='all'||r.dataset.act===f)?'':'none';});
+  }));
+
+  // ---- sort ----
+  const tbody=document.querySelector('#cmp tbody');
+  document.querySelectorAll('#cmp thead th[data-sort]').forEach(th=>{
+    th.addEventListener('click',()=>{
+      const key=th.dataset.sort, type=th.dataset.type;
+      const asc=!th.classList.contains('sorted-asc');
+      document.querySelectorAll('#cmp thead th').forEach(h=>h.classList.remove('sorted-asc','sorted-desc'));
+      th.classList.add(asc?'sorted-asc':'sorted-desc');
+      const visible=rows.filter(r=>r.style.display!=='none');
+      visible.sort((a,b)=>{
+        let x=a.dataset[key]||'', y=b.dataset[key]||'';
+        if(type==='num'){x=parseFloat(x)||0;y=parseFloat(y)||0;return asc?x-y:y-x;}
+        return asc?x.localeCompare(y):y.localeCompare(x);
+      });
+      visible.forEach(r=>tbody.appendChild(r));
+    });
+  });
+
+  // ---- scroll reveal ----
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

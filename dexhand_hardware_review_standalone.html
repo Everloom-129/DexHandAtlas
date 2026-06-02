@@ -17,7 +17,7 @@
     --line-bright:#3a444c;
     --ink:#e8e4dc;
     --ink-dim:#9aa2a8;
-    --ink-faint:#5f6a71;
+    --ink-faint:#8a929a;
     --amber:#e0a45c;
     --amber-bright:#f4b96b;
     --cyan:#6fd0c8;
@@ -200,9 +200,19 @@
     .entry .ethumb,.entry .noimg{width:96px;height:80px;margin-right:14px}
     section{padding:54px 0}
   }
+  .langswitch{position:fixed;top:16px;right:18px;z-index:1000;font:600 13px/1 -apple-system,system-ui,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;letter-spacing:.02em;padding:11px 16px;border-radius:999px;text-decoration:none;color:inherit;background:rgba(128,128,128,.16);border:1px solid rgba(128,128,128,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .2s,border-color .2s,transform .2s}
+  .langswitch:hover{background:rgba(128,128,128,.3);transform:translateY(-1px)}
+  a:focus-visible,button:focus-visible,.langswitch:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:3px}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+    .reveal{opacity:1!important;transform:none!important}
+    .langswitch:hover{transform:none}
+  }
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
+<a class="langswitch" href="dexhand_hardware_review_standalone.zh.html" hreflang="zh-Hans" lang="zh-CN" aria-label="切换到中文">中文</a>
 
 <header class="hero">
   <div class="wrap">

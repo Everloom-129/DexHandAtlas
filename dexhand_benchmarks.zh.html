@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dexterous Hand Benchmarks — A Literature Review</title>
+<title>灵巧手基准 — 文献综述</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -174,31 +174,31 @@
 </style>
 </head>
 <body>
-<a class="langswitch" href="dexhand_benchmarks.zh.html" hreflang="zh-Hans" lang="zh-CN" aria-label="切换到中文">中文</a>
+<a class="langswitch" href="dexhand_benchmarks.html" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
 <div class="wrap">
 
   <header class="masthead">
     <div class="kicker">Robotics Eval &nbsp;/&nbsp; Survey Dossier</div>
-    <h1 class="title">Dexterous Hand<br><em>Benchmarks</em></h1>
-    <div class="subtitle">A literature review of how the field measures the hand, the grasp, and the policy.</div>
+    <h1 class="title">灵巧手<br><em>基准</em></h1>
+    <div class="subtitle">关于该领域如何度量手、抓取与策略的文献综述。</div>
     <div class="meta-row">
-      <span><b>Scope</b> &nbsp;benchmarks · datasets · devices · VLAs</span>
-      <span><b>Compiled</b> &nbsp;Jun 2026</span>
-      <span><b>Anchors</b> &nbsp;DexYCB · DexArt</span>
-      <span><b>Entries</b> &nbsp;24 systems</span>
+      <span><b>范围</b> &nbsp;基准 · 数据集 · 设备 · VLAs</span>
+      <span><b>编纂</b> &nbsp;2026 年 6 月</span>
+      <span><b>锚点</b> &nbsp;DexYCB · DexArt</span>
+      <span><b>条目</b> &nbsp;24 个系统</span>
     </div>
   </header>
 
   <section class="intro">
-    <p class="lead">The two starting references sit in two different paradigms. <strong>DexYCB</strong> (NVIDIA, CVPR 2021) is a perception dataset for capturing hand grasping of objects, built for pose estimation and human-to-robot handover. <strong>DexArt</strong> (UC San Diego, CVPR 2023) is a simulation reinforcement-learning benchmark for generalizable manipulation of articulated objects with a multi-finger hand. Most of the field splits along that axis, plus a third cluster that has become much more active recently: benchmarks that measure the <em>device itself</em> rather than any policy running on it.</p>
-    <p>This dossier organizes the space into six paradigms, traces the timeline from 2021 to 2026, compares the hardware on degrees of freedom, and closes with the gaps that matter from an evaluation-infrastructure standpoint.</p>
+    <p class="lead">两个起始参考文献分处两种不同的范式。<strong>DexYCB</strong>（NVIDIA，CVPR 2021）是一个用于捕捉手抓取物体的感知数据集，为位姿估计与人到机器人的交接而构建。<strong>DexArt</strong>（UC San Diego，CVPR 2023）是一个仿真强化学习基准，用于使用多指手对铰接物体进行可泛化的操作。该领域的大部分工作沿着这一轴线划分，此外还有第三个最近变得活跃得多的聚类：度量<em>设备本身</em>而非运行其上的任何策略的基准。</p>
+    <p>本档案将这一空间组织为六种范式，梳理从 2021 到 2026 年的时间线，按自由度对硬件进行比较，并以从评测基础设施视角看来最为重要的若干空白作结。</p>
   </section>
 
   <!-- ============ FIGURE 1: TAXONOMY MAP ============ -->
   <figure>
     <div class="figframe">
-      <div class="figlabel">Figure 1 — The benchmark landscape, six paradigms</div>
-      <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Taxonomy map of dexterous hand benchmark paradigms">
+      <div class="figlabel">图 1 — 基准格局，六种范式</div>
+      <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="灵巧手基准范式的分类图">
         <defs>
           <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
             <path d="M0,0 L9,4.5 L0,9 Z" fill="#6f6b61"/>
@@ -213,7 +213,7 @@
         <rect x="20" y="70" width="920" height="78" rx="5" fill="#191b20" stroke="#e0843c" stroke-opacity="0.55"/>
         <text x="40" y="98" fill="#e0843c" font-size="13" font-weight="700" letter-spacing="2">06 · GENERALIST VLA / FOUNDATION MODELS</text>
         <text x="40" y="122" fill="#aaa59a" font-size="12.5">DexVLA · DexGraspVLA · GR00T N1 · &#960;0.5 · Gemini Robotics · TRI LBM eval</text>
-        <text x="40" y="140" fill="#6f6b61" font-size="11">cuts across every embodiment; eval shifts from task policy to generalist model</text>
+        <text x="40" y="140" fill="#6f6b61" font-size="11">贯穿每一种本体；评测从任务策略转向通用模型</text>
 
         <!-- MIDDLE: four paradigm columns -->
         <!-- col 1 hardware-dex -->
@@ -224,16 +224,16 @@
         <text x="34" y="266" fill="#aaa59a" font-size="11.5">ORCA dexterity bench</text>
         <text x="34" y="284" fill="#aaa59a" font-size="11.5">Elliott &amp; Connolly</text>
         <text x="34" y="302" fill="#aaa59a" font-size="11.5">MFR (Allegro)</text>
-        <text x="34" y="322" fill="#6f6b61" font-size="10.5">taxonomy · throughput · real+sim</text>
+        <text x="34" y="322" fill="#6f6b61" font-size="10.5">分类法 · 吞吐 · 真实+仿真</text>
 
         <!-- col 2 perception -->
         <rect x="252" y="180" width="218" height="150" rx="5" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
         <text x="266" y="206" fill="#cdc8bd" font-size="12.5" font-weight="700">02 · PERCEPTION</text>
         <text x="266" y="222" fill="#cdc8bd" font-size="12.5" font-weight="700">DATASETS</text>
         <text x="266" y="248" fill="#aaa59a" font-size="11.5">DexYCB (NVIDIA)</text>
-        <text x="266" y="266" fill="#6f6b61" font-size="10.5">hand+object pose</text>
-        <text x="266" y="283" fill="#6f6b61" font-size="10.5">6D pose · keypoints</text>
-        <text x="266" y="300" fill="#6f6b61" font-size="10.5">handover grasp gen</text>
+        <text x="266" y="266" fill="#6f6b61" font-size="10.5">手+物体位姿</text>
+        <text x="266" y="283" fill="#6f6b61" font-size="10.5">6D 位姿 · 关键点</text>
+        <text x="266" y="300" fill="#6f6b61" font-size="10.5">交接抓取生成</text>
 
         <!-- col 3 grasp synthesis -->
         <rect x="484" y="180" width="218" height="150" rx="5" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
@@ -243,7 +243,7 @@
         <text x="498" y="266" fill="#aaa59a" font-size="11.5">Get a Grip (Stanford)</text>
         <text x="498" y="284" fill="#aaa59a" font-size="11.5">GraspGen (NVIDIA)</text>
         <text x="498" y="302" fill="#aaa59a" font-size="11.5">DextrAH-RGB</text>
-        <text x="498" y="322" fill="#6f6b61" font-size="10.5">grasp success at scale · sim2real</text>
+        <text x="498" y="322" fill="#6f6b61" font-size="10.5">大规模抓取成功率 · sim2real</text>
 
         <!-- col 4 sim RL -->
         <rect x="716" y="180" width="224" height="150" rx="5" fill="#191b20" stroke="#54a89b" stroke-opacity="0.5"/>
@@ -252,7 +252,7 @@
         <text x="730" y="248" fill="#aaa59a" font-size="11.5">DexArt (UCSD)</text>
         <text x="730" y="266" fill="#aaa59a" font-size="11.5">Bi-DexHands</text>
         <text x="730" y="284" fill="#aaa59a" font-size="11.5">DexMimicGen (NVIDIA)</text>
-        <text x="730" y="322" fill="#6f6b61" font-size="10.5">articulated · bimanual · data gen</text>
+        <text x="730" y="322" fill="#6f6b61" font-size="10.5">铰接 · 双臂 · 数据生成</text>
 
         <!-- BOTTOM BAND: hardware substrate -->
         <rect x="20" y="362" width="920" height="118" rx="5" fill="#16181c" stroke="#7f7a70" stroke-opacity="0.4"/>
@@ -262,7 +262,7 @@
         <text x="40" y="450" fill="#aaa59a" font-size="11.5">Teleop: DOGlove · DexUMI</text>
         <text x="520" y="414" fill="#e0843c" font-size="11.5" font-weight="700">COMMERCIAL HUMANOID</text>
         <text x="520" y="432" fill="#aaa59a" font-size="11.5">Tesla Optimus · Figure 03 · Sanctuary · Agility Digit · SCHUNK SVH</text>
-        <text x="520" y="450" fill="#6f6b61" font-size="10.5">converging on 5-finger, 22–24 DoF, diverging on actuation</text>
+        <text x="520" y="450" fill="#6f6b61" font-size="10.5">在 5 指、22–24 DoF 上趋同，在驱动方式上分化</text>
 
         <!-- connectors -->
         <line x1="129" y1="362" x2="129" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
@@ -271,94 +271,94 @@
         <line x1="828" y1="362" x2="828" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
         <line x1="480" y1="180" x2="480" y2="148" stroke="#6f6b61" marker-end="url(#arrow)"/>
       </svg>
-      <figcaption><b>Reading:</b> paradigms run left (measuring the device) to right (measuring the policy). The hardware substrate feeds every evaluation column; generalist VLAs sit on top, cutting across all embodiments.</figcaption>
+      <figcaption><b>解读：</b>各范式从左（度量设备）排到右（度量策略）。硬件基底为每一个评测列提供支撑；通用 VLA 位于顶部，贯穿所有本体。</figcaption>
     </div>
   </figure>
 
   <!-- ============ 01 HARDWARE DEXTERITY ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">01</span><h2>Hardware-dexterity benchmarks</h2></div>
-    <div class="sec-tag">The hand as a device</div>
-    <p>The freshest cluster, and the one closest to evaluation-infrastructure work, because it measures the device rather than a policy. The recurring complaint is that hands get compared on proxy metrics like degrees of freedom or reachable workspace, which describe potential but not performance.</p>
+    <div class="sec-head"><span class="sec-num">01</span><h2>硬件灵巧性基准</h2></div>
+    <div class="sec-tag">作为设备的手</div>
+    <p>这是最新的聚类，也是最接近评测基础设施工作的聚类，因为它度量的是设备而非策略。反复出现的抱怨是，手往往以诸如自由度或可达工作空间这类代理指标来比较，而这些指标描述的是潜力而非性能。</p>
 
     <div class="entry teal">
       <h3>POMDAR</h3>
       <div class="src">ETH Zurich · Soft Robotics Lab (Katzschmann) · <b>arXiv 2604.09294</b> · Apr 2026</div>
-      <p>Formalizes dexterity as task performance across a structured set of manipulation and grasping motions derived from human-motor-control taxonomies (Elliott &amp; Connolly, Ma &amp; Dollar, Feix GRASP). Implemented in both real-world and simulation across four configurations: vertical, horizontal, continuous rotation, and pure grasping.</p>
-      <p>Two transferable primitives: mechanical scaffolds that constrain motion to the intended DoF and suppress compensatory strategies (gravity assist, palm support, excess wrist motion), and a single score combining task correctness with execution speed, treating dexterity as throughput. Fully 3D-printable and open source.</p>
+      <p>将灵巧性形式化为在一组结构化的操作与抓取动作上的任务性能，这些动作源自人类运动控制的分类法（Elliott &amp; Connolly、Ma &amp; Dollar、Feix GRASP）。在真实世界与仿真中跨四种配置实现：竖直、水平、连续旋转和纯抓取。</p>
+      <p>两个可迁移的原语：将运动约束到预期自由度并抑制代偿策略（重力辅助、掌部支撑、过度腕部运动）的机械支架；以及将任务正确性与执行速度结合的单一分数，把灵巧性视作吞吐量。完全可 3D 打印且开源。</p>
     </div>
 
     <div class="entry teal">
       <h3>ORCA-hand dexterity benchmark</h3>
       <div class="src">arXiv 2604.09294-adjacent · 2026</div>
-      <p>Evaluates ORCA-hand embodiments with degrees of freedom locked and unlocked from 5 to 16 DoF. The largest performance gaps appear on tasks requiring coordinated multi-finger interaction and finger abduction (squeeze, palmar, chopsticks), which is direct evidence that DoF count alone is a poor dexterity proxy.</p>
+      <p>在自由度从 5 到 16 DoF 锁定与解锁的情况下评测 ORCA-hand 本体。最大的性能差距出现在需要协调多指交互与手指外展的任务上（squeeze、palmar、chopsticks），这直接证明了仅凭 DoF 数量是一个糟糕的灵巧性代理。</p>
     </div>
 
     <div class="entry teal">
       <h3>MFR_benchmark · Elliott &amp; Connolly lineage</h3>
       <div class="src">UMich ARM Lab · plus classic E&amp;C, 50 HD-marks, Dexterity Test Board</div>
-      <p>MFR is a multi-finger reorientation suite (valve turning, cuboid insertion, screwdriver turning, object reorientation) implemented on the Allegro hand. POMDAR catalogs the older task-performance benchmarks worth citing for lineage.</p>
+      <p>MFR 是一个多指重定向任务集（拧阀门、长方体插入、拧螺丝刀、物体重定向），在 Allegro 手上实现。POMDAR 编录了那些就传承而言值得引用的更早的任务性能基准。</p>
     </div>
   </section>
 
   <!-- ============ 02 PERCEPTION ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">02</span><h2>Perception datasets</h2></div>
-    <div class="sec-tag">Where DexYCB lives</div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>感知数据集</h2></div>
+    <div class="sec-tag">DexYCB 所在之处</div>
     <div class="entry">
       <h3>DexYCB</h3>
       <div class="src">NVIDIA (Chao, Fox et al.) · <b>CVPR 2021</b> · arXiv 2104.04631</div>
-      <p>A dataset for capturing hand grasping of objects, benchmarking three tasks: 2D object and keypoint detection, 6D object pose estimation, and 3D hand pose estimation. It also defines a robotics task: generating safe robot grasps in human-to-robot handover. CC BY-NC 4.0, with an open evaluation toolkit. This is a data and perception benchmark, not a control benchmark.</p>
+      <p>一个用于捕捉手抓取物体的数据集，对三项任务进行基准测试：2D 物体与关键点检测、6D 物体位姿估计，以及 3D 手部位姿估计。它还定义了一项机器人任务：在人到机器人的交接中生成安全的机器人抓取。采用 CC BY-NC 4.0，并配有开放的评测工具包。这是一个数据与感知基准，而非控制基准。</p>
     </div>
   </section>
 
   <!-- ============ 03 GRASP SYNTHESIS ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">03</span><h2>Grasp synthesis and grasp evaluation</h2></div>
-    <div class="sec-tag">Does the grasp hold, and at what scale</div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>抓取合成与抓取评测</h2></div>
+    <div class="sec-tag">抓取是否稳固，以及在何种规模下</div>
     <div class="entry">
       <h3>DexGraspNet</h3>
       <div class="src">He Wang / Hao Su lineage · large-scale ShadowHand grasp dataset</div>
-      <p>The standard large-scale dexterous grasp dataset for synthesis evaluation, widely used as a training and benchmarking source for grasp generators.</p>
+      <p>用于合成评测的标准大规模灵巧抓取数据集，被广泛用作抓取生成器的训练与基准测试来源。</p>
     </div>
     <div class="entry">
       <h3>Get a Grip</h3>
       <div class="src">Stanford (Lum et al., Bohg lab) · <b>arXiv 2410.23701</b> · 2024</div>
-      <p>Multi-finger grasp evaluation at scale, explicitly framed around enabling robust sim-to-real transfer of grasp quality prediction.</p>
+      <p>大规模的多指抓取评测，明确围绕实现抓取质量预测的稳健 sim-to-real 迁移而构建。</p>
     </div>
     <div class="entry">
       <h3>GraspGen · DextrAH-RGB</h3>
       <div class="src">NVIDIA Research (Singh, Handa, Van Wyk et al.) · 2024–2025</div>
-      <p>GraspGen is a diffusion-based 6-DOF grasping framework backed by a synthetic dataset of over 57 million grasps across robots and grippers. DextrAH-RGB is a sim-to-real workflow for dexterous grasping from stereo RGB input, from the same group that built DexYCB.</p>
+      <p>GraspGen 是一个基于扩散的 6-DOF 抓取框架，背后是一个涵盖多种机器人与夹爪、超过 5700 万次抓取的合成数据集。DextrAH-RGB 是一个从立体 RGB 输入进行灵巧抓取的 sim-to-real 工作流，出自构建 DexYCB 的同一团队。</p>
     </div>
   </section>
 
   <!-- ============ 04 SIM RL ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">04</span><h2>Simulation RL and policy benchmarks</h2></div>
-    <div class="sec-tag">DexArt's family</div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>仿真强化学习与策略基准</h2></div>
+    <div class="sec-tag">DexArt 的家族</div>
     <div class="entry teal">
       <h3>DexArt</h3>
       <div class="src">UC San Diego (Bao, Xu, Qin, Wang) · <b>CVPR 2023</b> · arXiv 2305.05706</div>
-      <p>Dexterous manipulation of articulated objects (faucets, laptops, buckets, toilets) in a physics simulator, evaluating generalization to unseen articulated objects and robustness to camera viewpoint change. Uses PPO with a PointNet backbone on point-cloud input. Key finding: 3D geometric representation learning gives strong robustness to viewpoint shift where ResNet-based policies collapse.</p>
+      <p>在物理仿真器中对铰接物体（水龙头、笔记本电脑、水桶、马桶）进行灵巧操作，评测对未见铰接物体的泛化以及对相机视角变化的鲁棒性。在点云输入上使用带 PointNet 主干的 PPO。关键发现：3D 几何表征学习在视角偏移下提供了强鲁棒性，而基于 ResNet 的策略在此会崩溃。</p>
     </div>
     <div class="entry teal">
       <h3>Bi-DexHands</h3>
       <div class="src">Built on Isaac Gym</div>
-      <p>Tasks calibrated to human-motor-skill levels from cognitive-science literature, reaching 30,000+ FPS on a single RTX 3090. Provides a comprehensive benchmark across single-agent, multi-agent, offline, multi-task, and meta RL settings.</p>
+      <p>任务依据认知科学文献中的人类运动技能层级进行校准，在单张 RTX 3090 上达到 30,000+ FPS。提供跨单智能体、多智能体、离线、多任务与元强化学习设置的全面基准。</p>
     </div>
     <div class="entry teal">
       <h3>DexMimicGen</h3>
       <div class="src">NVIDIA GEAR + UT Austin + UCSD (Jiang, Mandlekar, Fan, Zhu) · <b>ICRA 2025</b> · arXiv 2410.24185</div>
-      <p>A simulation environment suite as much as a data pipeline. Generates 21K demonstrations from just 60 source human demos across bimanual dexterous tasks, spanning independent, coordinated, and sequential two-arm subtasks, with a real-to-sim-to-real deployment loop. The bimanual successor to MimicGen and a natural reference point for competitive analysis.</p>
+      <p>它既是一个仿真环境套件，也是一条数据流水线。从仅 60 个源人类演示生成 21K 条演示，覆盖双臂灵巧任务，跨越独立、协调和顺序两臂子任务，并带有 real-to-sim-to-real 的部署闭环。它是 MimicGen 的双臂后继者，也是竞争分析的自然参照点。</p>
     </div>
   </section>
 
   <!-- ============ FIGURE 2: TIMELINE ============ -->
   <figure>
     <div class="figframe">
-      <div class="figlabel">Figure 2 — Timeline, 2021 to 2026</div>
-      <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline of dexterous hand benchmarks and models 2021 to 2026">
+      <div class="figlabel">图 2 — 时间线，2021 至 2026</div>
+      <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="2021 至 2026 年灵巧手基准与模型的时间线">
         <!-- baseline -->
         <line x1="40" y1="180" x2="920" y2="180" stroke="#54a89b" stroke-opacity="0.45" stroke-width="1.5"/>
         <!-- year ticks -->
@@ -411,70 +411,70 @@
         <text x="850" y="107" text-anchor="middle" fill="#6f6b61" font-size="9.5">ETH · hardware dexterity</text>
         <text x="850" y="117" text-anchor="middle" fill="#aaa59a" font-size="9">ORCA bench</text>
 
-        <text x="40" y="345" fill="#6f6b61" font-size="11">teal = device / control benchmarks &nbsp;·&nbsp; grey = data &nbsp;·&nbsp; ember = generalist models</text>
+        <text x="40" y="345" fill="#6f6b61" font-size="11">teal = 设备 / 控制基准 &nbsp;·&nbsp; grey = 数据 &nbsp;·&nbsp; ember = 通用模型</text>
       </svg>
-      <figcaption><b>Trajectory:</b> the field moved from perception datasets, to simulation policy benchmarks and open hardware, to generalist VLAs, and most recently back to rigorous device-level dexterity benchmarking.</figcaption>
+      <figcaption><b>轨迹：</b>该领域从感知数据集，走向仿真策略基准与开放硬件，再走向通用 VLA，而最近又回到了严谨的设备级灵巧性基准测试。</figcaption>
     </div>
   </figure>
 
   <!-- ============ 05 VLA ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">05</span><h2>VLAs and foundation models on dexterous hands</h2></div>
-    <div class="sec-tag">Where the eval target is moving</div>
-    <p>The evaluation target is shifting from task-specific policies to generalist models running on dexterous embodiments. This matters because failure modes change and attribution gets harder.</p>
+    <div class="sec-head"><span class="sec-num">05</span><h2>灵巧手上的 VLA 与基础模型</h2></div>
+    <div class="sec-tag">评测目标正在移动之处</div>
+    <p>评测目标正从特定任务的策略转向运行在灵巧本体上的通用模型。这一点之所以重要，是因为失败模式发生了变化，归因也变得更困难。</p>
     <div class="entry">
       <h3>DexVLA</h3>
       <div class="src">Yichen Zhu et al. · <b>arXiv 2502.05855</b> · 2025</div>
-      <p>A billion-parameter diffusion action expert with embodiment curriculum learning, tested across single-arm, bimanual, and dexterous-hand embodiments, reported to beat Octo, OpenVLA, and Diffusion Policy.</p>
+      <p>一个十亿参数级的扩散动作专家，配以本体课程学习，在单臂、双臂与灵巧手本体上进行测试，据报道优于 Octo、OpenVLA 和 Diffusion Policy。</p>
     </div>
     <div class="entry">
       <h3>DexGraspVLA</h3>
       <div class="src">Zhong et al. · <b>arXiv 2502.20900</b> · 2025</div>
-      <p>A hierarchical framework using a pretrained VLM as high-level planner plus a diffusion-based low-level controller for language-guided general dexterous grasping.</p>
+      <p>一个分层框架，使用预训练的 VLM 作为高层规划器，外加一个基于扩散的低层控制器，用于语言引导的通用灵巧抓取。</p>
     </div>
     <div class="entry">
       <h3>GR00T N1 · Gemini Robotics · &#960;0.5</h3>
       <div class="src">NVIDIA · Google DeepMind · Physical Intelligence · 2025</div>
-      <p>The generalist humanoid and dexterous foundation models. &#960;0 and &#960;0.5 use flow matching for continuous action prediction enabling dexterous manipulation at up to 50 Hz; GR00T attends to the last VLM layer via cross attention.</p>
+      <p>通用人形与灵巧基础模型。&#960;0 与 &#960;0.5 使用流匹配进行连续动作预测，实现高达 50 Hz 的灵巧操作；GR00T 通过交叉注意力关注 VLM 的最后一层。</p>
     </div>
     <div class="entry">
       <h3>TRI Large Behavior Models — dexterity eval</h3>
       <div class="src">Toyota Research Institute · 2025 · "A Careful Examination of LBMs for Multitask Dexterous Manipulation"</div>
-      <p>An evaluation-methodology paper rather than a new model. Recent challenge writeups echo its theme: dexterity issues, clumsiness in grasping and releasing, dominate VLA failure modes ahead of progress and order errors and out-of-distribution confusion. This failure-attribution framing is the most directly relevant to counterfactual episode recording for eval.</p>
+      <p>这是一篇评测方法学论文，而非一个新模型。近期的挑战赛总结呼应了它的主题：灵巧性问题，即抓取与释放中的笨拙，是 VLA 失败模式中最主要的，排在进度与顺序错误以及分布外混淆之前。这种失败归因的框架与用于评测的反事实回合记录最为直接相关。</p>
     </div>
   </section>
 
   <!-- ============ 06 HARDWARE DEVICES ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">06</span><h2>Hardware devices: research and frontier companies</h2></div>
-    <div class="sec-tag">The substrate everything runs on</div>
+    <div class="sec-head"><span class="sec-num">06</span><h2>硬件设备：研究界与前沿企业</h2></div>
+    <div class="sec-tag">一切运行其上的基底</div>
     <div class="entry teal">
       <h3>LEAP Hand / LEAP V2</h3>
       <div class="src">CMU (Shaw, Agarwal, Pathak) · <b>RSS 2023</b> · arXiv 2309.06440</div>
-      <p>Assembled in 4 hours for 2000 USD from off-the-shelf parts, with a kinematic structure designed for maximal dexterity regardless of finger pose. Reported to outperform Allegro across experiments at one-eighth the cost. LEAP V2 (the DLA Hand) adds a hybrid rigid-soft build with a 3D-printed soft skin over an internal bone structure and a powered foldable palm, around 3000 USD.</p>
+      <p>用现成零件以 2000 美元、4 小时组装完成，其运动学结构旨在无论手指姿态如何都能实现最大灵巧性。据报道在各项实验中以八分之一的成本超越 Allegro。LEAP V2（即 DLA Hand）增加了刚柔混合构造，在内部骨架结构之上覆盖 3D 打印软皮肤，并配有可动力折叠的手掌，约 3000 美元。</p>
     </div>
     <div class="entry teal">
       <h3>Shadow DEX-EE · Shadow Hand</h3>
       <div class="src">Shadow Robot × Google DeepMind · May 2024</div>
-      <p>DEX-EE is a modular multi-finger hand built for reinforcement learning, with modular finger units, hundreds of tactile sensors per hand, and durability across thousands of impact cycles. The classic Shadow Hand is 24 DoF, the same as OpenAI's Dactyl.</p>
+      <p>DEX-EE 是一只为强化学习而构建的模块化多指手，配有模块化手指单元、每只手数百个触觉传感器，以及跨数千次冲击循环的耐久性。经典的 Shadow Hand 为 24 DoF，与 OpenAI 的 Dactyl 相同。</p>
     </div>
     <div class="entry teal">
-      <h3>Teleop and data devices: DOGlove · DexUMI</h3>
+      <h3>遥操作与数据设备：DOGlove · DexUMI</h3>
       <div class="src">Tsinghua (arXiv 2502.07730) · arXiv 2505.21864</div>
-      <p>DOGlove is a low-cost open-source haptic force-feedback glove. DexUMI uses the human hand as a universal manipulation interface, transferring relative finger trajectories that prove more robust to hardware imperfection.</p>
+      <p>DOGlove 是一只低成本的开源触觉力反馈手套。DexUMI 将人手用作通用操作接口，迁移相对手指轨迹，事实证明这对硬件缺陷更为鲁棒。</p>
     </div>
     <div class="entry">
-      <h3>Commercial humanoid hands</h3>
+      <h3>商用人形手</h3>
       <div class="src">Tesla · Figure · Sanctuary · Agility · SCHUNK · 2024–2026</div>
-      <p>Tesla Optimus went from 11 DoF (Gen 2) to 22 DoF on the hand plus 3 on the wrist, using a tendon-driven design with actuators relocated to the forearm. Treat any spec as provisional: Musk stated in April 2026 that a patented 25-actuator design did not work and Tesla iterated again. Figure 03 reports 24+ DoF hands paired with the Helix platform. Sanctuary uses hydraulic actuation, diverging from the all-electric trend. As of 2026 the field has converged on five-fingered anthropomorphic hands but diverges sharply on actuation, sensing, and control.</p>
+      <p>Tesla Optimus 的手从 11 DoF（Gen 2）增至 22 DoF，加上腕部 3 个，采用腱驱设计并将执行器迁移至前臂。任何规格都应视为暂定：Musk 在 2026 年 4 月表示一项已获专利的 25 执行器设计未能奏效，Tesla 再次迭代。Figure 03 报告其手为 24+ DoF，与 Helix 平台配对。Sanctuary 采用液压驱动，偏离了全电动的趋势。截至 2026 年，该领域已在五指拟人手上趋同，但在驱动、传感与控制上分化明显。</p>
     </div>
   </section>
 
   <!-- ============ FIGURE 3: DOF CHART ============ -->
   <figure>
     <div class="figframe">
-      <div class="figlabel">Figure 3 — Degrees of freedom per hand</div>
-      <svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart comparing degrees of freedom across robotic hands">
+      <div class="figlabel">图 3 — 每只手的自由度</div>
+      <svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="比较各机器人手自由度的条形图">
         <!-- scale: x from 220 to 900 maps 0..28 -->
         <!-- gridlines -->
         <g stroke="#e8e5dc" stroke-opacity="0.08">
@@ -491,13 +491,13 @@
           <text x="656" y="392">18</text>
           <text x="801" y="392">24</text>
         </g>
-        <text x="560" y="412" fill="#6f6b61" font-size="11" text-anchor="middle">degrees of freedom (hand, excluding wrist)</text>
+        <text x="560" y="412" fill="#6f6b61" font-size="11" text-anchor="middle">自由度（手，不含腕部）</text>
 
         <!-- bars: y rows; width = value*24.16 px per DoF (680px/28? use 24.28) -->
         <!-- human reference (dashed) value 27 -> width 27*24.28=655 -->
         <g font-size="13">
           <!-- Human -->
-          <text x="206" y="68" text-anchor="end" fill="#cdc8bd" font-weight="700">Human hand</text>
+          <text x="206" y="68" text-anchor="end" fill="#cdc8bd" font-weight="700">人手</text>
           <rect x="220" y="56" width="655" height="20" rx="2" fill="none" stroke="#f2b582" stroke-dasharray="4 4"/>
           <text x="884" y="71" fill="#f2b582" font-size="12" font-weight="700">27</text>
 
@@ -537,32 +537,32 @@
           <text x="496" y="351" fill="#aaa59a" font-size="12" font-weight="700">11</text>
         </g>
       </svg>
-      <figcaption><b>Caveat:</b> DoF is a potential metric, not a performance metric. POMDAR and the ORCA study both show task success depends on which DoF (especially abduction) are usable, not the raw count. Commercial specs (ember) are provisional and change between hardware revisions.</figcaption>
+      <figcaption><b>提醒：</b>DoF 是一个潜力指标，而非性能指标。POMDAR 与 ORCA 研究都表明，任务成功取决于哪些 DoF（尤其是外展）可用，而非原始数量。商用规格（ember）为暂定，且在不同硬件版本之间变化。</figcaption>
     </div>
   </figure>
 
   <!-- ============ GAPS ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">07</span><h2>Gaps worth noting</h2></div>
-    <div class="sec-tag">Evaluation-infrastructure lens</div>
+    <div class="sec-head"><span class="sec-num">07</span><h2>值得注意的空白</h2></div>
+    <div class="sec-tag">评测基础设施视角</div>
     <div class="gap">
-      <h3>The paradigms do not talk to each other.</h3>
-      <p>Simulation benchmarks (DexArt, Bi-DexHands, DexMimicGen) and hardware-dexterity benchmarks (POMDAR, the Elliott &amp; Connolly lineage) are disconnected. There is no standardized bridge that scores a policy on a specific hand against a taxonomy-grounded dexterity baseline. POMDAR's throughput metric and scaffold methodology are the most transferable primitives to build on.</p>
+      <h3>各范式之间互不对话。</h3>
+      <p>仿真基准（DexArt、Bi-DexHands、DexMimicGen）与硬件灵巧性基准（POMDAR、Elliott &amp; Connolly 传承）彼此脱节。目前没有标准化的桥梁能将一个策略在特定手上相对一个以分类法为基础的灵巧性基线进行打分。POMDAR 的吞吐量指标与支架方法学是最可迁移、可在其上构建的原语。</p>
     </div>
     <div class="gap">
-      <h3>Failure attribution for dexterous VLAs is still manual.</h3>
-      <p>The TRI and challenge writeups label failures by hand. A benchmark that records why a dexterous grasp failed, with counterfactual rollouts, would be novel and sits directly adjacent to counterfactual episode recording for eval.</p>
+      <h3>灵巧 VLA 的失败归因仍是手工的。</h3>
+      <p>TRI 与挑战赛的总结靠人工标注失败。一个记录灵巧抓取为何失败、并带有反事实回放的基准将是新颖的，且与用于评测的反事实回合记录直接相邻。</p>
     </div>
     <div class="gap">
-      <h3>Hand-agnostic evaluation is nearly absent.</h3>
-      <p>Almost everything is tied to one embodiment: Allegro for MFR, ShadowHand for DexGraspNet, specific humanoids for the VLAs. Given the DoF churn at Tesla and Figure, an eval format robust across hand morphologies would carry real value.</p>
+      <h3>与手无关的评测几乎缺席。</h3>
+      <p>几乎一切都绑定于单一本体：MFR 用 Allegro，DexGraspNet 用 ShadowHand，VLA 用特定人形机器人。鉴于 Tesla 与 Figure 的 DoF 频繁变动，一种跨手部形态稳健的评测格式将具有真正的价值。</p>
     </div>
   </section>
 
   <!-- ============ REFERENCES ============ -->
   <section>
-    <div class="sec-head"><span class="sec-num">08</span><h2>References</h2></div>
-    <div class="sec-tag">Primary sources</div>
+    <div class="sec-head"><span class="sec-num">08</span><h2>参考文献</h2></div>
+    <div class="sec-tag">一手来源</div>
     <div class="refs">
       <div class="ref"><span class="tag">DexYCB</span>Chao et al., NVIDIA. CVPR 2021. <a href="https://arxiv.org/abs/2104.04631">arXiv:2104.04631</a> · <a href="https://dex-ycb.github.io/">dex-ycb.github.io</a></div>
       <div class="ref"><span class="tag">DexArt</span>Bao, Xu, Qin, Wang, UCSD. CVPR 2023. <a href="https://arxiv.org/abs/2305.05706">arXiv:2305.05706</a> · <a href="https://www.chenbao.tech/dexart/">chenbao.tech/dexart</a></div>
@@ -582,7 +582,7 @@
   </section>
 
   <footer>
-    Compiled from public web sources, June 2026 · Diagrams hand-built (SVG) · For SomaStacks competitive-analysis reference · Specs marked provisional change between hardware revisions.
+    编纂自公开网络来源，2026 年 6 月 · 图示为手工构建（SVG） · 供 SomaStacks 竞争分析参考 · 标注为暂定的规格在不同硬件版本之间会有变化。
   </footer>
 
 </div>

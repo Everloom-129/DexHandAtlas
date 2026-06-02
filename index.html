@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DexHand Atlas — Dexterous Hand Research</title>
+<meta name="description" content="An independent research atlas of the dexterous robotic hand landscape: hardware, market & pricing, and manipulation benchmarks. Compiled by Jie Wang.">
+<meta name="author" content="Jie Wang">
+<!-- Open Graph -->
+<meta property="og:title" content="DexHand Atlas — Dexterous Hand Research">
+<meta property="og:description" content="An independent research atlas of the dexterous robotic hand landscape: hardware, market, and benchmarks.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e10; --bg-2:#121518; --panel:#15191d; --panel-2:#1b2025;
+    --line:#262d33; --line-bright:#3a444c;
+    --ink:#e8e4dc; --ink-dim:#9aa2a8; --ink-faint:#5f6a71;
+    --amber:#e0a45c; --amber-bright:#f4b96b; --cyan:#6fd0c8; --rust:#c46a4a;
+    --green:#86b06a; --violet:#9d8fc4;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Archivo',system-ui,sans-serif;
+    --serif:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(224,164,92,.07), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(111,208,200,.05), transparent 42%);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
+
+  /* hero */
+  header.hero{padding:96px 0 60px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .kick{
+    font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:26px;display:flex;gap:14px;align-items:center;
+    opacity:0;animation:fade .7s ease .1s forwards;
+  }
+  .kick::before{content:"";width:42px;height:1px;background:var(--amber)}
+  h1.title{
+    font-family:var(--serif);font-weight:300;font-size:clamp(46px,9vw,104px);line-height:.95;
+    letter-spacing:-.025em;opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .2s forwards;
+  }
+  h1.title em{font-style:italic;color:var(--amber-bright)}
+  .hero .sub{
+    margin-top:28px;max-width:64ch;color:var(--ink-dim);font-size:18.5px;
+    opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .35s forwards;
+  }
+  .byline{
+    margin-top:30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    opacity:0;animation:fade .8s ease .5s forwards;
+  }
+  .byline .avatar{
+    width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--rust));
+    display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:500;
+    color:#1a1205;font-size:18px;flex-shrink:0;
+  }
+  .byline .who{font-size:14.5px;color:var(--ink)}
+  .byline .who b{font-weight:600}
+  .byline .who span{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.04em;margin-top:2px}
+  .byline a.gh{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-dim);
+    border:1px solid var(--line-bright);border-radius:2px;padding:7px 12px;text-decoration:none;transition:all .2s;
+  }
+  .byline a.gh:hover{border-color:var(--cyan);color:var(--ink)}
+  .meta{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px;opacity:0;animation:fade .8s ease .6s forwards}
+  .chip{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;border:1px solid var(--line-bright);
+    border-radius:2px;padding:6px 11px;color:var(--ink-dim);background:rgba(255,255,255,.012);
+  }
+  .chip b{color:var(--ink)}
+
+  /* section */
+  section{padding:66px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:14px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.1em}
+  .sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.4vw,36px);letter-spacing:-.015em}
+  .lead{font-size:16.5px;color:var(--ink-dim);max-width:74ch;margin-bottom:30px}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .card{
+    display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;padding:30px 28px 24px;text-decoration:none;position:relative;overflow:hidden;
+    transition:border-color .25s,background .25s,transform .25s;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent,var(--amber));
+    opacity:.0;transition:opacity .25s;
+  }
+  .card:hover{background:var(--panel-2);border-color:var(--line-bright);transform:translateY(-3px)}
+  .card:hover::before{opacity:1}
+  .card.amber{--accent:var(--amber-bright)}
+  .card.cyan{--accent:var(--cyan)}
+  .card.violet{--accent:var(--violet)}
+  .card.green{--accent:var(--green)}
+  .card .vol{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent,var(--amber))}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:25px;line-height:1.12;margin:12px 0 0;color:var(--ink);letter-spacing:-.01em}
+  .card .zh{font-family:var(--sans);font-size:13px;color:var(--ink-faint);margin-top:4px}
+  .card p{font-size:14.5px;color:var(--ink-dim);margin-top:14px;flex:1}
+  .card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+  .card .t{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:2px;letter-spacing:.03em;background:var(--bg-2);color:var(--ink-dim);border:1px solid var(--line)}
+  .card .go{
+    margin-top:20px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+    letter-spacing:.05em;color:var(--accent,var(--amber));
+  }
+  .card .go .arrow{transition:transform .25s}
+  .card:hover .go .arrow{transform:translateX(5px)}
+  .card .alt{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .card .alt a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent}
+  .card .alt a:hover{border-bottom-color:var(--cyan)}
+  .span2{grid-column:1 / -1}
+
+  /* about */
+  .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:20px 24px;font-size:14.5px;color:var(--ink-dim);border-radius:0 6px 6px 0}
+  .note b{color:var(--ink)}
+  .note + .note{margin-top:14px}
+  .note.cyan{border-left-color:var(--cyan);background:rgba(111,208,200,.05)}
+
+  footer{padding:48px 0 80px;color:var(--ink-faint);font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center}
+  footer a{color:var(--ink-dim);text-decoration:none;border-bottom:1px dotted var(--line-bright)}
+  footer a:hover{color:var(--cyan)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .wrap{padding:0 20px}
+    .cards{grid-template-columns:1fr}
+    header.hero{padding:64px 0 44px}
+    section{padding:48px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Independent Research · Updated June 2026</div>
+    <h1 class="title">DexHand <em>Atlas</em></h1>
+    <p class="sub">A field guide to the dexterous robotic hand landscape — the hardware that grasps, the market that sells it, and the benchmarks that measure it. Compiled from public vendor data, primary papers, and 3rd-party listings.</p>
+    <div class="byline">
+      <div class="avatar">JW</div>
+      <div class="who"><b>Jie&nbsp;Wang</b><span>Independent research · maintained on GitHub</span></div>
+      <a class="gh" href="https://github.com/Everloom-129/DexHandAtlas" target="_blank" rel="noopener">★ Repository ↗</a>
+    </div>
+    <div class="meta">
+      <span class="chip"><b>3</b> volumes</span>
+      <span class="chip"><b>30+</b> hands surveyed</span>
+      <span class="chip"><b>14</b> priced products</span>
+      <span class="chip">hardware · market · benchmarks</span>
+    </div>
+  </div>
+</header>
+
+<!-- THE ATLAS -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2>The Atlas</h2></div>
+    <p class="lead">Three independent reviews, each self-contained. Specs and prices are vendor- or paper-reported and should be read as claims pending independent characterization.</p>
+
+    <div class="cards">
+
+      <a class="card amber" href="dexhand_hardware_review.html">
+        <span class="vol">Volume I · Hardware</span>
+        <h3>Dexterous Hand Hardware</h3>
+        <div class="zh">Landscape Review</div>
+        <p>20+ hands across three lines — commercial specialists, humanoid-integrated end-effectors, and the frontier research / open-source / biomimetic edge. Compared on DOF, actuation topology, tactile stack, and product philosophy, with photos and vendor links.</p>
+        <div class="tags"><span class="t">14+ companies</span><span class="t">actuation</span><span class="t">tactile</span><span class="t">8 key papers</span></div>
+        <div class="go"><span>Read the review</span><span class="arrow">→</span></div>
+        <div class="alt">offline copy: <a href="dexhand_hardware_review_standalone.html">single-file ↗</a></div>
+      </a>
+
+      <a class="card cyan" href="dex_hand_products.html">
+        <span class="vol">Volume II · Market</span>
+        <h3>Hands on the Market</h3>
+        <div class="zh">灵巧手产品市场一览 · Products &amp; Pricing</div>
+        <p>The buyable end of the field: 14 dexterous hands you can actually order, with product images, finger/DOF counts, origin, and reference prices — from $2k open-source kits to $110k research benchmarks. Sources linked per row.</p>
+        <div class="tags"><span class="t">reference prices</span><span class="t">images</span><span class="t">14 products</span></div>
+        <div class="go"><span>Browse the table</span><span class="arrow">→</span></div>
+        <div class="alt">offline copy: <a href="dex_hand_products_standalone.html">single-file ↗</a></div>
+      </a>
+
+      <a class="card violet span2" href="dexhand_benchmarks.html">
+        <span class="vol">Volume III · Benchmarks</span>
+        <h3>Dexterous Manipulation Benchmarks</h3>
+        <div class="zh">A Literature Review · 灵巧手操作基准综述</div>
+        <p>The evaluation side of dexterity — simulation suites, real-world task sets, and datasets used to measure in-hand manipulation and grasping. The substrate that turns hardware claims into comparable numbers.</p>
+        <div class="tags"><span class="t">benchmarks</span><span class="t">datasets</span><span class="t">sim &amp; real</span><span class="t">literature</span></div>
+        <div class="go"><span>Read the review</span><span class="arrow">→</span></div>
+        <div class="alt">中文版: <a href="dexbench_survey_sonnet.html">灵巧手操作基准综述 ↗</a></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>About this work</h2></div>
+    <div class="note">
+      <b>Independent research.</b> DexHand Atlas is a personal, independent research project by <b>Jie Wang</b> — not affiliated with, sponsored by, or endorsed by any vendor listed. It exists to map a fast-moving field in one place. All trademarks, product names, and images belong to their respective owners; images are linked or reproduced for reference and identification only.
+    </div>
+    <div class="note cyan">
+      <b>How to read it.</b> Figures are vendor- or paper-reported and inconsistently defined (active DOF vs. total joints; fingertip vs. whole-hand force; list vs. quote-only prices). Treat single-number comparisons as approximate, and confirm anything decision-critical with the original source — every entry links back to one.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>DexHand Atlas · Independent research by Jie Wang</span>
+    <span>Compiled June 2026 · <a href="https://github.com/Everloom-129/DexHandAtlas" target="_blank" rel="noopener">github.com/Everloom-129/DexHandAtlas</a></span>
+  </div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.06});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

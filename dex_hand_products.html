@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dexterous Hand Products on the Market | 灵巧手产品市场一览</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f5f7fa;
+    --bg-card: #ffffff;
+    --text: #1a1f29;
+    --text-soft: #4a5568;
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --border: #e2e8f0;
+    --table-head: #1e293b;
+    --table-head-text: #ffffff;
+    --row-alt: #f8fafc;
+    --code-bg: #eef2f7;
+    --tag: #ede9fe;
+    --tag-text: #6d28d9;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f141b;
+      --bg-alt: #161c25;
+      --bg-card: #1a212b;
+      --text: #e6edf3;
+      --text-soft: #9fb0c0;
+      --accent: #60a5fa;
+      --accent-soft: #1e3a5f;
+      --border: #2a3340;
+      --table-head: #0b3d91;
+      --table-head-text: #eaf1ff;
+      --row-alt: #141a22;
+      --code-bg: #232b36;
+      --tag: #2e2150;
+      --tag-text: #c4b5fd;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 24px 96px; }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent-soft), var(--bg-alt));
+    border-radius: 18px;
+    padding: 44px 40px;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+  }
+  header.hero h1 { margin: 0 0 8px; font-size: 2.05rem; line-height: 1.25; letter-spacing: -0.01em; }
+  header.hero .sub { color: var(--text-soft); font-size: 1.05rem; margin: 0; }
+  header.hero .meta { margin-top: 18px; font-size: 0.85rem; color: var(--text-soft); }
+  h2 { font-size: 1.4rem; margin: 44px 0 16px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); display: inline-block; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+  a:hover { border-bottom-style: solid; }
+  .callout { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; margin: 18px 0; font-size: 0.92rem; }
+  .callout.warn { border-left: 5px solid #f59e0b; }
+  .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin: 22px 0; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; min-width: 1080px; }
+  thead th { background: var(--table-head); color: var(--table-head-text); padding: 12px 14px; text-align: left; font-weight: 600; position: sticky; top: 0; }
+  tbody td { padding: 12px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:hover { background: var(--accent-soft); }
+  .prod { font-weight: 700; font-size: 0.95rem; }
+  .vendor { color: var(--text-soft); font-size: 0.82rem; }
+  .price { font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .thumb-cell { width: 150px; text-align: center; }
+  .thumb {
+    width: 130px; height: 100px; object-fit: contain; border-radius: 8px;
+    background: var(--bg-alt); border: 1px solid var(--border); padding: 4px;
+  }
+  .noimg { width: 130px; height: 100px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; background: var(--bg-alt); border: 1px dashed var(--border); color: var(--text-soft); font-size: 0.7rem; margin: 0 auto; }
+  .tag { display: inline-block; background: var(--tag); color: var(--tag-text); font-size: 0.68rem; padding: 2px 8px; border-radius: 20px; margin: 1px 2px 1px 0; font-weight: 600; white-space: nowrap; }
+  .tag.os { background: #dcfce7; color: #166534; }
+  @media (prefers-color-scheme: dark) { .tag.os { background: #14352099; color: #86efac; } }
+  footer { margin-top: 40px; font-size: 0.82rem; color: var(--text-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Dexterous Hand Products on the Market</h1>
+    <p class="sub">灵巧手产品市场一览 — multi-finger / anthropomorphic robotic & prosthetic hands available to buy, with reference prices and product images.</p>
+    <p class="meta">Compiled June 1, 2026 · Prices are list / 3rd-party reference prices in USD unless noted and vary by configuration, region, tactile options, and academic vs. commercial licensing. Always confirm with the vendor. · Images linked from vendor / aggregator pages.</p>
+  </header>
+
+  <div class="callout warn">
+    <strong>Read the prices as orders of magnitude, not quotes.</strong> Most research-grade hands are built-to-order; published figures range widely. Where a vendor lists "price on request," a 3rd-party reference range is shown and tagged <span class="tag">ref.</span>. Single-hand pricing unless stated; pairs and tactile ("-P") versions cost more.
+  </div>
+
+  <h2>Commercial &amp; research-grade hands</h2>
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th class="thumb-cell">Image</th>
+        <th>Product</th>
+        <th>Origin</th>
+        <th>Fingers / DOF</th>
+        <th>Reference price (USD)</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/shadow.png" alt="Shadow Dexterous Hand"></td>
+        <td><span class="prod">Shadow Dexterous Hand</span><br><span class="vendor">Shadow Robot · UK</span></td>
+        <td>United Kingdom</td>
+        <td>5 fingers · 20 actuated DOF (24 joints)</td>
+        <td class="price">≈ $45k – $110k</td>
+        <td>Industry benchmark for dexterity; 129 sensors. €45k (Lite) to €110k (Hand Plus) incl. support. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/allegro.webp" alt="Allegro Hand"></td>
+        <td><span class="prod">Allegro Hand V4 / V5</span><br><span class="vendor">Wonik Robotics · South Korea</span></td>
+        <td>South Korea</td>
+        <td>4 fingers · 16 DOF</td>
+        <td class="price">≈ $15k – $24.5k</td>
+        <td>Most-cited research hand after Shadow; ~1/5 the price. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/tesollo.webp" alt="Tesollo DG-5F"></td>
+        <td><span class="prod">Delto Gripper DG-5F</span><br><span class="vendor">Tesollo · South Korea</span></td>
+        <td>South Korea</td>
+        <td>5 fingers · 20 DOF</td>
+        <td class="price">Price on request</td>
+        <td>Fully-actuated 20-DOF; newer compact DG-5F-S ~60% of DG-5F price. <span class="tag">quote</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/schunk.webp" alt="Schunk SVH"></td>
+        <td><span class="prod">SVH 5-Finger Hand</span><br><span class="vendor">SCHUNK · Germany</span></td>
+        <td>Germany</td>
+        <td>5 fingers · 9 DOF</td>
+        <td class="price">Price on request</td>
+        <td>Servo-electric industrial/research 5-finger gripper. <span class="tag">quote</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/qb-softhand2.webp" alt="qb SoftHand2"></td>
+        <td><span class="prod">qb SoftHand2 Research</span><br><span class="vendor">qb Robotics · Italy</span></td>
+        <td>Italy</td>
+        <td>5 fingers · 2–4 DOF (soft, 19 joints)</td>
+        <td class="price">≈ $16,500</td>
+        <td>Adaptive synergy-driven soft hand; robust for grasping. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/sharpa.webp" alt="Sharpa Wave"></td>
+        <td><span class="prod">SharpaWave</span><br><span class="vendor">Sharpa · US / China</span></td>
+        <td>US / China</td>
+        <td>5 fingers · 22 DOF</td>
+        <td class="price">≈ $50,000+</td>
+        <td>Human-scale, high tactile sensitivity; embodied-AI research. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/xhand1.jpg" alt="RobotEra XHAND1"></td>
+        <td><span class="prod">XHAND1</span><br><span class="vendor">RobotEra · China</span></td>
+        <td>China</td>
+        <td>5 fingers · 12 active DOF</td>
+        <td class="price">$6,000 – $16,800</td>
+        <td>$6k base; ~$16.8k with 270° fingertip tactile (force + temp).</td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/linker-l20.jpg" alt="LinkerBot Linker Hand L20"></td>
+        <td><span class="prod">Linker Hand L20</span><br><span class="vendor">LinkerBot · China</span></td>
+        <td>China</td>
+        <td>5 fingers · 16–20 DOF</td>
+        <td class="price">$9,999</td>
+        <td>L10 mid-tier under ~$4k; L20 Lite starts under ~$5k.</td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/unitree-dex3.jpg" alt="Unitree Dex3-1"></td>
+        <td><span class="prod">Dex3-1</span><br><span class="vendor">Unitree · China</span></td>
+        <td>China</td>
+        <td>3 fingers · 7 DOF</td>
+        <td class="price">$6,500</td>
+        <td>Force-control, 33 tactile sensors; for G1/H1 humanoids.</td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/unitree-dex5.webp" alt="Unitree Dex5-1"></td>
+        <td><span class="prod">Dex5-1</span><br><span class="vendor">Unitree · China</span></td>
+        <td>China</td>
+        <td>5 fingers · 20 DOF</td>
+        <td class="price">≈ $6,000</td>
+        <td>94-sensor tactile option; retail listings range up to ~$25k single. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/brainco-revo2.jpg" alt="BrainCo Revo 2"></td>
+        <td><span class="prod">Revo 2</span><br><span class="vendor">BrainCo · China</span></td>
+        <td>China</td>
+        <td>5 fingers · 6 active / 11 DOF</td>
+        <td class="price">$4,995</td>
+        <td>~383 g, up to 20 kg single-hand lift; Revo 3 (21-DOF) newer.</td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/inspire-rh56h1.webp" alt="Inspire RH56H1"></td>
+        <td><span class="prod">RH56H1 (RH56 series)</span><br><span class="vendor">Inspire Robots · China</span></td>
+        <td>China</td>
+        <td>5 fingers · 6 DOF (12 joints)</td>
+        <td class="price">≈ $3,105</td>
+        <td>Ultra-compact, 260 tactile sensors. Force-sensor RH56DFX variant listed higher (~$24k at official store).</td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/psyonic.jpg" alt="PSYONIC Ability Hand"></td>
+        <td><span class="prod">Ability Hand</span><br><span class="vendor">PSYONIC · USA</span></td>
+        <td>USA</td>
+        <td>5 fingers · 6 DOF (prosthetic, touch-sensing)</td>
+        <td class="price">≈ $10k – $20k</td>
+        <td>Clinical bionic hand (often insurance-billed); also sold for research. <span class="tag">ref.</span></td>
+      </tr>
+      <tr>
+        <td class="thumb-cell"><img class="thumb" loading="lazy" src="images/leap.webp" alt="LEAP Hand"></td>
+        <td><span class="prod">LEAP Hand</span><br><span class="vendor">Carnegie Mellon University · open-source</span></td>
+        <td>USA (open-source)</td>
+        <td>4 fingers · 16 DOF</td>
+        <td class="price">≈ $2,000 (DIY BOM)</td>
+        <td>Self-assembled in ~4 h; LEAP Hand V2 ~$3,000. <span class="tag os">open-source</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Beyond this list</h2>
+  <div class="callout">
+    The 14 above are the most commonly purchased / cited hands with public pricing. The market is much larger — the <a href="https://humanoid.guide/hands/" target="_blank" rel="noopener">Humanoid.guide hands directory</a> tracks 70+ models, including <strong>Seed Robotics RH8D/RH6D</strong>, <strong>AgiBot OmniHand</strong>, <strong>PaXini DexH13 / GMH18</strong>, <strong>WIRobotics ALLEX</strong>, <strong>Shadow DEX-EE</strong> (3-finger RL hand), <strong>Open Bionics Hero</strong>, <strong>Prensilia Mia / IH2 Azzurra</strong>, <strong>Robotis HX5</strong>, <strong>OYMotion ROHand</strong>, <strong>ETH ORCA</strong>, <strong>Sanctuary Phoenix hand</strong>, <strong>DexRobot DexHand021</strong>, and many more — most quoted "price on request."
+  </div>
+
+  <h2>Sources</h2>
+  <ul style="font-size:0.85rem; color:var(--text-soft);">
+    <li><a href="https://humanoid.guide/hands/" target="_blank" rel="noopener">Humanoid.guide — 70+ robot hands comparison</a> (specs & images)</li>
+    <li><a href="https://shadowrobot.com/blog/how-much-does-a-robot-hand-cost/" target="_blank" rel="noopener">Shadow Robot — "How much does a robot hand cost?"</a></li>
+    <li><a href="https://www.allegrohand.com/" target="_blank" rel="noopener">Allegro Hand (Wonik Robotics)</a> · <a href="https://humanoid.guide/product/allegro-hand-v4/" target="_blank" rel="noopener">price ref.</a></li>
+    <li><a href="https://robostore.com/products/unitree-dex3-1-dexterous-hands" target="_blank" rel="noopener">RoboStore — Unitree Dex3-1</a> · <a href="https://humanoid.guide/product/dex5-1/" target="_blank" rel="noopener">Dex5-1 ref.</a></li>
+    <li><a href="https://aifitlab.com/products/robotera-xhand-1" target="_blank" rel="noopener">AIFITLAB — RobotEra XHAND1</a> · <a href="https://aifitlab.com/products/linkerbot-linker-hand-l20" target="_blank" rel="noopener">LinkerBot L20</a></li>
+    <li><a href="https://www.robotsinternational.com/BrainCo-Revo-2-Basic-Dexterous-Hand.htm" target="_blank" rel="noopener">Robots International — BrainCo Revo 2</a></li>
+    <li><a href="https://www.knoxlabs.com/products/inspire-robots-rh56h1-dexterous-hand" target="_blank" rel="noopener">Knox Labs — Inspire RH56H1</a> · <a href="https://inspire-robots.store/products/the-dexterous-hands-rh56dfx-series" target="_blank" rel="noopener">Inspire store</a></li>
+    <li><a href="https://www.psyonic.io/ability-hand" target="_blank" rel="noopener">PSYONIC Ability Hand</a> · <a href="https://v1.leaphand.com/" target="_blank" rel="noopener">LEAP Hand</a> · <a href="https://www.sharpa.com/" target="_blank" rel="noopener">Sharpa</a> · <a href="https://en.tesollo.com/dg-5f-s/" target="_blank" rel="noopener">Tesollo</a> · <a href="https://schunk.com/" target="_blank" rel="noopener">SCHUNK SVH</a> · <a href="https://qbrobotics.com/product/qb-softhand-research/" target="_blank" rel="noopener">qb Robotics</a></li>
+  </ul>
+
+  <footer>
+    Generated by surveying public vendor and 3rd-party listings (June 2026). Prices change frequently and many hands are quote-only — treat figures as reference, not offers. If a thumbnail fails to load, the vendor may block hotlinking; open the source link instead.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dexterous Hand Benchmarks — A Literature Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0f11;
+    --bg-raised:#16181c;
+    --bg-card:#191b20;
+    --ink:#e8e5dc;
+    --ink-dim:#aaa59a;
+    --ink-faint:#6f6b61;
+    --ember:#e0843c;
+    --ember-soft:#f2b582;
+    --teal:#54a89b;
+    --teal-soft:#8fd0c5;
+    --line:rgba(232,229,220,0.12);
+    --line-strong:rgba(232,229,220,0.22);
+    --grid:rgba(232,229,220,0.035);
+    --shadow:0 18px 50px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:46px 46px;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    padding:88px 0 52px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .kicker{
+    font-family:"JetBrains Mono",monospace;
+    font-size:12px;letter-spacing:0.34em;text-transform:uppercase;
+    color:var(--ember);
+    display:flex;align-items:center;gap:14px;margin-bottom:26px;
+  }
+  .kicker::after{content:"";height:1px;flex:1;background:var(--line-strong);}
+  h1.title{
+    font-family:"Fraunces",serif;
+    font-weight:900;
+    font-size:clamp(42px,7vw,84px);
+    line-height:0.96;
+    letter-spacing:-0.02em;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  h1.title em{font-style:italic;color:var(--ember-soft);font-weight:500;}
+  .subtitle{
+    font-family:"Fraunces",serif;font-weight:400;font-style:italic;
+    font-size:clamp(20px,3vw,28px);color:var(--ink-dim);margin:0 0 34px;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:10px 28px;
+    font-family:"JetBrains Mono",monospace;font-size:12.5px;
+    color:var(--ink-faint);letter-spacing:0.02em;
+  }
+  .meta-row b{color:var(--ink-dim);font-weight:500;}
+
+  /* ---------- prose ---------- */
+  section{padding:60px 0;border-bottom:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px;}
+  .sec-num{
+    font-family:"JetBrains Mono",monospace;font-size:13px;
+    color:var(--ember);letter-spacing:0.1em;padding-top:6px;
+  }
+  h2{
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:clamp(26px,4vw,38px);line-height:1.04;letter-spacing:-0.01em;
+    margin:0;color:var(--ink);
+  }
+  .sec-tag{
+    font-family:"JetBrains Mono",monospace;font-size:11px;
+    letter-spacing:0.22em;text-transform:uppercase;color:var(--teal);
+    margin:14px 0 26px 44px;
+  }
+  p{margin:0 0 20px;max-width:74ch;}
+  p .lead{font-size:20px;}
+  a{color:var(--ember-soft);text-decoration:none;border-bottom:1px solid rgba(242,181,130,0.3);}
+  a:hover{border-bottom-color:var(--ember-soft);}
+  strong{color:var(--ink);font-weight:600;}
+  .mono{font-family:"JetBrains Mono",monospace;font-size:0.84em;color:var(--ink-dim);}
+
+  .intro p{font-size:20px;max-width:76ch;}
+
+  /* ---------- entry cards ---------- */
+  .entry{
+    margin:0 0 22px 44px;padding:22px 26px;
+    background:var(--bg-card);border:1px solid var(--line);
+    border-left:2px solid var(--ember);border-radius:3px;
+  }
+  .entry.teal{border-left-color:var(--teal);}
+  .entry h3{
+    font-family:"Fraunces",serif;font-weight:600;font-size:21px;
+    margin:0 0 4px;color:var(--ink);letter-spacing:-0.01em;
+  }
+  .entry .src{
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;
+    color:var(--ink-faint);letter-spacing:0.03em;margin-bottom:12px;
+  }
+  .entry .src b{color:var(--teal-soft);font-weight:500;}
+  .entry p{margin:0;font-size:16.5px;line-height:1.55;color:var(--ink-dim);max-width:80ch;}
+  .entry p + p{margin-top:10px;}
+
+  /* ---------- figure blocks ---------- */
+  figure{margin:38px 0;padding:0;}
+  .figframe{
+    background:var(--bg-raised);border:1px solid var(--line);
+    border-radius:5px;padding:30px 26px 20px;box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  figcaption{
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;
+    color:var(--ink-faint);letter-spacing:0.04em;margin-top:16px;
+    padding-top:14px;border-top:1px solid var(--line);
+  }
+  figcaption b{color:var(--ember);font-weight:500;}
+  .figlabel{
+    font-family:"JetBrains Mono",monospace;font-size:11px;
+    letter-spacing:0.26em;text-transform:uppercase;color:var(--teal);
+    margin-bottom:18px;
+  }
+  svg{display:block;width:100%;height:auto;}
+  svg text{font-family:"JetBrains Mono",monospace;}
+
+  /* ---------- gaps list ---------- */
+  .gap{margin:0 0 18px 44px;padding-left:20px;border-left:1px solid var(--line-strong);}
+  .gap h3{font-family:"Fraunces",serif;font-weight:500;font-style:italic;font-size:20px;color:var(--ember-soft);margin:0 0 6px;}
+  .gap p{font-size:16.5px;color:var(--ink-dim);margin:0;max-width:80ch;}
+
+  /* ---------- references ---------- */
+  .refs{columns:2;column-gap:42px;margin-left:0;}
+  .refs .ref{
+    break-inside:avoid;margin-bottom:14px;
+    font-size:14px;line-height:1.45;color:var(--ink-dim);
+  }
+  .refs .ref .tag{
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ember);
+    display:block;letter-spacing:0.05em;margin-bottom:2px;
+  }
+  footer{padding:50px 0 80px;color:var(--ink-faint);font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.03em;}
+
+  @media(max-width:720px){
+    body{font-size:17px;}
+    .sec-tag,.entry,.gap{margin-left:0;}
+    .refs{columns:1;}
+    .meta-row{gap:8px 18px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">Robotics Eval &nbsp;/&nbsp; Survey Dossier</div>
+    <h1 class="title">Dexterous Hand<br><em>Benchmarks</em></h1>
+    <div class="subtitle">A literature review of how the field measures the hand, the grasp, and the policy.</div>
+    <div class="meta-row">
+      <span><b>Scope</b> &nbsp;benchmarks · datasets · devices · VLAs</span>
+      <span><b>Compiled</b> &nbsp;Jun 2026</span>
+      <span><b>Anchors</b> &nbsp;DexYCB · DexArt</span>
+      <span><b>Entries</b> &nbsp;24 systems</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <p class="lead">The two starting references sit in two different paradigms. <strong>DexYCB</strong> (NVIDIA, CVPR 2021) is a perception dataset for capturing hand grasping of objects, built for pose estimation and human-to-robot handover. <strong>DexArt</strong> (UC San Diego, CVPR 2023) is a simulation reinforcement-learning benchmark for generalizable manipulation of articulated objects with a multi-finger hand. Most of the field splits along that axis, plus a third cluster that has become much more active recently: benchmarks that measure the <em>device itself</em> rather than any policy running on it.</p>
+    <p>This dossier organizes the space into six paradigms, traces the timeline from 2021 to 2026, compares the hardware on degrees of freedom, and closes with the gaps that matter from an evaluation-infrastructure standpoint.</p>
+  </section>
+
+  <!-- ============ FIGURE 1: TAXONOMY MAP ============ -->
+  <figure>
+    <div class="figframe">
+      <div class="figlabel">Figure 1 — The benchmark landscape, six paradigms</div>
+      <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Taxonomy map of dexterous hand benchmark paradigms">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 Z" fill="#6f6b61"/>
+          </marker>
+        </defs>
+        <!-- axis label -->
+        <text x="20" y="30" fill="#54a89b" font-size="12" letter-spacing="2">DEVICE-CENTRIC</text>
+        <text x="940" y="30" fill="#54a89b" font-size="12" letter-spacing="2" text-anchor="end">POLICY / MODEL-CENTRIC</text>
+        <line x1="20" y1="42" x2="940" y2="42" stroke="#54a89b" stroke-opacity="0.3" stroke-dasharray="2 5"/>
+
+        <!-- TOP BAND: VLA layer spanning across -->
+        <rect x="20" y="70" width="920" height="78" rx="5" fill="#191b20" stroke="#e0843c" stroke-opacity="0.55"/>
+        <text x="40" y="98" fill="#e0843c" font-size="13" font-weight="700" letter-spacing="2">06 · GENERALIST VLA / FOUNDATION MODELS</text>
+        <text x="40" y="122" fill="#aaa59a" font-size="12.5">DexVLA · DexGraspVLA · GR00T N1 · &#960;0.5 · Gemini Robotics · TRI LBM eval</text>
+        <text x="40" y="140" fill="#6f6b61" font-size="11">cuts across every embodiment; eval shifts from task policy to generalist model</text>
+
+        <!-- MIDDLE: four paradigm columns -->
+        <!-- col 1 hardware-dex -->
+        <rect x="20" y="180" width="218" height="150" rx="5" fill="#191b20" stroke="#54a89b" stroke-opacity="0.5"/>
+        <text x="34" y="206" fill="#54a89b" font-size="12.5" font-weight="700">01 · HARDWARE</text>
+        <text x="34" y="222" fill="#54a89b" font-size="12.5" font-weight="700">DEXTERITY</text>
+        <text x="34" y="248" fill="#aaa59a" font-size="11.5">POMDAR (ETH)</text>
+        <text x="34" y="266" fill="#aaa59a" font-size="11.5">ORCA dexterity bench</text>
+        <text x="34" y="284" fill="#aaa59a" font-size="11.5">Elliott &amp; Connolly</text>
+        <text x="34" y="302" fill="#aaa59a" font-size="11.5">MFR (Allegro)</text>
+        <text x="34" y="322" fill="#6f6b61" font-size="10.5">taxonomy · throughput · real+sim</text>
+
+        <!-- col 2 perception -->
+        <rect x="252" y="180" width="218" height="150" rx="5" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
+        <text x="266" y="206" fill="#cdc8bd" font-size="12.5" font-weight="700">02 · PERCEPTION</text>
+        <text x="266" y="222" fill="#cdc8bd" font-size="12.5" font-weight="700">DATASETS</text>
+        <text x="266" y="248" fill="#aaa59a" font-size="11.5">DexYCB (NVIDIA)</text>
+        <text x="266" y="266" fill="#6f6b61" font-size="10.5">hand+object pose</text>
+        <text x="266" y="283" fill="#6f6b61" font-size="10.5">6D pose · keypoints</text>
+        <text x="266" y="300" fill="#6f6b61" font-size="10.5">handover grasp gen</text>
+
+        <!-- col 3 grasp synthesis -->
+        <rect x="484" y="180" width="218" height="150" rx="5" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
+        <text x="498" y="206" fill="#cdc8bd" font-size="12.5" font-weight="700">03 · GRASP</text>
+        <text x="498" y="222" fill="#cdc8bd" font-size="12.5" font-weight="700">SYNTHESIS / EVAL</text>
+        <text x="498" y="248" fill="#aaa59a" font-size="11.5">DexGraspNet</text>
+        <text x="498" y="266" fill="#aaa59a" font-size="11.5">Get a Grip (Stanford)</text>
+        <text x="498" y="284" fill="#aaa59a" font-size="11.5">GraspGen (NVIDIA)</text>
+        <text x="498" y="302" fill="#aaa59a" font-size="11.5">DextrAH-RGB</text>
+        <text x="498" y="322" fill="#6f6b61" font-size="10.5">grasp success at scale · sim2real</text>
+
+        <!-- col 4 sim RL -->
+        <rect x="716" y="180" width="224" height="150" rx="5" fill="#191b20" stroke="#54a89b" stroke-opacity="0.5"/>
+        <text x="730" y="206" fill="#54a89b" font-size="12.5" font-weight="700">04 · SIMULATION</text>
+        <text x="730" y="222" fill="#54a89b" font-size="12.5" font-weight="700">RL / POLICY</text>
+        <text x="730" y="248" fill="#aaa59a" font-size="11.5">DexArt (UCSD)</text>
+        <text x="730" y="266" fill="#aaa59a" font-size="11.5">Bi-DexHands</text>
+        <text x="730" y="284" fill="#aaa59a" font-size="11.5">DexMimicGen (NVIDIA)</text>
+        <text x="730" y="322" fill="#6f6b61" font-size="10.5">articulated · bimanual · data gen</text>
+
+        <!-- BOTTOM BAND: hardware substrate -->
+        <rect x="20" y="362" width="920" height="118" rx="5" fill="#16181c" stroke="#7f7a70" stroke-opacity="0.4"/>
+        <text x="40" y="388" fill="#cdc8bd" font-size="13" font-weight="700" letter-spacing="2">05 · HARDWARE SUBSTRATE — THE HAND AS A DEVICE</text>
+        <text x="40" y="414" fill="#54a89b" font-size="11.5" font-weight="700">RESEARCH OPEN HW</text>
+        <text x="40" y="432" fill="#aaa59a" font-size="11.5">LEAP / LEAP V2 (CMU) · Allegro · Shadow DEX-EE (Shadow × DeepMind) · ORCA</text>
+        <text x="40" y="450" fill="#aaa59a" font-size="11.5">Teleop: DOGlove · DexUMI</text>
+        <text x="520" y="414" fill="#e0843c" font-size="11.5" font-weight="700">COMMERCIAL HUMANOID</text>
+        <text x="520" y="432" fill="#aaa59a" font-size="11.5">Tesla Optimus · Figure 03 · Sanctuary · Agility Digit · SCHUNK SVH</text>
+        <text x="520" y="450" fill="#6f6b61" font-size="10.5">converging on 5-finger, 22–24 DoF, diverging on actuation</text>
+
+        <!-- connectors -->
+        <line x1="129" y1="362" x2="129" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
+        <line x1="361" y1="362" x2="361" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
+        <line x1="593" y1="362" x2="593" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
+        <line x1="828" y1="362" x2="828" y2="330" stroke="#6f6b61" marker-end="url(#arrow)"/>
+        <line x1="480" y1="180" x2="480" y2="148" stroke="#6f6b61" marker-end="url(#arrow)"/>
+      </svg>
+      <figcaption><b>Reading:</b> paradigms run left (measuring the device) to right (measuring the policy). The hardware substrate feeds every evaluation column; generalist VLAs sit on top, cutting across all embodiments.</figcaption>
+    </div>
+  </figure>
+
+  <!-- ============ 01 HARDWARE DEXTERITY ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Hardware-dexterity benchmarks</h2></div>
+    <div class="sec-tag">The hand as a device</div>
+    <p>The freshest cluster, and the one closest to evaluation-infrastructure work, because it measures the device rather than a policy. The recurring complaint is that hands get compared on proxy metrics like degrees of freedom or reachable workspace, which describe potential but not performance.</p>
+
+    <div class="entry teal">
+      <h3>POMDAR</h3>
+      <div class="src">ETH Zurich · Soft Robotics Lab (Katzschmann) · <b>arXiv 2604.09294</b> · Apr 2026</div>
+      <p>Formalizes dexterity as task performance across a structured set of manipulation and grasping motions derived from human-motor-control taxonomies (Elliott &amp; Connolly, Ma &amp; Dollar, Feix GRASP). Implemented in both real-world and simulation across four configurations: vertical, horizontal, continuous rotation, and pure grasping.</p>
+      <p>Two transferable primitives: mechanical scaffolds that constrain motion to the intended DoF and suppress compensatory strategies (gravity assist, palm support, excess wrist motion), and a single score combining task correctness with execution speed, treating dexterity as throughput. Fully 3D-printable and open source.</p>
+    </div>
+
+    <div class="entry teal">
+      <h3>ORCA-hand dexterity benchmark</h3>
+      <div class="src">arXiv 2604.09294-adjacent · 2026</div>
+      <p>Evaluates ORCA-hand embodiments with degrees of freedom locked and unlocked from 5 to 16 DoF. The largest performance gaps appear on tasks requiring coordinated multi-finger interaction and finger abduction (squeeze, palmar, chopsticks), which is direct evidence that DoF count alone is a poor dexterity proxy.</p>
+    </div>
+
+    <div class="entry teal">
+      <h3>MFR_benchmark · Elliott &amp; Connolly lineage</h3>
+      <div class="src">UMich ARM Lab · plus classic E&amp;C, 50 HD-marks, Dexterity Test Board</div>
+      <p>MFR is a multi-finger reorientation suite (valve turning, cuboid insertion, screwdriver turning, object reorientation) implemented on the Allegro hand. POMDAR catalogs the older task-performance benchmarks worth citing for lineage.</p>
+    </div>
+  </section>
+
+  <!-- ============ 02 PERCEPTION ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Perception datasets</h2></div>
+    <div class="sec-tag">Where DexYCB lives</div>
+    <div class="entry">
+      <h3>DexYCB</h3>
+      <div class="src">NVIDIA (Chao, Fox et al.) · <b>CVPR 2021</b> · arXiv 2104.04631</div>
+      <p>A dataset for capturing hand grasping of objects, benchmarking three tasks: 2D object and keypoint detection, 6D object pose estimation, and 3D hand pose estimation. It also defines a robotics task: generating safe robot grasps in human-to-robot handover. CC BY-NC 4.0, with an open evaluation toolkit. This is a data and perception benchmark, not a control benchmark.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 GRASP SYNTHESIS ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Grasp synthesis and grasp evaluation</h2></div>
+    <div class="sec-tag">Does the grasp hold, and at what scale</div>
+    <div class="entry">
+      <h3>DexGraspNet</h3>
+      <div class="src">He Wang / Hao Su lineage · large-scale ShadowHand grasp dataset</div>
+      <p>The standard large-scale dexterous grasp dataset for synthesis evaluation, widely used as a training and benchmarking source for grasp generators.</p>
+    </div>
+    <div class="entry">
+      <h3>Get a Grip</h3>
+      <div class="src">Stanford (Lum et al., Bohg lab) · <b>arXiv 2410.23701</b> · 2024</div>
+      <p>Multi-finger grasp evaluation at scale, explicitly framed around enabling robust sim-to-real transfer of grasp quality prediction.</p>
+    </div>
+    <div class="entry">
+      <h3>GraspGen · DextrAH-RGB</h3>
+      <div class="src">NVIDIA Research (Singh, Handa, Van Wyk et al.) · 2024–2025</div>
+      <p>GraspGen is a diffusion-based 6-DOF grasping framework backed by a synthetic dataset of over 57 million grasps across robots and grippers. DextrAH-RGB is a sim-to-real workflow for dexterous grasping from stereo RGB input, from the same group that built DexYCB.</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 SIM RL ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Simulation RL and policy benchmarks</h2></div>
+    <div class="sec-tag">DexArt's family</div>
+    <div class="entry teal">
+      <h3>DexArt</h3>
+      <div class="src">UC San Diego (Bao, Xu, Qin, Wang) · <b>CVPR 2023</b> · arXiv 2305.05706</div>
+      <p>Dexterous manipulation of articulated objects (faucets, laptops, buckets, toilets) in a physics simulator, evaluating generalization to unseen articulated objects and robustness to camera viewpoint change. Uses PPO with a PointNet backbone on point-cloud input. Key finding: 3D geometric representation learning gives strong robustness to viewpoint shift where ResNet-based policies collapse.</p>
+    </div>
+    <div class="entry teal">
+      <h3>Bi-DexHands</h3>
+      <div class="src">Built on Isaac Gym</div>
+      <p>Tasks calibrated to human-motor-skill levels from cognitive-science literature, reaching 30,000+ FPS on a single RTX 3090. Provides a comprehensive benchmark across single-agent, multi-agent, offline, multi-task, and meta RL settings.</p>
+    </div>
+    <div class="entry teal">
+      <h3>DexMimicGen</h3>
+      <div class="src">NVIDIA GEAR + UT Austin + UCSD (Jiang, Mandlekar, Fan, Zhu) · <b>ICRA 2025</b> · arXiv 2410.24185</div>
+      <p>A simulation environment suite as much as a data pipeline. Generates 21K demonstrations from just 60 source human demos across bimanual dexterous tasks, spanning independent, coordinated, and sequential two-arm subtasks, with a real-to-sim-to-real deployment loop. The bimanual successor to MimicGen and a natural reference point for competitive analysis.</p>
+    </div>
+  </section>
+
+  <!-- ============ FIGURE 2: TIMELINE ============ -->
+  <figure>
+    <div class="figframe">
+      <div class="figlabel">Figure 2 — Timeline, 2021 to 2026</div>
+      <svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline of dexterous hand benchmarks and models 2021 to 2026">
+        <!-- baseline -->
+        <line x1="40" y1="180" x2="920" y2="180" stroke="#54a89b" stroke-opacity="0.45" stroke-width="1.5"/>
+        <!-- year ticks -->
+        <g fill="#e8e5dc" font-size="15" font-weight="700">
+          <text x="60"  y="214" text-anchor="middle">2021</text>
+          <text x="230" y="214" text-anchor="middle">2023</text>
+          <text x="400" y="214" text-anchor="middle">2024</text>
+          <text x="600" y="214" text-anchor="middle">2025</text>
+          <text x="850" y="214" text-anchor="middle">2026</text>
+        </g>
+        <g fill="#54a89b">
+          <circle cx="60" cy="180" r="5"/><circle cx="230" cy="180" r="5"/>
+          <circle cx="400" cy="180" r="5"/><circle cx="600" cy="180" r="5"/>
+          <circle cx="850" cy="180" r="5"/>
+        </g>
+
+        <!-- 2021 above -->
+        <line x1="60" y1="180" x2="60" y2="120" stroke="#6f6b61"/>
+        <rect x="14" y="78" width="92" height="42" rx="3" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
+        <text x="60" y="96" text-anchor="middle" fill="#cdc8bd" font-size="12" font-weight="700">DexYCB</text>
+        <text x="60" y="112" text-anchor="middle" fill="#6f6b61" font-size="9.5">NVIDIA · dataset</text>
+
+        <!-- 2023 below -->
+        <line x1="230" y1="180" x2="230" y2="244" stroke="#6f6b61"/>
+        <rect x="176" y="244" width="108" height="58" rx="3" fill="#191b20" stroke="#54a89b" stroke-opacity="0.5"/>
+        <text x="230" y="262" text-anchor="middle" fill="#54a89b" font-size="12" font-weight="700">DexArt</text>
+        <text x="230" y="277" text-anchor="middle" fill="#6f6b61" font-size="9.5">UCSD · sim RL</text>
+        <text x="230" y="293" text-anchor="middle" fill="#aaa59a" font-size="10">LEAP Hand · CMU</text>
+
+        <!-- 2024 above -->
+        <line x1="400" y1="180" x2="400" y2="112" stroke="#6f6b61"/>
+        <rect x="338" y="50" width="124" height="62" rx="3" fill="#191b20" stroke="#7f7a70" stroke-opacity="0.5"/>
+        <text x="400" y="68" text-anchor="middle" fill="#cdc8bd" font-size="12" font-weight="700">DexMimicGen</text>
+        <text x="400" y="83" text-anchor="middle" fill="#6f6b61" font-size="9.5">NVIDIA · data gen</text>
+        <text x="400" y="98" text-anchor="middle" fill="#aaa59a" font-size="10">Shadow DEX-EE</text>
+        <text x="400" y="108" text-anchor="middle" fill="#6f6b61" font-size="9">DeepMind · Get a Grip</text>
+
+        <!-- 2025 below -->
+        <line x1="600" y1="180" x2="600" y2="244" stroke="#6f6b61"/>
+        <rect x="528" y="244" width="144" height="76" rx="3" fill="#191b20" stroke="#e0843c" stroke-opacity="0.55"/>
+        <text x="600" y="262" text-anchor="middle" fill="#e0843c" font-size="12" font-weight="700">VLA wave</text>
+        <text x="600" y="278" text-anchor="middle" fill="#aaa59a" font-size="10">DexVLA · DexGraspVLA</text>
+        <text x="600" y="293" text-anchor="middle" fill="#aaa59a" font-size="10">GR00T N1 · Gemini Robotics</text>
+        <text x="600" y="308" text-anchor="middle" fill="#aaa59a" font-size="10">TRI LBM dexterity eval</text>
+
+        <!-- 2026 above -->
+        <line x1="850" y1="180" x2="850" y2="120" stroke="#6f6b61"/>
+        <rect x="788" y="74" width="124" height="46" rx="3" fill="#191b20" stroke="#54a89b" stroke-opacity="0.55"/>
+        <text x="850" y="92" text-anchor="middle" fill="#54a89b" font-size="12" font-weight="700">POMDAR</text>
+        <text x="850" y="107" text-anchor="middle" fill="#6f6b61" font-size="9.5">ETH · hardware dexterity</text>
+        <text x="850" y="117" text-anchor="middle" fill="#aaa59a" font-size="9">ORCA bench</text>
+
+        <text x="40" y="345" fill="#6f6b61" font-size="11">teal = device / control benchmarks &nbsp;·&nbsp; grey = data &nbsp;·&nbsp; ember = generalist models</text>
+      </svg>
+      <figcaption><b>Trajectory:</b> the field moved from perception datasets, to simulation policy benchmarks and open hardware, to generalist VLAs, and most recently back to rigorous device-level dexterity benchmarking.</figcaption>
+    </div>
+  </figure>
+
+  <!-- ============ 05 VLA ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>VLAs and foundation models on dexterous hands</h2></div>
+    <div class="sec-tag">Where the eval target is moving</div>
+    <p>The evaluation target is shifting from task-specific policies to generalist models running on dexterous embodiments. This matters because failure modes change and attribution gets harder.</p>
+    <div class="entry">
+      <h3>DexVLA</h3>
+      <div class="src">Yichen Zhu et al. · <b>arXiv 2502.05855</b> · 2025</div>
+      <p>A billion-parameter diffusion action expert with embodiment curriculum learning, tested across single-arm, bimanual, and dexterous-hand embodiments, reported to beat Octo, OpenVLA, and Diffusion Policy.</p>
+    </div>
+    <div class="entry">
+      <h3>DexGraspVLA</h3>
+      <div class="src">Zhong et al. · <b>arXiv 2502.20900</b> · 2025</div>
+      <p>A hierarchical framework using a pretrained VLM as high-level planner plus a diffusion-based low-level controller for language-guided general dexterous grasping.</p>
+    </div>
+    <div class="entry">
+      <h3>GR00T N1 · Gemini Robotics · &#960;0.5</h3>
+      <div class="src">NVIDIA · Google DeepMind · Physical Intelligence · 2025</div>
+      <p>The generalist humanoid and dexterous foundation models. &#960;0 and &#960;0.5 use flow matching for continuous action prediction enabling dexterous manipulation at up to 50 Hz; GR00T attends to the last VLM layer via cross attention.</p>
+    </div>
+    <div class="entry">
+      <h3>TRI Large Behavior Models — dexterity eval</h3>
+      <div class="src">Toyota Research Institute · 2025 · "A Careful Examination of LBMs for Multitask Dexterous Manipulation"</div>
+      <p>An evaluation-methodology paper rather than a new model. Recent challenge writeups echo its theme: dexterity issues, clumsiness in grasping and releasing, dominate VLA failure modes ahead of progress and order errors and out-of-distribution confusion. This failure-attribution framing is the most directly relevant to counterfactual episode recording for eval.</p>
+    </div>
+  </section>
+
+  <!-- ============ 06 HARDWARE DEVICES ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Hardware devices: research and frontier companies</h2></div>
+    <div class="sec-tag">The substrate everything runs on</div>
+    <div class="entry teal">
+      <h3>LEAP Hand / LEAP V2</h3>
+      <div class="src">CMU (Shaw, Agarwal, Pathak) · <b>RSS 2023</b> · arXiv 2309.06440</div>
+      <p>Assembled in 4 hours for 2000 USD from off-the-shelf parts, with a kinematic structure designed for maximal dexterity regardless of finger pose. Reported to outperform Allegro across experiments at one-eighth the cost. LEAP V2 (the DLA Hand) adds a hybrid rigid-soft build with a 3D-printed soft skin over an internal bone structure and a powered foldable palm, around 3000 USD.</p>
+    </div>
+    <div class="entry teal">
+      <h3>Shadow DEX-EE · Shadow Hand</h3>
+      <div class="src">Shadow Robot × Google DeepMind · May 2024</div>
+      <p>DEX-EE is a modular multi-finger hand built for reinforcement learning, with modular finger units, hundreds of tactile sensors per hand, and durability across thousands of impact cycles. The classic Shadow Hand is 24 DoF, the same as OpenAI's Dactyl.</p>
+    </div>
+    <div class="entry teal">
+      <h3>Teleop and data devices: DOGlove · DexUMI</h3>
+      <div class="src">Tsinghua (arXiv 2502.07730) · arXiv 2505.21864</div>
+      <p>DOGlove is a low-cost open-source haptic force-feedback glove. DexUMI uses the human hand as a universal manipulation interface, transferring relative finger trajectories that prove more robust to hardware imperfection.</p>
+    </div>
+    <div class="entry">
+      <h3>Commercial humanoid hands</h3>
+      <div class="src">Tesla · Figure · Sanctuary · Agility · SCHUNK · 2024–2026</div>
+      <p>Tesla Optimus went from 11 DoF (Gen 2) to 22 DoF on the hand plus 3 on the wrist, using a tendon-driven design with actuators relocated to the forearm. Treat any spec as provisional: Musk stated in April 2026 that a patented 25-actuator design did not work and Tesla iterated again. Figure 03 reports 24+ DoF hands paired with the Helix platform. Sanctuary uses hydraulic actuation, diverging from the all-electric trend. As of 2026 the field has converged on five-fingered anthropomorphic hands but diverges sharply on actuation, sensing, and control.</p>
+    </div>
+  </section>
+
+  <!-- ============ FIGURE 3: DOF CHART ============ -->
+  <figure>
+    <div class="figframe">
+      <div class="figlabel">Figure 3 — Degrees of freedom per hand</div>
+      <svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart comparing degrees of freedom across robotic hands">
+        <!-- scale: x from 220 to 900 maps 0..28 -->
+        <!-- gridlines -->
+        <g stroke="#e8e5dc" stroke-opacity="0.08">
+          <line x1="220" y1="40" x2="220" y2="372"/>
+          <line x1="365" y1="40" x2="365" y2="372"/>
+          <line x1="510" y1="40" x2="510" y2="372"/>
+          <line x1="656" y1="40" x2="656" y2="372"/>
+          <line x1="801" y1="40" x2="801" y2="372"/>
+        </g>
+        <g fill="#6f6b61" font-size="11" text-anchor="middle">
+          <text x="220" y="392">0</text>
+          <text x="365" y="392">6</text>
+          <text x="510" y="392">12</text>
+          <text x="656" y="392">18</text>
+          <text x="801" y="392">24</text>
+        </g>
+        <text x="560" y="412" fill="#6f6b61" font-size="11" text-anchor="middle">degrees of freedom (hand, excluding wrist)</text>
+
+        <!-- bars: y rows; width = value*24.16 px per DoF (680px/28? use 24.28) -->
+        <!-- human reference (dashed) value 27 -> width 27*24.28=655 -->
+        <g font-size="13">
+          <!-- Human -->
+          <text x="206" y="68" text-anchor="end" fill="#cdc8bd" font-weight="700">Human hand</text>
+          <rect x="220" y="56" width="655" height="20" rx="2" fill="none" stroke="#f2b582" stroke-dasharray="4 4"/>
+          <text x="884" y="71" fill="#f2b582" font-size="12" font-weight="700">27</text>
+
+          <!-- Shadow / Dactyl 24 -> 583 -->
+          <text x="206" y="108" text-anchor="end" fill="#aaa59a">Shadow · Dactyl</text>
+          <rect x="220" y="96" width="583" height="20" rx="2" fill="#54a89b" fill-opacity="0.85"/>
+          <text x="812" y="111" fill="#8fd0c5" font-size="12" font-weight="700">24</text>
+
+          <!-- Figure 03 24+ -->
+          <text x="206" y="148" text-anchor="end" fill="#aaa59a">Figure 03</text>
+          <rect x="220" y="136" width="583" height="20" rx="2" fill="#e0843c" fill-opacity="0.85"/>
+          <text x="812" y="151" fill="#f2b582" font-size="12" font-weight="700">24+</text>
+
+          <!-- Tesla Optimus 22 -> 534 -->
+          <text x="206" y="188" text-anchor="end" fill="#aaa59a">Tesla Optimus G3</text>
+          <rect x="220" y="176" width="534" height="20" rx="2" fill="#e0843c" fill-opacity="0.85"/>
+          <text x="763" y="191" fill="#f2b582" font-size="12" font-weight="700">22</text>
+
+          <!-- Allegro 16 -> 388 -->
+          <text x="206" y="228" text-anchor="end" fill="#aaa59a">Allegro</text>
+          <rect x="220" y="216" width="388" height="20" rx="2" fill="#54a89b" fill-opacity="0.6"/>
+          <text x="617" y="231" fill="#8fd0c5" font-size="12" font-weight="700">16</text>
+
+          <!-- LEAP 16 -->
+          <text x="206" y="268" text-anchor="end" fill="#aaa59a">LEAP Hand</text>
+          <rect x="220" y="256" width="388" height="20" rx="2" fill="#54a89b" fill-opacity="0.6"/>
+          <text x="617" y="271" fill="#8fd0c5" font-size="12" font-weight="700">16</text>
+
+          <!-- ORCA <=16 -->
+          <text x="206" y="308" text-anchor="end" fill="#aaa59a">ORCA (max)</text>
+          <rect x="220" y="296" width="388" height="20" rx="2" fill="#54a89b" fill-opacity="0.6"/>
+          <text x="617" y="311" fill="#8fd0c5" font-size="12" font-weight="700">&#8804;16</text>
+
+          <!-- Tesla Gen2 11 -> 267 -->
+          <text x="206" y="348" text-anchor="end" fill="#6f6b61">Optimus Gen 2</text>
+          <rect x="220" y="336" width="267" height="20" rx="2" fill="#7f7a70" fill-opacity="0.5"/>
+          <text x="496" y="351" fill="#aaa59a" font-size="12" font-weight="700">11</text>
+        </g>
+      </svg>
+      <figcaption><b>Caveat:</b> DoF is a potential metric, not a performance metric. POMDAR and the ORCA study both show task success depends on which DoF (especially abduction) are usable, not the raw count. Commercial specs (ember) are provisional and change between hardware revisions.</figcaption>
+    </div>
+  </figure>
+
+  <!-- ============ GAPS ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>Gaps worth noting</h2></div>
+    <div class="sec-tag">Evaluation-infrastructure lens</div>
+    <div class="gap">
+      <h3>The paradigms do not talk to each other.</h3>
+      <p>Simulation benchmarks (DexArt, Bi-DexHands, DexMimicGen) and hardware-dexterity benchmarks (POMDAR, the Elliott &amp; Connolly lineage) are disconnected. There is no standardized bridge that scores a policy on a specific hand against a taxonomy-grounded dexterity baseline. POMDAR's throughput metric and scaffold methodology are the most transferable primitives to build on.</p>
+    </div>
+    <div class="gap">
+      <h3>Failure attribution for dexterous VLAs is still manual.</h3>
+      <p>The TRI and challenge writeups label failures by hand. A benchmark that records why a dexterous grasp failed, with counterfactual rollouts, would be novel and sits directly adjacent to counterfactual episode recording for eval.</p>
+    </div>
+    <div class="gap">
+      <h3>Hand-agnostic evaluation is nearly absent.</h3>
+      <p>Almost everything is tied to one embodiment: Allegro for MFR, ShadowHand for DexGraspNet, specific humanoids for the VLAs. Given the DoF churn at Tesla and Figure, an eval format robust across hand morphologies would carry real value.</p>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCES ============ -->
+  <section>
+    <div class="sec-head"><span class="sec-num">08</span><h2>References</h2></div>
+    <div class="sec-tag">Primary sources</div>
+    <div class="refs">
+      <div class="ref"><span class="tag">DexYCB</span>Chao et al., NVIDIA. CVPR 2021. <a href="https://arxiv.org/abs/2104.04631">arXiv:2104.04631</a> · <a href="https://dex-ycb.github.io/">dex-ycb.github.io</a></div>
+      <div class="ref"><span class="tag">DexArt</span>Bao, Xu, Qin, Wang, UCSD. CVPR 2023. <a href="https://arxiv.org/abs/2305.05706">arXiv:2305.05706</a> · <a href="https://www.chenbao.tech/dexart/">chenbao.tech/dexart</a></div>
+      <div class="ref"><span class="tag">POMDAR</span>Liconti, Zhou et al., ETH Zurich. 2026. <a href="https://arxiv.org/abs/2604.09294">arXiv:2604.09294</a> · <a href="https://srl-ethz.github.io/POMDAR/">srl-ethz.github.io/POMDAR</a></div>
+      <div class="ref"><span class="tag">DexMimicGen</span>Jiang et al., NVIDIA / UT Austin. ICRA 2025. <a href="https://arxiv.org/abs/2410.24185">arXiv:2410.24185</a> · <a href="https://dexmimicgen.github.io/">dexmimicgen.github.io</a></div>
+      <div class="ref"><span class="tag">LEAP Hand</span>Shaw, Agarwal, Pathak, CMU. RSS 2023. <a href="https://arxiv.org/abs/2309.06440">arXiv:2309.06440</a> · <a href="https://leap-hand.github.io/">leap-hand.github.io</a></div>
+      <div class="ref"><span class="tag">Get a Grip</span>Lum et al., Stanford. 2024. <a href="https://arxiv.org/abs/2410.23701">arXiv:2410.23701</a></div>
+      <div class="ref"><span class="tag">DexVLA</span>Zhu et al. 2025. <a href="https://arxiv.org/abs/2502.05855">arXiv:2502.05855</a></div>
+      <div class="ref"><span class="tag">DexGraspVLA</span>Zhong et al. 2025. <a href="https://arxiv.org/abs/2502.20900">arXiv:2502.20900</a> · <a href="https://dexgraspvla.github.io/">dexgraspvla.github.io</a></div>
+      <div class="ref"><span class="tag">DOGlove</span>Zhang, Hu, Yuan, Xu, Tsinghua. 2025. <a href="https://arxiv.org/abs/2502.07730">arXiv:2502.07730</a></div>
+      <div class="ref"><span class="tag">DexUMI</span>2025. <a href="https://arxiv.org/abs/2505.21864">arXiv:2505.21864</a></div>
+      <div class="ref"><span class="tag">DextrAH-RGB</span>Singh, Handa, Van Wyk et al., NVIDIA. 2024. <a href="https://arxiv.org/abs/2412.01791">arXiv:2412.01791</a></div>
+      <div class="ref"><span class="tag">NVIDIA R2D2</span>GraspGen, DexMimicGen, DextrAH digest. 2025. <a href="https://developer.nvidia.com/blog/r²d²-adapting-dexterous-robots-with-nvidia-research-workflows-and-models">developer.nvidia.com</a></div>
+      <div class="ref"><span class="tag">MFR benchmark</span>UMich ARM Lab. <a href="https://github.com/UM-ARM-Lab/MFR_benchmark">github.com/UM-ARM-Lab/MFR_benchmark</a></div>
+      <div class="ref"><span class="tag">Humanoid hands</span>Tesla / Figure / Sanctuary DoF survey. <a href="https://en.wikipedia.org/wiki/Humanoid_hand">en.wikipedia.org/wiki/Humanoid_hand</a></div>
+    </div>
+  </section>
+
+  <footer>
+    Compiled from public web sources, June 2026 · Diagrams hand-built (SVG) · For SomaStacks competitive-analysis reference · Specs marked provisional change between hardware revisions.
+  </footer>
+
+</div>
+</body>
+</html>

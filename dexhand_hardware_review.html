@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dexterous Hand Hardware — Landscape Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0e10;
+    --bg-2:#121518;
+    --panel:#15191d;
+    --panel-2:#1b2025;
+    --line:#262d33;
+    --line-bright:#3a444c;
+    --ink:#e8e4dc;
+    --ink-dim:#9aa2a8;
+    --ink-faint:#5f6a71;
+    --amber:#e0a45c;
+    --amber-bright:#f4b96b;
+    --cyan:#6fd0c8;
+    --rust:#c46a4a;
+    --green:#86b06a;
+    --violet:#9d8fc4;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Archivo',system-ui,sans-serif;
+    --serif:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(224,164,92,.06), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(111,208,200,.05), transparent 42%);
+    background-attachment:fixed;
+  }
+  /* grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ---------- header ---------- */
+  header.hero{
+    border-bottom:1px solid var(--line);
+    padding:90px 0 54px;
+    position:relative;overflow:hidden;
+  }
+  .hero .kick{
+    font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:26px;display:flex;gap:14px;align-items:center;
+    opacity:0;animation:fade .7s ease .1s forwards;
+  }
+  .hero .kick::before{content:"";width:42px;height:1px;background:var(--amber)}
+  h1.title{
+    font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,82px);
+    line-height:.98;letter-spacing:-.02em;max-width:14ch;
+    opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .2s forwards;
+  }
+  h1.title em{font-style:italic;color:var(--amber-bright)}
+  .hero .sub{
+    margin-top:30px;max-width:62ch;color:var(--ink-dim);font-size:18px;
+    opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) .35s forwards;
+  }
+  .hero .meta{
+    margin-top:38px;display:flex;flex-wrap:wrap;gap:10px;
+    opacity:0;animation:fade .8s ease .55s forwards;
+  }
+  .chip{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+    border:1px solid var(--line-bright);border-radius:2px;padding:6px 11px;color:var(--ink-dim);
+    background:rgba(255,255,255,.012);
+  }
+  .chip b{color:var(--ink)}
+
+  /* ---------- section frame ---------- */
+  section{padding:74px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:36px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:.1em;padding-top:6px}
+  .sec-head h2{
+    font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.6vw,40px);
+    line-height:1.05;letter-spacing:-.015em;color:var(--ink);
+  }
+  .lead{font-size:17px;color:var(--ink-dim);max-width:74ch;margin-bottom:8px}
+
+  /* ---------- axes cards ---------- */
+  .axes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:34px}
+  .axis{background:var(--panel);padding:26px 24px;transition:background .3s}
+  .axis:hover{background:var(--panel-2)}
+  .axis .n{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.1em}
+  .axis h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:8px 0 12px;color:var(--ink)}
+  .axis p{font-size:14.5px;color:var(--ink-dim)}
+  .axis p b{color:var(--ink)}
+  .axis .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:2px;margin:3px 4px 0 0;letter-spacing:.04em}
+  .t-direct{background:rgba(224,164,92,.14);color:var(--amber-bright)}
+  .t-tendon{background:rgba(111,208,200,.14);color:var(--cyan)}
+  .t-link{background:rgba(157,143,196,.16);color:var(--violet)}
+
+  /* ---------- table ---------- */
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+  .controls .lbl{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;margin-right:6px}
+  .fbtn{
+    font-family:var(--mono);font-size:12px;letter-spacing:.03em;cursor:pointer;
+    border:1px solid var(--line-bright);background:transparent;color:var(--ink-dim);
+    padding:6px 13px;border-radius:2px;transition:all .2s;
+  }
+  .fbtn:hover{border-color:var(--amber);color:var(--ink)}
+  .fbtn.active{background:var(--amber);color:#1a1205;border-color:var(--amber);font-weight:700}
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+  table{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5px}
+  thead th{
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-faint);text-align:left;padding:14px 14px;border-bottom:1px solid var(--line-bright);
+    cursor:pointer;user-select:none;white-space:nowrap;position:relative;background:var(--bg-2);
+  }
+  thead th:hover{color:var(--amber)}
+  thead th[data-sort]::after{content:"⇅";opacity:.3;margin-left:6px;font-size:10px}
+  thead th.sorted-asc::after{content:"↑";opacity:1;color:var(--amber)}
+  thead th.sorted-desc::after{content:"↓";opacity:1;color:var(--amber)}
+  tbody td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-dim)}
+  tbody tr{transition:background .15s}
+  tbody tr:hover{background:var(--panel-2)}
+  tbody tr:last-child td{border-bottom:none}
+  .hand-name{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  .hand-org{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:3px;letter-spacing:.02em}
+  .dof{font-family:var(--mono);color:var(--amber-bright);font-weight:500}
+  .pill{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:2px;letter-spacing:.03em;white-space:nowrap}
+  .p-direct{background:rgba(224,164,92,.14);color:var(--amber-bright)}
+  .p-tendon{background:rgba(111,208,200,.14);color:var(--cyan)}
+  .p-link{background:rgba(157,143,196,.16);color:var(--violet)}
+  .p-soft{background:rgba(196,106,74,.16);color:var(--rust)}
+  .p-mixed{background:rgba(134,176,106,.14);color:var(--green)}
+  .table-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);margin-top:14px;line-height:1.7}
+
+  /* ---------- entry cards ---------- */
+  .entries{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:8px}
+  .entry{background:var(--panel);padding:28px 28px;transition:background .3s}
+  .entry:hover{background:var(--panel-2)}
+  .entry .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .entry h3{font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);letter-spacing:-.01em}
+  .entry h3 span{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.04em;font-weight:400;display:block;margin-top:4px}
+  .entry .badges{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+  .entry p{font-size:15px;color:var(--ink-dim)}
+  .entry p b{color:var(--ink);font-weight:600}
+  .entry p .hi{color:var(--amber-bright);font-family:var(--mono);font-size:13.5px}
+
+  /* ---------- themes ---------- */
+  .themes{counter-reset:th;display:grid;gap:0;margin-top:8px}
+  .theme{display:grid;grid-template-columns:64px 1fr;gap:0;border-top:1px solid var(--line);padding:24px 0}
+  .theme:first-child{border-top:none}
+  .theme .tn{font-family:var(--serif);font-size:34px;color:var(--line-bright);font-weight:300;line-height:1}
+  .theme h3{font-family:var(--sans);font-weight:600;font-size:18px;color:var(--ink);margin-bottom:8px}
+  .theme p{font-size:15px;color:var(--ink-dim);max-width:76ch}
+  .theme p b{color:var(--amber-bright);font-weight:600}
+
+  /* ---------- papers ---------- */
+  .papers{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:14px}
+  .paper{background:var(--panel);padding:18px 20px;transition:background .25s}
+  .paper:hover{background:var(--panel-2)}
+  .paper .id{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.03em}
+  .paper .t{font-size:14.5px;color:var(--ink);margin-top:5px;font-weight:500}
+  .paper .w{font-size:13px;color:var(--ink-faint);margin-top:4px}
+  .src-block{margin-top:22px;padding:20px 22px;border:1px solid var(--line);background:var(--bg-2);font-size:13.5px;color:var(--ink-dim);font-family:var(--mono);line-height:1.9}
+  .src-block b{color:var(--ink)}
+
+  /* ---------- callouts / notes ---------- */
+  .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:18px 22px;margin-top:18px;font-size:14.5px;color:var(--ink-dim)}
+  .note b{color:var(--ink)}
+  .gaps{margin-top:18px;font-size:14.5px;color:var(--ink-dim)}
+  .gaps b{color:var(--ink)}
+
+  footer{padding:50px 0 80px;color:var(--ink-faint);font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .wrap{padding:0 20px}
+    .axes,.papers{grid-template-columns:1fr}
+    .theme{grid-template-columns:44px 1fr}
+    .entry .top{flex-direction:column}
+    section{padding:54px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Hardware Landscape · Compiled June 2026</div>
+    <h1 class="title">Dexterous Hand <em>Hardware</em></h1>
+    <p class="sub">Commercial specialists, humanoid-integrated end-effectors, and the frontier research / open-source / biomimetic line. Specs are vendor- or paper-reported and should be read as claims pending independent characterization.</p>
+    <div class="meta">
+      <span class="chip"><b>14+</b> companies</span>
+      <span class="chip"><b>20</b> hands compared</span>
+      <span class="chip"><b>8</b> key papers</span>
+      <span class="chip">DOF · actuation · tactile · philosophy</span>
+    </div>
+  </div>
+</header>
+
+<!-- 1 — ORIENTATION -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Orientation — the design axes that actually matter</h2></div>
+    <p class="lead">Before the per-entry detail, four axes separate these hands from each other. "How many DOF" is no longer a clean proxy for capability.</p>
+    <div class="axes">
+      <div class="axis">
+        <div class="n">AXIS 01</div>
+        <h3>Actuation topology</h3>
+        <p>
+          <span class="tag t-direct">DIRECT / QDD</span> motors at the joint — clean mapping, backdrivable, but bulky &amp; hot in-hand.
+          <span class="tag t-link">LINKAGE</span> few motors, coupled joints — cheap &amp; strong, hard mapping.
+          <span class="tag t-tendon">TENDON</span> motors relocated to palm/base — most anthropomorphic, but friction, hysteresis &amp; calibration.
+        </p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 02</div>
+        <h3>Degrees of freedom</h3>
+        <p>From <b>6 active</b> (Inspire) through the 12–22 "human-equivalent" band, up to <b>27</b> (Clone) and Daxo's <b>108–120 actuators</b>. More DOF trades against reliability, cost, controllability and data efficiency.</p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 03</div>
+        <h3>Tactile &amp; sensing stack</h3>
+        <p>Increasingly the real differentiator: fingertip-only vs <b>full-palm arrays</b>, taxel density, force resolution, and whether <b>visuo-tactile</b> (camera-in-finger) is included.</p>
+      </div>
+      <div class="axis">
+        <div class="n">AXIS 04</div>
+        <h3>Product philosophy</h3>
+        <p>A genuine fault line: <b>maximal hardware</b> (push DOF, sensing, anthropomorphism) versus <b>data-centric minimalism</b> (simple cheap hand, win on a scaled data engine and the model).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 — COMPARISON TABLE -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Comparison — headline specs</h2></div>
+    <p class="lead">Filter by actuation, or click a column header to sort. Numbers are vendor-reported and inconsistently defined; treat single-number comparisons as approximate.</p>
+    <div class="controls">
+      <span class="lbl">Actuation</span>
+      <button class="fbtn active" data-filter="all">All</button>
+      <button class="fbtn" data-filter="direct">Direct / QDD</button>
+      <button class="fbtn" data-filter="tendon">Tendon</button>
+      <button class="fbtn" data-filter="link">Linkage</button>
+      <button class="fbtn" data-filter="soft">Soft</button>
+      <button class="fbtn" data-filter="mixed">Mixed</button>
+    </div>
+    <div class="tbl-scroll">
+      <table id="cmp">
+        <thead>
+          <tr>
+            <th data-sort="name" data-type="str">Hand / Company</th>
+            <th data-sort="dof" data-type="num">Active DOF</th>
+            <th data-sort="act" data-type="str">Actuation</th>
+            <th>Tactile</th>
+            <th>Notable</th>
+            <th data-sort="status" data-type="str">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-act="mixed" data-dof="22" data-name="SharpaWave" data-status="Mass production"><td><span class="hand-name">SharpaWave</span><span class="hand-org">Sharpa · Singapore</span></td><td class="dof">22</td><td><span class="pill p-mixed">in-finger</span></td><td>Dynamic Tactile Array, &gt;1,000 px/fingertip, ~0.005–0.02 N</td><td>On NVIDIA Isaac GR00T ref humanoid; CES 2026 honoree</td><td>Mass production (Oct '25)</td></tr>
+          <tr data-act="direct" data-dof="20" data-name="Wuji Hand" data-status="Shipping"><td><span class="hand-name">Wuji Hand</span><span class="hand-org">Wuji Tech (Pan-Motor) · Shenzhen</span></td><td class="dof">20</td><td><span class="pill p-direct">direct micro-actuators</span></td><td>data glove 526 pts</td><td>~15 N tip, ~10 kg grasp, ~1 kHz, 300k+ cycles; Genesis AI partner</td><td>Shipping</td></tr>
+          <tr data-act="direct" data-dof="12" data-name="XHAND1" data-status="Commercial"><td><span class="hand-name">XHAND1</span><span class="hand-org">RobotEra · Beijing</span></td><td class="dof">12</td><td><span class="pill p-direct">full-gear QDD</span></td><td>&gt;100 pts/finger, 270° encircling, 3D force + temp</td><td>~80 N grip, ERA-42 VLA, Vision Pro teleop</td><td>Commercial</td></tr>
+          <tr data-act="link" data-dof="6" data-name="RH56 series" data-status="Commercial mature"><td><span class="hand-name">RH56 series</span><span class="hand-org">Inspire 因时 · Beijing</span></td><td class="dof">6</td><td><span class="pill p-link">linear-servo linkage</span></td><td>force; F1 has 24 sensors</td><td>Ubiquitous (Unitree G1/H1); F1 all-metal EtherCAT 1 kHz</td><td>Commercial, mature</td></tr>
+          <tr data-act="direct" data-dof="21" data-name="Revo 3" data-status="Commercial"><td><span class="hand-name">Revo 2 / Revo 3</span><span class="hand-org">BrainCo 强脑 · Hangzhou</span></td><td class="dof">11 / 21</td><td><span class="pill p-direct">direct, backdrivable</span></td><td>full-palm + fingertip visuo-tactile (Revo 3)</td><td>BCI heritage; Revo 3 = 70 N, open-source ecosystem</td><td>Commercial; HK IPO rumored</td></tr>
+          <tr data-act="mixed" data-dof="25" data-name="Linker Hand" data-status="Mass production"><td><span class="hand-name">Linker Hand L6/L20/L30</span><span class="hand-org">Linkerbot 灵心巧手 · Beijing</span></td><td class="dof">6 / 20 / 25</td><td><span class="pill p-mixed">all three routes</span></td><td>varies</td><td>~1/10–1/20 overseas cost; 10k+ units '25, &gt;80% China share</td><td>Mass production</td></tr>
+          <tr data-act="direct" data-dof="16" data-name="Agile Hand" data-status="Commercial"><td><span class="hand-name">Agile Hand</span><span class="hand-org">Agile Robots · Munich + CN</span></td><td class="dof">15–16</td><td><span class="pill p-direct">in-finger modular</span></td><td>joint torque + fingertip</td><td>Active compliant control; on Agile ONE humanoid</td><td>Commercial</td></tr>
+          <tr data-act="tendon" data-dof="22" data-name="OmniHand" data-status="Commercial"><td><span class="hand-name">OmniHand 2025 / Pro / 3 Ultra-T</span><span class="hand-org">AgiBot 智元 · Shanghai</span></td><td class="dof">10 / 12 / 22+3</td><td><span class="pill p-tendon">tendon (Ultra-T)</span></td><td>400+ taxels (0.1 N); full-hand 3D (Ultra-T)</td><td>Modular w/ OmniPicker; open SDK</td><td>Commercial</td></tr>
+          <tr data-act="soft" data-dof="120" data-name="Muscle V0" data-status="V2 Q3 2026"><td><span class="hand-name">Muscle V0 / V2</span><span class="hand-org">Daxo Robotics · Philadelphia</span></td><td class="dof">108–120 act.</td><td><span class="pill p-soft">soft redundant tendon</span></td><td>AI-driven</td><td>Tolerates ~20% motor failure; ~$1,200 build; electronics out of hand</td><td>V2 Q3 2026</td></tr>
+          <tr data-act="direct" data-dof="1" data-name="Origami (unnamed)" data-status="Early stage"><td><span class="hand-name">(unnamed)</span><span class="hand-org">Origami Robotics · YC / US</span></td><td class="dof">TBD</td><td><span class="pill p-direct">miniature in-house</span></td><td>co-designed glove</td><td>Hand + matched data glove to close sim-real &amp; embodiment gap</td><td>Early stage</td></tr>
+          <tr data-act="direct" data-dof="27" data-name="CyberOne V2 hand" data-status="Pre-commercial"><td><span class="hand-name">CyberOne V2 hand</span><span class="hand-org">Xiaomi · in-house</span></td><td class="dof">22–27</td><td><span class="pill p-direct">in-finger</span></td><td>full-palm tactile</td><td>Liquid-cooling "sweat glands"; 1:1 scale; 150k+ cycles</td><td>Internal / pre-commercial</td></tr>
+          <tr data-act="direct" data-dof="16" data-name="Figure 03 hand" data-status="Production ramp"><td><span class="hand-name">Figure 03 hand</span><span class="hand-org">Figure AI · US</span></td><td class="dof">16</td><td><span class="pill p-direct">in-finger</span></td><td>in-house tactile (3 g), palm camera</td><td>Powers Helix-02; ~$20k robot target, BotQ 12k/yr</td><td>Production ramp</td></tr>
+          <tr data-act="direct" data-dof="7" data-name="Atlas GR2 gripper" data-status="Commercial pilots"><td><span class="hand-name">Atlas GR2 gripper</span><span class="hand-org">Boston Dynamics · US</span></td><td class="dof">7</td><td><span class="pill p-direct">electric, 3 fingers</span></td><td>tactile + palm camera</td><td>Backward-bending fingers; CES '26 pivot to tool-friendly hand</td><td>Commercial pilots (Hyundai)</td></tr>
+          <tr data-act="link" data-dof="2" data-name="Memo hands" data-status="Beta 2026"><td><span class="hand-name">Memo hands</span><span class="hand-org">Sunday Robotics · Mountain View</span></td><td class="dof">pincer</td><td><span class="pill p-link">simple clamp</span></td><td>minimal</td><td>Deliberate minimalism; ACT-1 model + Skill Capture Glove (10M episodes)</td><td>Founding Family beta</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Research / open-source / biomimetic hands (Shadow, Allegro, LEAP, ORCA, RUKA, Clone, Faive) are detailed in §05.<br>"Active DOF" vs "total joints" vs "passive DOF" are reported inconsistently across vendors — sorting is on the active-DOF figure where available.</p>
+  </div>
+</section>
+
+<!-- 3 — SPECIALISTS -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Standalone dexterous-hand specialists</h2></div>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="top"><h3>Sharpa — SharpaWave<span>Singapore</span></h3>
+          <div class="badges"><span class="pill p-mixed">22 DOF</span><span class="pill p-direct">sensing-first</span></div></div>
+        <p>A 1:1 human-scale, 22-active-DOF hand whose pitch is high-resolution touch. The proprietary <b>Dynamic Tactile Array</b> claims <span class="hi">&gt;1,000 px/fingertip</span>, sub-mm resolution, pressure sensitivity ~0.005–0.02 N over 0–30 N, and 180 FPS — enabling texture recognition and 6D force. Mass production from Oct 2025, open ROS2 stack, paired with <b>CraftNet</b> (Vision-Tactile-Language-Action, "System 0" reflex layer). Demoed at IROS 2025, CES 2026 honoree, integrated into the <b>NVIDIA Isaac GR00T</b> reference humanoid.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Wuji Tech — Wuji Hand<span>Shenzhen · ex-Pan-Motor</span></h3>
+          <div class="badges"><span class="pill p-direct">20 DOF</span><span class="pill p-direct">direct-drive</span></div></div>
+        <p>Vertically integrated on actuation. 20 active DOF, four joints per finger, <b>direct-drive micro-actuators in the phalanges</b> (no tendon slack). Reported ~0.6–0.9 kg, ~15 N fingertip, ~10 kg static grasp, ~1 kHz control, <span class="hi">300,000+ grasp cycles</span>, ~80 cm drop survival. Companion glove: 526 touch points @ 120 FPS. Strategically the hardware partner behind <b>Genesis AI's "Genesis Hand 1.0"</b> (3 ms latency, tuned for human-data collection into the GENE model).</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>RobotEra — XHAND1<span>Beijing</span></h3>
+          <div class="badges"><span class="pill p-direct">12 DOF</span><span class="pill p-direct">QDD</span></div></div>
+        <p>12 active DOF (3 on thumb &amp; index, 2 on the rest), <b>full-gear quasi-direct-drive</b> with decoupled, backdrivable joints — explicitly marketed as a clean platform for IL/RL. Index swings ±15°, thumb reaches pinky opposition. Tactile: &gt;100-point per-fingertip array, 270° encircling 3D force + temperature. Whole-hand grip ~80 N. Integrates with <b>ERA-42</b> and supports Apple Vision Pro teleop. Slimmer <b>XHAND Lite</b> (11 DOF) for service robots.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Inspire — RH56 series<span>Beijing · 因时机器人</span></h3>
+          <div class="badges"><span class="pill p-link">6 DOF</span><span class="pill p-link">linkage</span></div></div>
+        <p>The incumbent research workhorse. 6 active DOF / 12 joints via six <b>miniature linear servos</b>, <b>underactuated &amp; coupled</b>. Variants: BFX (fast "pianist"), DFX (balanced; ~15 N thumb), all-metal flagship F1 (EtherCAT 1 kHz, 24 sensors, 30 kg static). Ubiquitous on Unitree G1/H1. But a <b>2026 characterization paper (Tan, Xie, Correll)</b> documents its limits as an instrument: uncalibrated proprioception, <span class="hi">up to +1618% force overshoot</span> at speed, non-trivial antipodal grasps. Essential cautionary reading.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>BrainCo / Qiangnao — Revo series<span>Hangzhou · 强脑科技</span></h3>
+          <div class="badges"><span class="pill p-direct">11 / 21 DOF</span><span class="pill p-direct">visuo-tactile</span></div></div>
+        <p>From BCI and prosthetics into robot hands. <b>Revo 2</b>: 11 DOF, 383 g, 50 N, 20 kg load, RS485/CAN-FD/EtherCAT @ 1 kHz, Basic/Pro/Touch tiers. <b>Revo 3</b> (2026): a 21-DOF jump to <b>direct-drive backdrivable</b> with full-palm tactile + fingertip visuo-tactile + 70 N grip — positioned as the first 20+ DOF open-ecosystem hand combining those modes. Demoed 33 grasp types, two-handed Rubik's cube. HK IPO reportedly in motion.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Linkerbot — Linker Hand<span>Beijing · 灵心巧手</span></h3>
+          <div class="badges"><span class="pill p-mixed">6–42 DOF</span><span class="pill p-mixed">all routes</span></div></div>
+        <p>Volume leader and the most explicit "embrace all routes" strategy (founder Zhou Yong, 2023). <b>L6</b> (6 DOF direct, ~¥19,900), <b>L20</b> (20–21 DOF linkage, ~¥49,900), <b>L30</b> (25 DOF tendon, ~¥100k), research line to <b>42 DOF</b>. Pricing ~<span class="hi">1/10–1/20 of overseas</span>. Reported 10,000+ units in 2025, &gt;80% of China's high-DOF market, ~¥1.5B Series B at &gt;¥10B valuation. Customers: Stanford, Cambridge, PKU, Tsinghua. The clearest lab-to-standard-product case study.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Agile Robots — Agile Hand<span>Munich + China</span></h3>
+          <div class="badges"><span class="pill p-direct">15–16 DOF</span><span class="pill p-direct">compliant</span></div></div>
+        <p>Founded 2018, acquired Franka Emika (2023) — force-control arm pedigree. 21 joints / 15–16 DOF, 1.5 kg, ~10 N fingertip, 360°/s, with <b>identical modular fingers</b> (actuator + electronics + sensing + transmission in each). Joint-torque + fingertip tactile, active compliant control for safe contact. Now embedded in the <b>Agile ONE</b> industrial humanoid.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>AgiBot / Zhiyuan — OmniHand<span>Shanghai · 智元</span></h3>
+          <div class="badges"><span class="pill p-tendon">10–22 DOF</span><span class="pill p-tendon">modular</span></div></div>
+        <p>Modular end-effector family on a standard wrist (swaps with OmniPicker). <b>OmniHand 2025</b>: 10 active + 6 passive DOF, ~500 g, <span class="hi">400+ taxels @ 0.1 N</span>, open SDK. <b>Pro</b>: 19 DOF (12 active), 35–60 N, 150+ sensors. <b>OmniHand 3 Ultra-T</b> (Apr 2026): 22+3 DOF, <b>tendon-driven</b>, full-hand 3D tactile, 10:1 load-to-weight. Presented at MWC 2026; tied to a European manufacturing partnership.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Daxo Robotics — Muscle V0 / V2<span>Philadelphia · Tom Zhang (Penn PhD)</span></h3>
+          <div class="badges"><span class="pill p-soft">108–120 act.</span><span class="pill p-soft">soft redundant</span></div></div>
+        <p>The contrarian. A <b>soft, tendon-driven</b> hand with <span class="hi">108–120 actuators</span> (~3× the human hand), pitched as "infinite DOF." Explicitly rejects the human hand as a reference — dexterity comes from control complexity, not joint count. Redundancy is the headline: the AI reroutes through remaining muscles and reportedly keeps working with ~20% of motors failed. Electronics live outside the hand. Built cheap (~$1,200, ~$5 motors), assembled in hours. V2 targets Q3 2026 with industrial pilots.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Origami Robotics<span>YC · US</span></h3>
+          <div class="badges"><span class="pill p-direct">early</span><span class="pill p-direct">data-first</span></div></div>
+        <p>Early-stage; thesis is the <b>data problem</b>. Large transmissions make current hands hard to model, and the embodiment gap inflates the train/deploy distribution. Their answer: build <b>both</b> the hand and a <b>co-designed data-collection glove</b>, optimizing miniature motors so glove kinematics match the hand — minimizing sim-to-real and embodiment gaps for scalable high-quality data. Aligned with the broader "hardware in service of data" pattern.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4 — HUMANOID-INTEGRATED -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Hands embedded in full humanoids</h2></div>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="top"><h3>Xiaomi — CyberOne V2 hand<span>in-house</span></h3>
+          <div class="badges"><span class="pill p-direct">22–27 DOF</span><span class="pill p-direct">liquid-cooled</span></div></div>
+        <p>The 2026 redesign reaches <b>22–27 DOF</b> (~83% jump in active DOF), volume cut ~60% to a true 1:1 adult-hand scale (improving sim-to-real for teleop data). The standout is thermal: <b>"bionic sweat glands"</b> — 3D-printed metal liquid-cooling channels evaporating ~0.5 ml/min to dissipate ~100 W from compact motors, attacking one of the hardest constraints in dense hands. Full-palm tactile, <span class="hi">150,000+ cycles</span>. Edge: a captive customer in Xiaomi's own EV factory.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Figure AI — Figure 03 hand<span>Helix-02</span></h3>
+          <div class="badges"><span class="pill p-direct">16 DOF</span><span class="pill p-direct">3 g tactile</span></div></div>
+        <p>16-DOF five-finger hands; the emphasis is <b>compliance + sensing</b>, not DOF. Softer, larger-surface fingertips, a small <b>palm-embedded camera</b> for occluded close-range feedback, and an in-house tactile fingertip sensor sensitive to <span class="hi">~3 grams</span> (a paperclip) to predict slip before it happens. Engineered around the <b>Helix / Helix-02</b> VLA (pixels-to-action, onboard, 44 DOF total). Vertically integrated, BotQ ~12,000 units/yr, ~$20k target, TIME Best Invention 2025.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Boston Dynamics — Atlas GR grippers<span>US</span></h3>
+          <div class="badges"><span class="pill p-direct">7 DOF</span><span class="pill p-direct">non-anthropomorphic</span></div></div>
+        <p>A deliberately <b>non-anthropomorphic</b> path. <b>GR2</b>: 7-DOF, three-finger (two fingers + opposable swiveling thumb), tactile + palm camera, and a superhuman trick — fingers <b>bend fully backward</b> for back-of-hand grasps. Philosophy: "the fewest fingers that achieve complex manipulation," reliability over biomimicry. Plot twist: at CES 2026 BD revealed a more conventional three-finger hand — a concession to <b>human-tool compatibility</b>. Atlas runs Large Behavior Models; in pilots at a Hyundai plant.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Sunday Robotics — Memo<span>Mountain View · Zhao + Chi</span></h3>
+          <div class="badges"><span class="pill p-link">pincer</span><span class="pill p-link">data-maximal</span></div></div>
+        <p>The purest "hardware minimalism, data maximalism" bet — founders <b>Tony Zhao (ALOHA/ACT)</b> and <b>Cheng Chi (Diffusion Policy/UMI)</b>. A wheeled two-arm home robot with intentionally <b>simple pincer "Lego-like" hands</b>. The product is the data engine: a patented <b>Skill Capture Glove</b> matching Memo's hands, worn across 500+ homes to produce <span class="hi">~10 million chore episodes</span> feeding the in-house <b>ACT-1</b> model, emphasizing zero-shot generalization to unseen homes. The implicit argument: for many home tasks, matched-embodiment data beats end-effector dexterity.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5 — RESEARCH / OPEN SOURCE / BIOMIMETIC -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Frontier research, open-source &amp; biomimetic</h2></div>
+    <p class="lead">The part the field actually reads — and where the most useful hardware ideas often originate before commercialization.</p>
+    <div class="entries">
+
+      <div class="entry">
+        <div class="top"><h3>Benchmarks &amp; commercial-research crossover<span>Shadow · Allegro · PSYONIC</span></h3></div>
+        <p><b>Shadow Dexterous Hand</b> (London, since 2005): 24 joints, 20 DOF, tendon-driven, extensive tactile — the long-standing gold standard, historically &gt;$100k and fragile, the exact accessibility gap the open-source hands attack. <b>Allegro Hand</b>: direct-drive, 16 DOF, ~15,000 CHF — the default RL/sim2real platform (e.g. NVIDIA's <b>DeXtreme</b> with Isaac Gym). <b>PSYONIC Ability Hand</b>: a bionic prosthesis adapted for robotics (490 g, closes ~0.2 s, lower native DOF), on <b>Apptronik Apollo</b> and Hexagon AEON — the "modular, simple first" humanoid philosophy.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Open-source hands — the accessibility wave<span>LEAP · ORCA · RUKA · MM-Hand</span></h3>
+          <div class="badges"><span class="pill p-tendon">tendon</span><span class="pill p-direct">direct</span></div></div>
+        <p><b>LEAP Hand</b> (CMU; Shaw, Pathak): open-source, <b>direct-drive, 16 DOF, &lt;$2,000, ~3 hr assembly</b> — a landmark in cheap reproducible research. <b>ORCA Hand</b> (ETH SRL; 2504.04259): <b>tendon-driven, 17 DOF</b> (16 fingers + 1 wrist), integrated tactile, &lt;2,000 CHF, assembled <span class="hi">in under 8 hours</span>, with popping joints, auto-calibration &amp; tensioning — matches LEAP accuracy/latency despite tendons. <b>RUKA / Ruka-v2</b> (NYU; 2603.26660): <b>11 DOF, &lt;$1,300</b>, learns tendon dynamics directly; v2 adds a 2-DOF parallel wrist + finger abduction. <b>MM-Hand</b>: 21-DOF multimodal modular, remote tendon actuation to free finger volume and keep heat out.</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Biomimetic / muscle-driven — the high-fidelity frontier<span>Clone · Faive/Mimic</span></h3>
+          <div class="badges"><span class="pill p-soft">27 DOF</span><span class="pill p-tendon">rolling-contact</span></div></div>
+        <p><b>Clone Robotics</b>: anthropomorphic <b>27-DOF</b> hand with artificial-muscle actuation, claiming human-level grip strength &amp; speed; its <b>Neural Joint V2</b> controller is a network trained on human-hand video rather than hardcoded control. <b>Faive Hand / Mimic Robotics</b> (ETH spinout): biomimetic, tendon-driven with <b>rolling-contact joints</b> (no fixed axis) — closed-loop RL trained in Isaac Gym, transferred to hardware; rolling joints break the usual encoder assumptions. Historical grounding: the <b>ACT Hand</b>, the <b>Biomimetic Hand</b> (9 actuators), and <b>CasiaHand</b> (15 DOF, palm-integrated).</p>
+      </div>
+
+      <div class="entry">
+        <div class="top"><h3>Wearable / data-collection hardware<span>adjacent but central</span></h3></div>
+        <p>The "hand as data device" pattern recurs: Wuji's 526-point glove, Origami's matched glove, Sunday's Skill Capture Glove, and academic work like the <b>HIRO Hand</b> (a wearable robotic hand for hand-over-hand imitation that captures the operator's own tactile feedback). For a VLA-eval context this matters — <b>the glove is the embodiment that defines the training distribution.</b></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 6 — THEMES -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Cross-cutting themes</h2></div>
+    <div class="themes">
+      <div class="theme"><div class="tn">1</div><div><h3>The DOF "arms race" is bifurcating</h3><p>One camp pushes toward and past human DOF (Clone 27, Xiaomi 22–27, Linker research 42, Daxo 108+). The opposite camp argues DOF is the wrong axis and bets on <b>data + model</b> (Sunday, Boston Dynamics, PSYONIC-on-Apollo). Both have credible 2026 traction.</p></div></div>
+      <div class="theme"><div class="tn">2</div><div><h3>Tactile is the new battleground</h3><p>Sharpa (&gt;1,000 px/fingertip), Figure (3 g sensor), Xiaomi/BrainCo/AgiBot (full-palm arrays), plus palm-camera visuo-tactile. <b>Fingertip-only sensing is becoming table stakes; full-hand 3D tactile is the frontier.</b></p></div></div>
+      <div class="theme"><div class="tn">3</div><div><h3>Actuation converges on "motors out of the fingers"</h3><p>Remote tendon (MM-Hand, Daxo, OmniHand 3) and palm-located actuation address the two killers of in-finger motors: <b>inertia and heat</b>. Xiaomi's liquid cooling is the brute-force alternative for those who keep motors in-hand.</p></div></div>
+      <div class="theme"><div class="tn">4</div><div><h3>Reliability &amp; characterization gate research use</h3><p>The Inspire RH56DFX paper is the cautionary tale: catalog DOF and force say little about overshoot, calibration, and contact behavior. <b>ORCA's whole pitch is reliability-as-feature.</b></p></div></div>
+      <div class="theme"><div class="tn">5</div><div><h3>China dominates volume; the West leads integrated stacks</h3><p>Linkerbot, Inspire, BrainCo, AgiBot, RobotEra, Wuji, Xiaomi own the cost curve and unit volume. Figure, Boston Dynamics, Sunday, Apptronik, Daxo, Clone integrate the hand into a <b>learning-first robot</b>. Agile and Sharpa straddle both.</p></div></div>
+      <div class="theme"><div class="tn">6</div><div><h3>The hand is co-designed with the model</h3><p>SharpaWave/CraftNet, Figure/Helix, RobotEra/ERA-42, Sunday/ACT-1, Wuji/Genesis Hand. <b>Hardware and policy are no longer separable</b> — the data-collection embodiment is part of the spec.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 — PAPERS -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Key papers &amp; primary sources</h2></div>
+    <div class="papers">
+      <div class="paper"><div class="id">arXiv 2504.04259</div><div class="t">ORCA — Open-Source, Reliable, Cost-Effective Anthropomorphic Hand</div><div class="w">ETH Zurich Soft Robotics Lab</div></div>
+      <div class="paper"><div class="id">arXiv 2603.26660</div><div class="t">Ruka-v2 — Tendon-Driven Open-Source Hand with Wrist &amp; Abduction</div><div class="w">NYU</div></div>
+      <div class="paper"><div class="id">arXiv 2603.08988</div><div class="t">Characterization, Planning &amp; Hybrid Force Control for the Inspire RH56DFX</div><div class="w">Tan / Xie / Correll · CU Boulder</div></div>
+      <div class="paper"><div class="id">arXiv 2512.24657</div><div class="t">Antagonistic Bowden-Cable Actuation of a Lightweight Robotic Hand</div><div class="w">surveys cable-driven biomimetic lineage</div></div>
+      <div class="paper"><div class="id">arXiv 2308.02453</div><div class="t">Getting the Ball Rolling — Biomimetic Tendon Hand w/ Rolling Contact Joints</div><div class="w">Faive / ETH</div></div>
+      <div class="paper"><div class="id">arXiv 2309.14860</div><div class="t">A Wearable Robotic Hand for Hand-over-Hand Imitation Learning (HIRO)</div><div class="w">Wei &amp; Xu</div></div>
+      <div class="paper"><div class="id">RSS 2023</div><div class="t">LEAP Hand — Low-Cost, Anthropomorphic, Dexterous</div><div class="w">Shaw &amp; Pathak · CMU</div></div>
+      <div class="paper"><div class="id">arXiv 2210.13702</div><div class="t">DeXtreme — Agile In-hand Manipulation, Sim-to-Real</div><div class="w">NVIDIA · Allegro + Isaac Gym</div></div>
+    </div>
+    <div class="src-block">
+      <b>Primary vendor sources</b> (specs vendor-reported): sharpa.com · wuji.tech · robotera (XHAND1 manual) · en.inspire-robots.com · BrainCo / Qiangnao · linkerbot.cn · agile-robots.com · store.agibot.com (+ AgibotTech GitHub SDK) · daxo-robotics.com · figure.ai · bostondynamics.com · sunday.ai · shadowrobot.com
+    </div>
+  </div>
+</section>
+
+<!-- 8 — METHODOLOGY -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Notes on methodology &amp; gaps</h2></div>
+    <div class="note">
+      <b>How to read DOF and force numbers.</b> "Active DOF" vs "total joints" vs "passive DOF" are reported inconsistently (Inspire's "6 DOF / 12 joints," AgiBot's "10 active + 6 passive," Agile's "21 joints / 15–16 DOF"). Force figures mix fingertip, thumb, whole-hand, and static-load. Treat all single-number comparisons as approximate until characterized on a common bench.
+    </div>
+    <p class="gaps"><b>Coverage gaps to consider adding:</b> Tesla Optimus Gen 3 hand (~22 DOF, in-house, not publicly specced), Sanctuary AI Phoenix, Unitree's own Dex hands, DeepRobotics OmniHand2025 (16–19 DOF), RoboSense Papert 2.0 (20 DOF, lidar-vendor crossover), and Dexmate / DexRobot in the Chinese long tail. If this review feeds an eval/benchmark scoping exercise, the most decision-relevant missing axis is <b>standardized contact/force characterization</b> (the Inspire paper is the template) — that, not catalog DOF, determines whether a given hand can serve as a reliable eval substrate.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Dexterous Hand Hardware — Landscape Review</span>
+    <span>Compiled June 2026 · specs vendor- / paper-reported</span>
+  </div>
+</footer>
+
+<script>
+  // ---- filter ----
+  const fbtns=document.querySelectorAll('.fbtn');
+  const rows=Array.from(document.querySelectorAll('#cmp tbody tr'));
+  fbtns.forEach(b=>b.addEventListener('click',()=>{
+    fbtns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const f=b.dataset.filter;
+    rows.forEach(r=>{r.style.display=(f==='all'||r.dataset.act===f)?'':'none';});
+  }));
+
+  // ---- sort ----
+  const tbody=document.querySelector('#cmp tbody');
+  document.querySelectorAll('#cmp thead th[data-sort]').forEach(th=>{
+    th.addEventListener('click',()=>{
+      const key=th.dataset.sort, type=th.dataset.type;
+      const asc=!th.classList.contains('sorted-asc');
+      document.querySelectorAll('#cmp thead th').forEach(h=>h.classList.remove('sorted-asc','sorted-desc'));
+      th.classList.add(asc?'sorted-asc':'sorted-desc');
+      const visible=rows.filter(r=>r.style.display!=='none');
+      visible.sort((a,b)=>{
+        let x=a.dataset[key]||'', y=b.dataset[key]||'';
+        if(type==='num'){x=parseFloat(x)||0;y=parseFloat(y)||0;return asc?x-y:y-x;}
+        return asc?x.localeCompare(y):y.localeCompare(x);
+      });
+      visible.forEach(r=>tbody.appendChild(r));
+    });
+  });
+
+  // ---- scroll reveal ----
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

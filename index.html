@@ -126,6 +126,51 @@
   .atlas-note a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
   .atlas-note a:hover{border-bottom-color:var(--cyan)}
 
+  /* hand wall */
+  .wall-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+  .legend{display:flex;flex-wrap:wrap;gap:8px}
+  .legend button{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--ink-faint);
+    background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 11px;
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:border-color .2s,color .2s,background .2s;
+  }
+  .legend button:hover{color:var(--ink-dim);border-color:var(--line-bright)}
+  .legend button i{width:8px;height:8px;border-radius:2px;background:var(--lc);flex-shrink:0}
+  .legend button[aria-pressed="true"]{color:var(--ink);border-color:var(--lc);background:rgba(255,255,255,.04)}
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;margin-top:22px}
+  .hand{
+    position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;display:block;
+    border:1px solid var(--line);background:var(--panel);text-decoration:none;
+    transition:border-color .25s,transform .25s,opacity .3s;
+  }
+  .hand img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(.45) brightness(.8) contrast(1.03);transition:filter .35s,transform .5s;
+  }
+  .hand::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;z-index:3;background:var(--ha);opacity:.9}
+  .hand .dof{
+    position:absolute;top:10px;right:10px;z-index:3;font-family:var(--mono);font-size:10px;
+    padding:3px 7px;border-radius:3px;color:var(--ink);background:rgba(8,9,10,.66);
+    border:1px solid var(--ha);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+  .cap{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;padding:40px 13px 13px;
+    background:linear-gradient(to top,rgba(8,9,10,.94) 26%,rgba(8,9,10,.55) 66%,transparent);
+  }
+  .cap .nm{font-family:var(--serif);font-weight:500;font-size:16px;color:var(--ink);line-height:1.12;display:block;letter-spacing:-.01em}
+  .cap .og{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:4px;display:block}
+  .specs{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.7,.2,1),opacity .3s}
+  .specs .act{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ha);margin-top:9px}
+  .specs .nt{display:block;font-size:11.5px;color:var(--ink-dim);margin-top:5px;line-height:1.35}
+  .hand:hover,.hand:focus-visible{transform:translateY(-4px);border-color:var(--ha);outline:none}
+  .hand:hover img,.hand:focus-visible img{filter:grayscale(0) brightness(.92) contrast(1.02);transform:scale(1.06)}
+  .hand:hover .specs,.hand:focus-visible .specs{max-height:140px;opacity:1}
+  .wall.filtered .hand{opacity:.16}
+  .wall.filtered .hand.match{opacity:1}
+  .wall-foot{margin-top:18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);letter-spacing:.02em}
+  .wall-foot a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .wall-foot a:hover{border-bottom-color:var(--cyan)}
+
   /* about */
   .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:20px 24px;font-size:14.5px;color:var(--ink-dim);border-radius:0 6px 6px 0}
   .note b{color:var(--ink)}
@@ -145,6 +190,8 @@
   @media(max-width:760px){
     .wrap{padding:0 20px}
     .cards{grid-template-columns:1fr}
+    .wall{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+    .cap .nm{font-size:14px}
     header.hero{padding:64px 0 44px}
     section{padding:48px 0}
     .langswitch{top:12px;right:12px}
@@ -181,6 +228,125 @@
     </div>
   </div>
 </header>
+
+<!-- THE HAND WALL -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">◆</span><h2>The Field, at a Glance</h2></div>
+    <p class="lead">Two dozen programs are racing to build the robot hand. Here are fourteen — hover any one for its specs, or filter by how it actuates. Then dive into the three volumes below.</p>
+    <div class="wall-head">
+      <div class="legend">
+        <button data-filter="direct" aria-pressed="false" style="--lc:var(--cyan)"><i></i>Direct-drive</button>
+        <button data-filter="tendon" aria-pressed="false" style="--lc:var(--violet)"><i></i>Tendon</button>
+        <button data-filter="soft" aria-pressed="false" style="--lc:var(--amber-bright)"><i></i>Soft / muscle</button>
+        <button data-filter="link" aria-pressed="false" style="--lc:var(--green)"><i></i>Linkage</button>
+        <button data-filter="mixed" aria-pressed="false" style="--lc:var(--rust)"><i></i>Hybrid</button>
+      </div>
+    </div>
+
+    <div class="wall">
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="XHAND1 by RobotEra, 12 DOF, full-gear direct drive">
+        <img src="images/xhand1.jpg" alt="XHAND1 dexterous hand by RobotEra" loading="lazy">
+        <span class="dof">12 DOF</span>
+        <div class="cap"><span class="nm">XHAND1</span><span class="og">RobotEra · Beijing</span>
+          <div class="specs"><span class="act">Full-gear QDD</span><span class="nt">~80 N grip · ERA-42 VLA · Vision Pro teleop</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="Revo 3 by BrainCo, 21 DOF, direct backdrivable drive">
+        <img src="images/brainco-revo2.jpg" alt="Revo dexterous hand by BrainCo" loading="lazy">
+        <span class="dof">21 DOF</span>
+        <div class="cap"><span class="nm">Revo 3</span><span class="og">BrainCo 强脑 · Hangzhou</span>
+          <div class="specs"><span class="act">Direct, backdrivable</span><span class="nt">70 N · full-palm visuo-tactile · BCI heritage</span></div></div>
+      </a>
+
+      <a class="hand" data-act="link" style="--ha:var(--green)" href="dexhand_hardware_review.html" aria-label="RH56 series by Inspire, 6 DOF, linear-servo linkage">
+        <img src="images/inspire-rh56h1.webp" alt="RH56 dexterous hand by Inspire" loading="lazy">
+        <span class="dof">6 DOF</span>
+        <div class="cap"><span class="nm">RH56 series</span><span class="og">Inspire 因时 · Beijing</span>
+          <div class="specs"><span class="act">Linear-servo linkage</span><span class="nt">Ubiquitous on Unitree G1/H1 · mature</span></div></div>
+      </a>
+
+      <a class="hand" data-act="mixed" style="--ha:var(--rust)" href="dexhand_hardware_review.html" aria-label="Linker Hand L20 by Linkerbot, 20 DOF, hybrid actuation">
+        <img src="images/linker-l20.jpg" alt="Linker Hand L20 by Linkerbot" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Linker Hand L20</span><span class="og">Linkerbot 灵心巧手 · Beijing</span>
+          <div class="specs"><span class="act">All three routes</span><span class="nt">&gt;80% China share · 10k+ units in 2025</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="Wuji Hand by Wuji Tech, 20 DOF, direct micro-actuators">
+        <img src="images/wuji.webp" alt="Wuji dexterous hand by Wuji Tech" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Wuji Hand</span><span class="og">Wuji Tech · Shenzhen</span>
+          <div class="specs"><span class="act">Direct micro-actuators</span><span class="nt">~15 N tip · ~1 kHz · 300k+ cycles</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.html" aria-label="OmniHand by AgiBot, 22 plus 3 DOF, tendon driven">
+        <img src="images/omnihand.webp" alt="OmniHand by AgiBot" loading="lazy">
+        <span class="dof">22+ DOF</span>
+        <div class="cap"><span class="nm">OmniHand Ultra-T</span><span class="og">AgiBot 智元 · Shanghai</span>
+          <div class="specs"><span class="act">Tendon</span><span class="nt">400+ taxels · modular · open SDK</span></div></div>
+      </a>
+
+      <a class="hand" data-act="mixed" style="--ha:var(--rust)" href="dexhand_hardware_review.html" aria-label="SharpaWave by Sharpa, 22 DOF, hybrid in-finger actuation">
+        <img src="images/sharpa.webp" alt="SharpaWave dexterous hand by Sharpa" loading="lazy">
+        <span class="dof">22 DOF</span>
+        <div class="cap"><span class="nm">SharpaWave</span><span class="og">Sharpa · Singapore</span>
+          <div class="specs"><span class="act">In-finger hybrid</span><span class="nt">&gt;1,000 px/fingertip · on NVIDIA Isaac GR00T</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="Agile Hand by Agile Robots, 16 DOF, in-finger modular direct drive">
+        <img src="images/agile.webp" alt="Agile Hand by Agile Robots" loading="lazy">
+        <span class="dof">16 DOF</span>
+        <div class="cap"><span class="nm">Agile Hand</span><span class="og">Agile Robots · Munich</span>
+          <div class="specs"><span class="act">In-finger modular</span><span class="nt">Active compliant control · on Agile ONE</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="Atlas GR2 gripper by Boston Dynamics, 7 DOF, electric three-finger">
+        <img src="images/atlas.png" alt="Atlas GR2 gripper by Boston Dynamics" loading="lazy">
+        <span class="dof">7 DOF</span>
+        <div class="cap"><span class="nm">Atlas GR2</span><span class="og">Boston Dynamics · US</span>
+          <div class="specs"><span class="act">Electric · 3 fingers</span><span class="nt">Backward-bending fingers · Hyundai pilots</span></div></div>
+      </a>
+
+      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.html" aria-label="Muscle V0 by Daxo, 108 to 120 actuators, soft redundant tendon">
+        <img src="images/daxo.jpg" alt="Muscle V0 hand by Daxo Robotics" loading="lazy">
+        <span class="dof">120 act</span>
+        <div class="cap"><span class="nm">Muscle V0</span><span class="og">Daxo Robotics · Austin</span>
+          <div class="specs"><span class="act">Soft redundant tendon</span><span class="nt">Tolerates ~20% motor failure · ~$1,200 build</span></div></div>
+      </a>
+
+      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.html" aria-label="Clone hand by Clone Robotics, 27 DOF, artificial muscle">
+        <img src="images/clone.jpg" alt="Anthropomorphic hand by Clone Robotics" loading="lazy">
+        <span class="dof">27 DOF</span>
+        <div class="cap"><span class="nm">Clone Hand</span><span class="og">Clone Robotics · US</span>
+          <div class="specs"><span class="act">Artificial muscle</span><span class="nt">Neural Joint V2 · trained on human-hand video</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.html" aria-label="Shadow Dexterous Hand by Shadow Robot, 20 DOF, tendon driven">
+        <img src="images/shadow.png" alt="Shadow Dexterous Hand" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Shadow Hand</span><span class="og">Shadow Robot · London</span>
+          <div class="specs"><span class="act">Tendon-driven</span><span class="nt">24 joints · the gold standard since 2005</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.html" aria-label="ORCA Hand by ETH SRL, 17 DOF, tendon driven open source">
+        <img src="images/orca.webp" alt="ORCA Hand by ETH SRL" loading="lazy">
+        <span class="dof">17 DOF</span>
+        <div class="cap"><span class="nm">ORCA Hand</span><span class="og">ETH SRL · Zürich</span>
+          <div class="specs"><span class="act">Tendon · open-source</span><span class="nt">&lt;2,000 CHF · assembled in &lt;8 hours</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.html" aria-label="LEAP Hand by CMU, 16 DOF, direct drive open source">
+        <img src="images/leap.webp" alt="LEAP Hand by CMU" loading="lazy">
+        <span class="dof">16 DOF</span>
+        <div class="cap"><span class="nm">LEAP Hand</span><span class="og">CMU · US</span>
+          <div class="specs"><span class="act">Direct-drive · open-source</span><span class="nt">&lt;$2,000 · ~3 hr build · the research landmark</span></div></div>
+      </a>
+    </div>
+
+    <p class="wall-foot">Specs are vendor- or paper-reported — read as claims pending independent test. Full detail, sources &amp; more hands in <a href="dexhand_hardware_review.html">Volume I →</a></p>
+  </div>
+</section>
 
 <!-- THE ATLAS -->
 <section>
@@ -231,6 +397,19 @@
 <script>
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.06});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // hand-wall actuation filter
+  const wall=document.querySelector('.wall');
+  document.querySelectorAll('.legend button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const on=btn.getAttribute('aria-pressed')==='true';
+      document.querySelectorAll('.legend button').forEach(b=>b.setAttribute('aria-pressed','false'));
+      if(on){wall.classList.remove('filtered');wall.querySelectorAll('.hand').forEach(h=>h.classList.remove('match'));return;}
+      btn.setAttribute('aria-pressed','true');
+      wall.classList.add('filtered');
+      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act===btn.dataset.filter));
+    });
+  });
 </script>
 </body>
 </html>

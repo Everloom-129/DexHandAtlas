@@ -126,6 +126,51 @@
   .atlas-note a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
   .atlas-note a:hover{border-bottom-color:var(--cyan)}
 
+  /* hand wall */
+  .wall-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+  .legend{display:flex;flex-wrap:wrap;gap:8px}
+  .legend button{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--ink-faint);
+    background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 11px;
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;transition:border-color .2s,color .2s,background .2s;
+  }
+  .legend button:hover{color:var(--ink-dim);border-color:var(--line-bright)}
+  .legend button i{width:8px;height:8px;border-radius:2px;background:var(--lc);flex-shrink:0}
+  .legend button[aria-pressed="true"]{color:var(--ink);border-color:var(--lc);background:rgba(255,255,255,.04)}
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;margin-top:22px}
+  .hand{
+    position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;display:block;
+    border:1px solid var(--line);background:var(--panel);text-decoration:none;
+    transition:border-color .25s,transform .25s,opacity .3s;
+  }
+  .hand img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(.45) brightness(.8) contrast(1.03);transition:filter .35s,transform .5s;
+  }
+  .hand::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;z-index:3;background:var(--ha);opacity:.9}
+  .hand .dof{
+    position:absolute;top:10px;right:10px;z-index:3;font-family:var(--mono);font-size:10px;
+    padding:3px 7px;border-radius:3px;color:var(--ink);background:rgba(8,9,10,.66);
+    border:1px solid var(--ha);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+  .cap{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;padding:40px 13px 13px;
+    background:linear-gradient(to top,rgba(8,9,10,.94) 26%,rgba(8,9,10,.55) 66%,transparent);
+  }
+  .cap .nm{font-family:var(--serif);font-weight:500;font-size:16px;color:var(--ink);line-height:1.12;display:block;letter-spacing:-.01em}
+  .cap .og{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:4px;display:block}
+  .specs{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.7,.2,1),opacity .3s}
+  .specs .act{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ha);margin-top:9px}
+  .specs .nt{display:block;font-size:11.5px;color:var(--ink-dim);margin-top:5px;line-height:1.35}
+  .hand:hover,.hand:focus-visible{transform:translateY(-4px);border-color:var(--ha);outline:none}
+  .hand:hover img,.hand:focus-visible img{filter:grayscale(0) brightness(.92) contrast(1.02);transform:scale(1.06)}
+  .hand:hover .specs,.hand:focus-visible .specs{max-height:140px;opacity:1}
+  .wall.filtered .hand{opacity:.16}
+  .wall.filtered .hand.match{opacity:1}
+  .wall-foot{margin-top:18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);letter-spacing:.02em}
+  .wall-foot a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+  .wall-foot a:hover{border-bottom-color:var(--cyan)}
+
   /* about */
   .note{border-left:2px solid var(--amber);background:rgba(224,164,92,.05);padding:20px 24px;font-size:14.5px;color:var(--ink-dim);border-radius:0 6px 6px 0}
   .note b{color:var(--ink)}
@@ -145,6 +190,8 @@
   @media(max-width:760px){
     .wrap{padding:0 20px}
     .cards{grid-template-columns:1fr}
+    .wall{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+    .cap .nm{font-size:14px}
     header.hero{padding:64px 0 44px}
     section{padding:48px 0}
     .langswitch{top:12px;right:12px}
@@ -181,6 +228,125 @@
     </div>
   </div>
 </header>
+
+<!-- THE HAND WALL -->
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">◆</span><h2>灵巧手全景一览</h2></div>
+    <p class="lead">二十多个团队正竞相打造机器人手。这里精选十四款 —— 悬停任意一款查看规格，或按驱动方式筛选。随后可深入下方三卷。</p>
+    <div class="wall-head">
+      <div class="legend">
+        <button data-filter="direct" aria-pressed="false" style="--lc:var(--cyan)"><i></i>直驱</button>
+        <button data-filter="tendon" aria-pressed="false" style="--lc:var(--violet)"><i></i>腱驱动</button>
+        <button data-filter="soft" aria-pressed="false" style="--lc:var(--amber-bright)"><i></i>柔性/肌肉</button>
+        <button data-filter="link" aria-pressed="false" style="--lc:var(--green)"><i></i>连杆</button>
+        <button data-filter="mixed" aria-pressed="false" style="--lc:var(--rust)"><i></i>混合</button>
+      </div>
+    </div>
+
+    <div class="wall">
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="RobotEra XHAND1，12 DOF，全齿轮直驱">
+        <img src="images/xhand1.jpg" alt="RobotEra XHAND1 灵巧手" loading="lazy">
+        <span class="dof">12 DOF</span>
+        <div class="cap"><span class="nm">XHAND1</span><span class="og">RobotEra · Beijing</span>
+          <div class="specs"><span class="act">全齿轮 QDD</span><span class="nt">~80 N 抓握 · ERA-42 VLA · Vision Pro 遥操作</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="BrainCo Revo 3，21 DOF，直驱可反驱">
+        <img src="images/brainco-revo2.jpg" alt="BrainCo Revo 灵巧手" loading="lazy">
+        <span class="dof">21 DOF</span>
+        <div class="cap"><span class="nm">Revo 3</span><span class="og">BrainCo 强脑 · Hangzhou</span>
+          <div class="specs"><span class="act">直驱 · 可反驱</span><span class="nt">70 N · 全掌视触觉 · 脑机接口积淀</span></div></div>
+      </a>
+
+      <a class="hand" data-act="link" style="--ha:var(--green)" href="dexhand_hardware_review.zh.html" aria-label="Inspire RH56 系列，6 DOF，直线舵机连杆">
+        <img src="images/inspire-rh56h1.webp" alt="Inspire RH56 灵巧手" loading="lazy">
+        <span class="dof">6 DOF</span>
+        <div class="cap"><span class="nm">RH56 系列</span><span class="og">Inspire 因时 · Beijing</span>
+          <div class="specs"><span class="act">直线舵机连杆</span><span class="nt">广泛用于 Unitree G1/H1 · 成熟</span></div></div>
+      </a>
+
+      <a class="hand" data-act="mixed" style="--ha:var(--rust)" href="dexhand_hardware_review.zh.html" aria-label="Linkerbot Linker Hand L20，20 DOF，混合驱动">
+        <img src="images/linker-l20.jpg" alt="Linkerbot Linker Hand L20" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Linker Hand L20</span><span class="og">Linkerbot 灵心巧手 · Beijing</span>
+          <div class="specs"><span class="act">三种驱动并用</span><span class="nt">中国市场占比 &gt;80% · 2025 年出货 1 万+</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="Wuji Tech 无极手，20 DOF，直驱微型电机">
+        <img src="images/wuji.webp" alt="Wuji Tech 无极灵巧手" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Wuji Hand</span><span class="og">Wuji Tech · Shenzhen</span>
+          <div class="specs"><span class="act">直驱微型电机</span><span class="nt">指尖 ~15 N · ~1 kHz · 30 万+ 循环</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.zh.html" aria-label="AgiBot OmniHand，22+3 DOF，腱驱动">
+        <img src="images/omnihand.webp" alt="AgiBot OmniHand 灵巧手" loading="lazy">
+        <span class="dof">22+ DOF</span>
+        <div class="cap"><span class="nm">OmniHand Ultra-T</span><span class="og">AgiBot 智元 · Shanghai</span>
+          <div class="specs"><span class="act">腱驱动</span><span class="nt">400+ 触觉点 · 模块化 · 开放 SDK</span></div></div>
+      </a>
+
+      <a class="hand" data-act="mixed" style="--ha:var(--rust)" href="dexhand_hardware_review.zh.html" aria-label="Sharpa SharpaWave，22 DOF，指内混合驱动">
+        <img src="images/sharpa.webp" alt="Sharpa SharpaWave 灵巧手" loading="lazy">
+        <span class="dof">22 DOF</span>
+        <div class="cap"><span class="nm">SharpaWave</span><span class="og">Sharpa · Singapore</span>
+          <div class="specs"><span class="act">指内混合驱动</span><span class="nt">每指尖 &gt;1,000 像素 · 搭载 NVIDIA Isaac GR00T</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="Agile Robots Agile Hand，16 DOF，指内模块化直驱">
+        <img src="images/agile.webp" alt="Agile Robots Agile Hand" loading="lazy">
+        <span class="dof">16 DOF</span>
+        <div class="cap"><span class="nm">Agile Hand</span><span class="og">Agile Robots · Munich</span>
+          <div class="specs"><span class="act">指内模块化</span><span class="nt">主动柔顺控制 · 搭载 Agile ONE</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="Boston Dynamics Atlas GR2 夹爪，7 DOF，电驱三指">
+        <img src="images/atlas.png" alt="Boston Dynamics Atlas GR2 夹爪" loading="lazy">
+        <span class="dof">7 DOF</span>
+        <div class="cap"><span class="nm">Atlas GR2</span><span class="og">Boston Dynamics · US</span>
+          <div class="specs"><span class="act">电驱 · 三指</span><span class="nt">可反向弯曲手指 · 现代汽车试点</span></div></div>
+      </a>
+
+      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.zh.html" aria-label="Daxo Muscle V0，108–120 驱动器，柔性冗余腱驱动">
+        <img src="images/daxo.jpg" alt="Daxo Robotics Muscle V0 灵巧手" loading="lazy">
+        <span class="dof">120 驱动器</span>
+        <div class="cap"><span class="nm">Muscle V0</span><span class="og">Daxo Robotics · Austin</span>
+          <div class="specs"><span class="act">柔性冗余腱驱动</span><span class="nt">可容忍 ~20% 电机失效 · 整机 ~$1,200</span></div></div>
+      </a>
+
+      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.zh.html" aria-label="Clone Robotics 灵巧手，27 DOF，人工肌肉">
+        <img src="images/clone.jpg" alt="Clone Robotics 拟人灵巧手" loading="lazy">
+        <span class="dof">27 DOF</span>
+        <div class="cap"><span class="nm">Clone Hand</span><span class="og">Clone Robotics · US</span>
+          <div class="specs"><span class="act">人工肌肉</span><span class="nt">Neural Joint V2 · 以人手视频训练</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.zh.html" aria-label="Shadow Robot Shadow Hand，20 DOF，腱驱动">
+        <img src="images/shadow.png" alt="Shadow 灵巧手" loading="lazy">
+        <span class="dof">20 DOF</span>
+        <div class="cap"><span class="nm">Shadow Hand</span><span class="og">Shadow Robot · London</span>
+          <div class="specs"><span class="act">腱驱动</span><span class="nt">24 关节 · 2005 年至今的黄金标准</span></div></div>
+      </a>
+
+      <a class="hand" data-act="tendon" style="--ha:var(--violet)" href="dexhand_hardware_review.zh.html" aria-label="ETH SRL ORCA Hand，17 DOF，腱驱动开源">
+        <img src="images/orca.webp" alt="ETH SRL ORCA Hand" loading="lazy">
+        <span class="dof">17 DOF</span>
+        <div class="cap"><span class="nm">ORCA Hand</span><span class="og">ETH SRL · Zürich</span>
+          <div class="specs"><span class="act">腱驱动 · 开源</span><span class="nt">&lt;2,000 瑞郎 · 8 小时内组装完成</span></div></div>
+      </a>
+
+      <a class="hand" data-act="direct" style="--ha:var(--cyan)" href="dexhand_hardware_review.zh.html" aria-label="CMU LEAP Hand，16 DOF，直驱开源">
+        <img src="images/leap.webp" alt="CMU LEAP Hand" loading="lazy">
+        <span class="dof">16 DOF</span>
+        <div class="cap"><span class="nm">LEAP Hand</span><span class="og">CMU · US</span>
+          <div class="specs"><span class="act">直驱 · 开源</span><span class="nt">&lt;$2,000 · ~3 小时组装 · 研究里程碑</span></div></div>
+      </a>
+    </div>
+
+    <p class="wall-foot">规格均来自厂商或论文报告 —— 应视为有待独立验证的声明。完整细节、来源与更多型号见 <a href="dexhand_hardware_review.zh.html">第一卷 →</a></p>
+  </div>
+</section>
 
 <!-- THE ATLAS -->
 <section>
@@ -231,6 +397,19 @@
 <script>
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.06});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // hand-wall actuation filter
+  const wall=document.querySelector('.wall');
+  document.querySelectorAll('.legend button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const on=btn.getAttribute('aria-pressed')==='true';
+      document.querySelectorAll('.legend button').forEach(b=>b.setAttribute('aria-pressed','false'));
+      if(on){wall.classList.remove('filtered');wall.querySelectorAll('.hand').forEach(h=>h.classList.remove('match'));return;}
+      btn.setAttribute('aria-pressed','true');
+      wall.classList.add('filtered');
+      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act===btn.dataset.filter));
+    });
+  });
 </script>
 </body>
 </html>

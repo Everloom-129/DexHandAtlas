@@ -146,6 +146,7 @@
     .langswitch:hover{transform:none}
   }
 </style>
+<link rel="stylesheet" href="dexhand_viewer.css">
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
@@ -334,5 +335,6 @@
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.06});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script src="dexhand_viewer.js" defer></script>
 </body>
 </html>

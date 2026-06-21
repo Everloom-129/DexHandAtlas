@@ -1,0 +1,86 @@
+/* ============================================================================
+   DexHand Atlas — 2.5D hand viewer styles (shared, theme-independent)
+   Self-contained dark "inspection" overlay; does not depend on page CSS vars,
+   so it looks identical on the dark editorial pages and the light product/
+   benchmark pages. Pairs with dexhand_viewer.js.
+   ========================================================================== */
+
+/* clickable hand photos */
+img.ethumb, img.thumb, img[data-hand]{cursor:zoom-in;transition:border-color .25s,transform .25s,box-shadow .25s}
+img.ethumb:hover, img.thumb:hover, img[data-hand]:hover{
+  border-color:#f4b96b !important;
+  box-shadow:0 0 0 1px #f4b96b,0 10px 26px -12px rgba(0,0,0,.7);
+  transform:translateY(-2px)}
+
+/* overlay */
+.hv-overlay{position:fixed;inset:0;z-index:4000;display:flex;align-items:center;justify-content:center;padding:36px;
+  font-family:'Archivo',system-ui,sans-serif;color:#e8e4dc;
+  background:rgba(6,7,8,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background-image:radial-gradient(circle at 30% 20%,rgba(224,164,92,.07),transparent 45%),radial-gradient(circle at 78% 86%,rgba(111,208,200,.06),transparent 48%);
+  opacity:0;visibility:hidden;transition:opacity .42s ease,visibility .42s ease}
+.hv-overlay.open{opacity:1;visibility:visible}
+.hv-dialog{display:flex;gap:34px;align-items:center;max-width:1080px;width:100%;max-height:90vh;
+  transform:translateY(22px) scale(.97);opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .5s ease}
+.hv-overlay.open .hv-dialog{transform:none;opacity:1}
+
+/* turntable stage */
+.hv-stage{flex:1 1 56%;min-width:0;height:min(64vh,520px);perspective:1400px;perspective-origin:50% 42%;
+  display:flex;align-items:center;justify-content:center;position:relative}
+.hv-stage::after{content:"";position:absolute;left:50%;bottom:6%;width:46%;height:42px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.66),transparent 72%);filter:blur(7px);z-index:0}
+.hv-card{position:relative;transform-style:preserve-3d;will-change:transform;transition:transform .08s linear}
+.hv-card .hv-depth{position:absolute;inset:0;transform:translateZ(-46px) scale(.97);
+  background:rgba(0,0,0,.55);filter:blur(20px);border-radius:14px}
+.hv-card img{display:block;max-width:min(46vw,440px);max-height:min(60vh,470px);width:auto;height:auto;
+  border-radius:12px;background:#0e1114;padding:14px;border:1px solid #3a444c;
+  box-shadow:0 26px 60px -22px rgba(0,0,0,.85);backface-visibility:hidden}
+.hv-card .hv-sheen{position:absolute;inset:0;border-radius:12px;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(115deg,transparent 30%,rgba(244,185,107,.16) 47%,rgba(111,208,200,.12) 53%,transparent 70%);
+  background-size:260% 260%;background-position:50% 50%;transform:translateZ(2px)}
+.hv-card .hv-edge{position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),inset 0 1px 18px rgba(255,255,255,.04);transform:translateZ(3px)}
+
+/* info panel */
+.hv-panel{flex:1 1 44%;min-width:0;max-width:380px;align-self:center}
+.hv-panel .hv-kick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#e0a45c;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.hv-panel .hv-kick::before{content:"";width:30px;height:1px;background:#e0a45c}
+.hv-panel h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(26px,3vw,34px);line-height:1.05;letter-spacing:-.01em;margin:0 0 6px}
+.hv-panel .hv-org{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;color:#8a929a;margin-bottom:18px}
+.hv-panel .hv-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.hv-assets{border-top:1px solid #262d33;padding-top:18px;max-height:46vh;overflow-y:auto}
+.hv-assets .hv-lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8a929a;margin-bottom:12px}
+.hv-assets .hv-links{display:flex;flex-direction:column;gap:8px}
+.hv-asset{display:flex;align-items:center;gap:12px;text-decoration:none;color:#e8e4dc;
+  border:1px solid #262d33;border-radius:6px;padding:10px 13px;background:#15191d;transition:border-color .2s,background .2s,transform .2s}
+.hv-asset:hover{border-color:#6fd0c8;background:#1b2025;transform:translateX(3px)}
+.hv-fmt{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;font-weight:700;letter-spacing:.05em;color:#0c0e10;background:#6fd0c8;border-radius:3px;padding:3px 7px;flex-shrink:0;min-width:46px;text-align:center;display:inline-block}
+.hv-fmt.urdf{background:#e0a45c}
+.hv-fmt.mjcf{background:#86b06a}
+.hv-fmt.mesh{background:#9d8fc4}
+.hv-asset .hv-meta{min-width:0}
+.hv-asset .hv-src{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hv-asset .hv-note{font-size:11.5px;color:#8a929a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hv-asset .hv-arrow{margin-left:auto;color:#8a929a;flex-shrink:0}
+.hv-none{font-size:13px;color:#8a929a;font-style:italic;line-height:1.5}
+.hv-hint{margin-top:18px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:#8a929a;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+
+.hv-close{position:absolute;top:22px;right:24px;z-index:10;width:42px;height:42px;border-radius:50%;
+  border:1px solid #3a444c;background:rgba(20,24,28,.7);color:#e8e4dc;cursor:pointer;
+  font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .2s}
+.hv-close:hover{background:#c46a4a;border-color:#c46a4a;transform:rotate(90deg)}
+.hv-spinbtn{margin-top:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:#9aa2a8;background:transparent;border:1px solid #262d33;border-radius:4px;padding:7px 12px;cursor:pointer;transition:border-color .2s,color .2s}
+.hv-spinbtn:hover{border-color:#6fd0c8;color:#6fd0c8}
+
+.hv-overlay :focus-visible{outline:2px solid #6fd0c8;outline-offset:3px;border-radius:3px}
+
+@media(max-width:820px){
+  .hv-dialog{flex-direction:column;gap:18px;overflow-y:auto}
+  .hv-stage{height:38vh;flex-basis:auto;width:100%}
+  .hv-card img{max-width:74vw;max-height:34vh}
+  .hv-panel{max-width:100%;flex-basis:auto}
+  .hv-overlay{padding:18px}
+}
+@media (prefers-reduced-motion: reduce){
+  .hv-card{transition:none}
+}

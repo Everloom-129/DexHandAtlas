@@ -10,13 +10,22 @@ This index is surfaced interactively on the site: click any hand photo in
 which rotates the hand and lists both upstream links **and** the copy vendored in
 this repo. The same data lives in [`dexhand_viewer.js`](dexhand_viewer.js) (`DB`).
 
-**Vendored copies.** The freely-licensed assets are downloaded and organized
-per hand under [`/assets/`](assets/) — browse and download them via
-[`assets/index.html`](assets/index.html) (file tree + per-file download links;
-machine-readable [`assets/manifest.json`](assets/manifest.json)). Heavy CAD
-(STEP/`.f3d`) and vendor demo videos were pruned; each folder keeps its upstream
-`LICENSE`. ~14 hands, ~230 MB. **Wuji ships native USD**; the rest are
-URDF/MJCF + meshes (see conversion notes below).
+**Vendored copies — every hand has a USD.** The freely-licensed assets are
+downloaded and organized per hand under [`/assets/`](assets/) — browse and
+download via [`assets/index.html`](assets/index.html) (file tree + per-file
+links; machine-readable [`assets/manifest.json`](assets/manifest.json)). ~14
+hands, ~270 MB; heavy CAD (STEP/`.f3d`) and demo videos pruned; each folder keeps
+its upstream `LICENSE`.
+
+**Wuji ships native USD.** For the other 13 hands a USD was **generated from the
+vendored URDF/MJCF + meshes** by [`assets/tools/urdf_mjcf_to_usd.py`](assets/tools/urdf_mjcf_to_usd.py)
+(OpenUSD + trimesh): kinematic Xform hierarchy in rest pose, per-link visual
+meshes baked as `UsdGeomMesh`, primitive geoms as USD shapes, **Z-up / meters**.
+Output lands at `assets/<hand>/usd/<hand>.usd`. These are geometry scenes, not
+physics articulations (no joint drives) — for full PhysX articulation, import the
+URDF in Isaac Sim. Barrett & Schunk had only `*.urdf.xacro` with ROS `$(find)`
+substitutions, so their USD is an un-posed mesh assembly (meshes at authored
+origins). All 14 USD validated openable at hand scale (0.2–0.5 m).
 
 > **Not vendored (links only):** native USD for Shadow / Allegro / Robotiq lives
 > on NVIDIA Nucleus (served to Isaac Sim, not plain HTTP); Unitree Dex5 USD and
@@ -42,6 +51,11 @@ URDF/MJCF + meshes (see conversion notes below).
 | Barrett Hand | Barrett | – | ✅ | – | [barrett_hand_common](https://github.com/RobotnikAutomation/barrett_hand_common) |
 | Robotiq 2F-85/140 | Robotiq | ✅ | ✅ | ✅ | Isaac Sim built-in · [Menagerie](https://github.com/google-deepmind/mujoco_menagerie/tree/main/robotiq_2f85) |
 | Clone Robotics hand | Clone | – | – | – | No public sim asset (proprietary myofiber) |
+
+The **USD** column above marks *native upstream* USD. Independently, a **generated
+USD is vendored for every hand in this table except Clone** (see
+`assets/<hand>/usd/`) — so a USD is available even where upstream ships only
+URDF/MJCF.
 
 ¹ LEAP USD is produced by `LEAP_Hand_Isaac_Lab` via URDF→USD on import (no standalone `.usd`).
 ² `dexsuite/dex-urdf` Inspire URDF is **CC BY-NC-SA 4.0 (non-commercial)**. Inspire MJCF is an open Menagerie PR — confirm it is merged before relying on it.

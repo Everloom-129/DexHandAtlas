@@ -6,7 +6,11 @@
   "formats": [
    "MESH",
    "MJCF",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/ability.usd"
   ],
   "files": [
    "LICENSE",
@@ -59,7 +63,8 @@
    "mujoco/hands/abh_right_large.xml",
    "mujoco/hands/abh_right_small.xml",
    "mujoco/mujoco_viewer.py",
-   "mujoco/scene.xml"
+   "mujoco/scene.xml",
+   "usd/ability.usd"
   ]
  },
  "allegro": {
@@ -68,7 +73,11 @@
   "source": "MuJoCo Menagerie (BSD-2)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/allegro.usd"
   ],
   "files": [
    "CHANGELOG.md",
@@ -92,7 +101,8 @@
    "left_hand.xml",
    "right_hand.xml",
    "scene_left.xml",
-   "scene_right.xml"
+   "scene_right.xml",
+   "usd/allegro.usd"
   ]
  },
  "barrett": {
@@ -101,7 +111,11 @@
   "source": "barrett_hand_common (BSD-3)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/barrett.usd"
   ],
   "files": [
    "CHANGELOG.rst",
@@ -127,7 +141,8 @@
    "urdf/bh280_tactile.urdf.xacro",
    "urdf/bh282.gazebo.xacro",
    "urdf/bh282.urdf.xacro",
-   "urdf/convert-tactile-to-urdf.py"
+   "urdf/convert-tactile-to-urdf.py",
+   "usd/barrett.usd"
   ]
  },
  "brainco": {
@@ -136,7 +151,11 @@
   "source": "Unitree xr_teleoperate",
   "formats": [
    "MESH",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/brainco.usd"
   ],
   "files": [
    "brainco.yml",
@@ -175,7 +194,8 @@
    "meshes/right_thumb_distal_link.STL",
    "meshes/right_thumb_metacarpal_link.STL",
    "meshes/right_thumb_proximal_link.STL",
-   "meshes/right_thumb_tip.STL"
+   "meshes/right_thumb_tip.STL",
+   "usd/brainco.usd"
   ]
  },
  "faive": {
@@ -185,7 +205,11 @@
   "formats": [
    "MESH",
    "MJCF",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/faive.usd"
   ],
   "files": [
    "LICENSE",
@@ -247,7 +271,8 @@
    "urdf/sphere.mtl",
    "urdf/sphere.obj",
    "urdf/sphere.urdf",
-   "urdf/sphere_checkerboard.png"
+   "urdf/sphere_checkerboard.png",
+   "usd/faive.usd"
   ]
  },
  "inspire": {
@@ -256,7 +281,11 @@
   "source": "Unitree xr_teleoperate (RH56DFX)",
   "formats": [
    "MESH",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/inspire.usd"
   ],
   "files": [
    "inspire_hand.yml",
@@ -287,16 +316,21 @@
    "meshes/Link21_R.STL",
    "meshes/Link22_L.STL",
    "meshes/Link22_R.STL",
-   "meshes/R_hand_base_link.STL"
+   "meshes/R_hand_base_link.STL",
+   "usd/inspire.usd"
   ]
  },
  "leap": {
   "title": "LEAP Hand",
   "vendor": "CMU",
-  "source": "LEAP_Hand_Sim + Menagerie (MIT)",
+  "source": "MuJoCo Menagerie (MIT)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/leap.usd"
   ],
   "files": [
    "CHANGELOG.md",
@@ -320,7 +354,8 @@
    "right_hand.png",
    "right_hand.xml",
    "scene_left.xml",
-   "scene_right.xml"
+   "scene_right.xml",
+   "usd/leap.usd"
   ]
  },
  "orca": {
@@ -330,7 +365,11 @@
   "formats": [
    "MESH",
    "MJCF",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/orca.usd"
   ],
   "files": [
    ".gitignore",
@@ -345,6 +384,7 @@
    "tests/__pycache__/test_urdf.cpython-311-pytest-8.4.0.pyc",
    "tests/test_mjcf.py",
    "tests/test_urdf.py",
+   "usd/orca.usd",
    "utils/mesh_utils.py",
    "utils/utils_requirements.txt",
    "v2/models/assets/left/ForeArmStructure-Model.stl",
@@ -456,7 +496,11 @@
   "source": "MuJoCo Menagerie (BSD-2)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/robotiq.usd"
   ],
   "files": [
    "2f85.png",
@@ -472,7 +516,8 @@
    "assets/pad.stl",
    "assets/silicone_pad.stl",
    "assets/spring_link.stl",
-   "scene.xml"
+   "scene.xml",
+   "usd/robotiq.usd"
   ]
  },
  "ruka": {
@@ -481,12 +526,17 @@
   "source": "ruka-hand/RUKA",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/ruka.usd"
   ],
   "files": [
    ".DS_Store",
    "LICENSE",
    "architecture.png",
+   "usd/ruka.usd",
    "xml/.DS_Store",
    "xml/hand_assembly.xml",
    "xml/hand_basic_scene.xml",
@@ -531,7 +581,11 @@
   "source": "schunk_svh_description (GPL-3.0)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/schunk.usd"
   ],
   "files": [
    "CHANGELOG.rst",
@@ -569,7 +623,8 @@
    "urdf/svh-standalone.urdf.xacro",
    "urdf/svh.gazebo.xacro",
    "urdf/svh.transmission.xacro",
-   "urdf/svh.urdf.xacro"
+   "urdf/svh.urdf.xacro",
+   "usd/schunk.usd"
   ]
  },
  "shadow": {
@@ -578,7 +633,11 @@
   "source": "MuJoCo Menagerie (Apache-2.0)",
   "formats": [
    "MESH",
-   "MJCF"
+   "MJCF",
+   "USD"
+  ],
+  "usd": [
+   "usd/shadow.usd"
   ],
   "files": [
    "CHANGELOG.md",
@@ -603,7 +662,8 @@
    "right_hand.xml",
    "scene_left.xml",
    "scene_right.xml",
-   "shadow_hand.png"
+   "shadow_hand.png",
+   "usd/shadow.usd"
   ]
  },
  "unitree_dex": {
@@ -612,7 +672,11 @@
   "source": "Unitree xr_teleoperate",
   "formats": [
    "MESH",
-   "URDF"
+   "URDF",
+   "USD"
+  ],
+  "usd": [
+   "usd/unitree_dex.usd"
   ],
   "files": [
    "meshes/left_hand_index_0_link.STL",
@@ -647,7 +711,8 @@
    "meshes/right_hand_thumb_2_link.STL.convex.stl",
    "unitree_dex3.yml",
    "unitree_dex3_left.urdf",
-   "unitree_dex3_right.urdf"
+   "unitree_dex3_right.urdf",
+   "usd/unitree_dex.usd"
   ]
  },
  "wuji": {
@@ -659,6 +724,19 @@
    "MJCF",
    "URDF",
    "USD"
+  ],
+  "usd": [
+   "docking/usd/docking.usda",
+   "usd/left/configuration/wujihand_base.usd",
+   "usd/left/configuration/wujihand_physics.usd",
+   "usd/left/configuration/wujihand_robot.usd",
+   "usd/left/configuration/wujihand_sensor.usd",
+   "usd/left/wujihand.usd",
+   "usd/right/configuration/wujihand_base.usd",
+   "usd/right/configuration/wujihand_physics.usd",
+   "usd/right/configuration/wujihand_robot.usd",
+   "usd/right/configuration/wujihand_sensor.usd",
+   "usd/right/wujihand.usd"
   ],
   "files": [
    ".gitignore",

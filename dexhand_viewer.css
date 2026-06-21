@@ -57,6 +57,10 @@ img.ethumb:hover, img.thumb:hover, img[data-hand]:hover{
 .hv-fmt.urdf{background:#e0a45c}
 .hv-fmt.mjcf{background:#86b06a}
 .hv-fmt.mesh{background:#9d8fc4}
+.hv-fmt.repo{background:#f4b96b}
+.hv-vendored{border-color:#3a444c;background:#1b2025}
+.hv-vendored:hover{border-color:#f4b96b}
+.hv-vendored .hv-src{color:#f4b96b}
 .hv-asset .hv-meta{min-width:0}
 .hv-asset .hv-src{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hv-asset .hv-note{font-size:11.5px;color:#8a929a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

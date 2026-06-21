@@ -22,7 +22,9 @@
     spin: "自动旋转",
     none: "暂无公开仿真资源（专有方案，或尚未发布）。",
     close: "关闭",
-    tag: "2.5D 展示"
+    tag: "2.5D 展示",
+    vendored: "下载 · 已归档到本仓库",
+    vendoredNote: "USD / URDF / MJCF / 网格"
   } : {
     kick: "Inspect · 2.5D",
     assets: "Simulation assets",
@@ -30,7 +32,9 @@
     spin: "auto-spin",
     none: "No public simulation asset found — proprietary, or not yet released.",
     close: "Close",
-    tag: "2.5D view"
+    tag: "2.5D view",
+    vendored: "Download · vendored in this repo",
+    vendoredNote: "USD / URDF / MJCF / meshes"
   };
 
   /* --- asset database, keyed by image file basename ----------------------- */
@@ -99,6 +103,12 @@
         { fmt: "URDF", src: "dexsuite/dex-urdf", note: "community · CC BY-NC-SA (non-commercial)", url: "https://github.com/dexsuite/dex-urdf" }
       ]}]
     },
+    "brainco-revo2.jpg": {
+      title: "BrainCo Revo", org: "强脑科技 · Hangzhou",
+      groups: [{ name: "BrainCo Revo series", assets: [
+        { fmt: "URDF", src: "Unitree xr_teleoperate", note: "as shipped on Unitree humanoids", url: "https://github.com/unitreerobotics/xr_teleoperate/tree/main/assets/brainco_hand" }
+      ]}]
+    },
     "unitree-dex3.jpg": {
       title: "Unitree Dex3-1", org: "Unitree · Hangzhou",
       groups: [{ name: "Unitree Dex3-1", assets: [
@@ -152,6 +162,27 @@
        sharpa, xhand1, brainco-revo2, linker-l20, agile, omnihand, daxo,
        atlas, qb-softhand2, etc. */
   };
+
+  // hands whose assets are downloaded & organized in this repo under /assets/<folder>
+  var LOCAL = {
+    "Shadow Dexterous Hand": "shadow",
+    "Allegro Hand (Wonik)": "allegro",
+    "Allegro Hand (16-DOF)": "allegro",
+    "PSYONIC Ability Hand": "ability",
+    "Ability Hand": "ability",
+    "LEAP Hand (CMU)": "leap",
+    "LEAP Hand (16-DOF, <$2k)": "leap",
+    "ORCA Hand (ETH SRL)": "orca",
+    "RUKA Hand (NYU)": "ruka",
+    "Faive Hand (Mimic / ETH)": "faive",
+    "Wuji Hand (20-DOF direct-drive)": "wuji",
+    "Inspire RH56 series": "inspire",
+    "BrainCo Revo series": "brainco",
+    "Unitree Dex3-1": "unitree_dex",
+    "Schunk SVH (5-finger)": "schunk"
+  };
+  // path back to /assets/ from the including page (root pages → "assets/")
+  var ASSET_BASE = "assets/";
 
   function basename(src) {
     return (src || "").split("/").pop().split("?")[0].split("#")[0];
@@ -253,14 +284,29 @@
     if (d) d.groups.forEach(function (g) {
       if (d.groups.length > 1) {
         var h = document.createElement("div");
-        h.className = "hv-lbl"; h.style.marginTop = "14px"; h.style.color = "var(--amber)";
+        h.className = "hv-lbl"; h.style.marginTop = "14px"; h.style.color = "#e0a45c";
         h.textContent = g.name;
         elLinks.appendChild(h);
       }
+      // vendored-in-repo download (organized under /assets/<folder>)
+      var folder = LOCAL[g.name];
+      if (folder) {
+        any = true;
+        var dl = document.createElement("a");
+        dl.className = "hv-asset hv-vendored"; dl.href = ASSET_BASE + "index.html#" + folder;
+        dl.innerHTML =
+          '<span class="hv-fmt repo">REPO</span>' +
+          '<span class="hv-meta"><span class="hv-src">' + T.vendored + '</span>' +
+          '<span class="hv-note">/assets/' + folder + '/ · ' + T.vendoredNote + '</span></span>' +
+          '<span class="hv-arrow">↓</span>';
+        elLinks.appendChild(dl);
+      }
       if (!g.assets.length) {
-        var n = document.createElement("div");
-        n.className = "hv-none"; n.textContent = T.none;
-        elLinks.appendChild(n);
+        if (!folder) {
+          var n = document.createElement("div");
+          n.className = "hv-none"; n.textContent = T.none;
+          elLinks.appendChild(n);
+        }
         return;
       }
       g.assets.forEach(function (a) {

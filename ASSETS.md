@@ -7,14 +7,22 @@ this atlas. Priority order: **USD** (OpenUSD / NVIDIA Isaac Sim) → **URDF** �
 This index is surfaced interactively on the site: click any hand photo in
 [`dexhand_hardware_review.html`](dexhand_hardware_review.html) or
 [`dex_hand_products.html`](dex_hand_products.html) to open the **2.5D viewer**,
-which rotates the hand and lists its downloadable assets. The same data lives in
-[`dexhand_viewer.js`](dexhand_viewer.js) (`DB` object).
+which rotates the hand and lists both upstream links **and** the copy vendored in
+this repo. The same data lives in [`dexhand_viewer.js`](dexhand_viewer.js) (`DB`).
 
-> **Why links, not vendored binaries.** Most native USD lives on NVIDIA Nucleus
-> (served to Isaac Sim, not plain HTTP), and the URDF/MJCF packages are whole git
-> repos with mesh trees. Bundling them would blow past GitHub Pages' size budget
-> and duplicate upstream licensing. Clone the linked repo (or open it in Isaac
-> Sim) to get the actual files. Formats/licenses are vendor- or community-reported.
+**Vendored copies.** The freely-licensed assets are downloaded and organized
+per hand under [`/assets/`](assets/) — browse and download them via
+[`assets/index.html`](assets/index.html) (file tree + per-file download links;
+machine-readable [`assets/manifest.json`](assets/manifest.json)). Heavy CAD
+(STEP/`.f3d`) and vendor demo videos were pruned; each folder keeps its upstream
+`LICENSE`. ~14 hands, ~230 MB. **Wuji ships native USD**; the rest are
+URDF/MJCF + meshes (see conversion notes below).
+
+> **Not vendored (links only):** native USD for Shadow / Allegro / Robotiq lives
+> on NVIDIA Nucleus (served to Isaac Sim, not plain HTTP); Unitree Dex5 USD and
+> the Inspire MJCF are likewise fetched at runtime / still in review. Open those
+> in Isaac Sim or clone the linked repo. Tesollo's repo required auth at fetch
+> time. Formats/licenses are vendor- or community-reported.
 
 | Hand | Vendor | USD | URDF | MJCF | Source |
 |---|---|:--:|:--:|:--:|---|

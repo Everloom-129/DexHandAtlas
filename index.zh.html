@@ -300,7 +300,7 @@
           <div class="specs"><span class="act">电驱 · 三指</span><span class="nt">可反向弯曲手指 · 现代汽车试点</span></div></div>
       </a>
 
-      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.zh.html" aria-label="Daxo Muscle V0，108–120 驱动器，柔性冗余腱驱动">
+      <a class="hand" data-act="soft tendon" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.zh.html" aria-label="Daxo Muscle V0，108–120 驱动器，柔性冗余腱驱动">
         <img src="images/daxo.jpg" alt="Daxo Robotics Muscle V0 灵巧手" loading="lazy">
         <span class="dof">120 驱动器</span>
         <div class="cap"><span class="nm">Muscle V0</span><span class="og">Daxo Robotics · Austin</span>
@@ -393,7 +393,7 @@
       if(on){wall.classList.remove('filtered');wall.querySelectorAll('.hand').forEach(h=>h.classList.remove('match'));return;}
       btn.setAttribute('aria-pressed','true');
       wall.classList.add('filtered');
-      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act===btn.dataset.filter));
+      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act.split(' ').includes(btn.dataset.filter)));
     });
   });
 </script>

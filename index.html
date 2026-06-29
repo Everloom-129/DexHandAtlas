@@ -300,7 +300,7 @@
           <div class="specs"><span class="act">Electric · 3 fingers</span><span class="nt">Backward-bending fingers · Hyundai pilots</span></div></div>
       </a>
 
-      <a class="hand" data-act="soft" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.html" aria-label="Muscle V0 by Daxo, 108 to 120 actuators, soft redundant tendon">
+      <a class="hand" data-act="soft tendon" style="--ha:var(--amber-bright)" href="dexhand_hardware_review.html" aria-label="Muscle V0 by Daxo, 108 to 120 actuators, soft redundant tendon">
         <img src="images/daxo.jpg" alt="Muscle V0 hand by Daxo Robotics" loading="lazy">
         <span class="dof">120 act</span>
         <div class="cap"><span class="nm">Muscle V0</span><span class="og">Daxo Robotics · Austin</span>
@@ -393,7 +393,7 @@
       if(on){wall.classList.remove('filtered');wall.querySelectorAll('.hand').forEach(h=>h.classList.remove('match'));return;}
       btn.setAttribute('aria-pressed','true');
       wall.classList.add('filtered');
-      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act===btn.dataset.filter));
+      wall.querySelectorAll('.hand').forEach(h=>h.classList.toggle('match',h.dataset.act.split(' ').includes(btn.dataset.filter)));
     });
   });
 </script>
